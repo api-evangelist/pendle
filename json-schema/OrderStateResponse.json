@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderStateResponse",
+  "type": "object",
+  "properties": {
+    "orderType": {
+      "type": "string"
+    },
+    "exchangeRate": {
+      "type": "string"
+    },
+    "psAmountToTaker": {
+      "type": "string"
+    },
+    "psAmountFromTaker": {
+      "type": "string"
+    },
+    "ysAmountToTaker": {
+      "type": "string"
+    },
+    "ysAmountFromTaker": {
+      "type": "string"
+    },
+    "fee": {
+      "type": "string"
+    },
+    "psRate": {
+      "type": "number"
+    },
+    "ysRate": {
+      "type": "number"
+    },
+    "netToMakerIfFullyFilled": {
+      "type": "string",
+      "description": "In SY if the order is PY for token"
+    },
+    "netFromMakerIfFullyFilled": {
+      "type": "string",
+      "description": "The difference with currentMakingAmount is that this is in SY if currentMakingAmount in tokenIn"
+    },
+    "notionalVolume": {
+      "type": "string"
+    },
+    "matchableAmount": {
+      "type": "string"
+    },
+    "notionalVolumeUSD": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "orderType",
+    "exchangeRate",
+    "psAmountToTaker",
+    "psAmountFromTaker",
+    "ysAmountToTaker",
+    "ysAmountFromTaker",
+    "fee",
+    "psRate",
+    "ysRate",
+    "netToMakerIfFullyFilled",
+    "netFromMakerIfFullyFilled",
+    "notionalVolume",
+    "matchableAmount",
+    "notionalVolumeUSD"
+  ]
+}

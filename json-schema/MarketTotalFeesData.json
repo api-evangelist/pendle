@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketTotalFeesData",
+  "type": "object",
+  "properties": {
+    "market": {
+      "description": "market metadata",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/MarketMetaData"
+        }
+      ]
+    },
+    "values": {
+      "description": "total fee at each timestamp",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TotalFeesWithTimestamp"
+      }
+    }
+  },
+  "required": [
+    "market",
+    "values"
+  ]
+}

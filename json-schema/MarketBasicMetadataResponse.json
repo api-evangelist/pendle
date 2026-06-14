@@ -1,0 +1,307 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketBasicMetadataResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "expiry": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "pt": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "yt": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "sy": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "lp": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "accountingAsset": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "underlyingAsset": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "basePricingAsset": {
+      "nullable": true,
+      "description": "Same as accountingAsset",
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "protocol": {
+      "type": "string",
+      "nullable": true
+    },
+    "underlyingPool": {
+      "type": "string",
+      "nullable": true
+    },
+    "proSymbol": {
+      "type": "string",
+      "nullable": true
+    },
+    "proIcon": {
+      "type": "string",
+      "nullable": true
+    },
+    "assetRepresentation": {
+      "type": "string"
+    },
+    "isWhitelistedPro": {
+      "type": "boolean"
+    },
+    "isWhitelistedSimple": {
+      "type": "boolean",
+      "deprecated": true
+    },
+    "votable": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean",
+      "deprecated": true
+    },
+    "isWhitelistedLimitOrder": {
+      "type": "boolean"
+    },
+    "accentColor": {
+      "type": "string",
+      "nullable": true
+    },
+    "totalPt": {
+      "type": "number",
+      "nullable": true
+    },
+    "totalSy": {
+      "type": "number",
+      "nullable": true
+    },
+    "totalLp": {
+      "type": "number",
+      "nullable": true
+    },
+    "liquidity": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "tradingVolume": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "underlyingInterestApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "underlyingRewardApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "underlyingApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "impliedApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "ytFloatingApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "ptDiscount": {
+      "type": "number",
+      "nullable": true
+    },
+    "swapFeeApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "pendleApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "arbApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "aggregatedApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "maxBoostedApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "lpRewardApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "voterApy": {
+      "type": "number",
+      "nullable": true
+    },
+    "ytRoi": {
+      "type": "number",
+      "nullable": true
+    },
+    "ptRoi": {
+      "type": "number",
+      "nullable": true
+    },
+    "dataUpdatedAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "categoryIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "whitelistedProAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "scalarRoot": {
+      "type": "number"
+    },
+    "initialAnchor": {
+      "type": "number"
+    },
+    "extendedInfo": {
+      "description": "Additional market data, only available when market is whitelisted.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/MarketExtendedInfoResponse"
+        }
+      ]
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "isPopular": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "tvlThresholdTimestamp": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "isNew": {
+      "type": "boolean",
+      "description": "Market which whitelisted in the last 2 weeks will have isNew==true"
+    },
+    "name": {
+      "type": "string"
+    },
+    "simpleName": {
+      "type": "string"
+    },
+    "simpleSymbol": {
+      "type": "string"
+    },
+    "simpleIcon": {
+      "type": "string"
+    },
+    "proName": {
+      "type": "string"
+    },
+    "farmName": {
+      "type": "string"
+    },
+    "farmSymbol": {
+      "type": "string"
+    },
+    "farmSimpleName": {
+      "type": "string"
+    },
+    "farmSimpleSymbol": {
+      "type": "string"
+    },
+    "farmSimpleIcon": {
+      "type": "string"
+    },
+    "farmProName": {
+      "type": "string"
+    },
+    "farmProSymbol": {
+      "type": "string"
+    },
+    "farmProIcon": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "address",
+    "symbol",
+    "expiry",
+    "pt",
+    "yt",
+    "sy",
+    "lp",
+    "accountingAsset",
+    "underlyingAsset",
+    "assetRepresentation",
+    "isWhitelistedPro",
+    "isWhitelistedSimple",
+    "votable",
+    "isActive",
+    "isWhitelistedLimitOrder",
+    "categoryIds",
+    "timestamp",
+    "scalarRoot",
+    "initialAnchor",
+    "extendedInfo",
+    "isNew",
+    "name",
+    "simpleName",
+    "simpleSymbol",
+    "simpleIcon",
+    "proName",
+    "farmName",
+    "farmSymbol",
+    "farmSimpleName",
+    "farmSimpleSymbol",
+    "farmSimpleIcon",
+    "farmProName",
+    "farmProSymbol",
+    "farmProIcon"
+  ]
+}

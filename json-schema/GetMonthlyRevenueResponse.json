@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetMonthlyRevenueResponse",
+  "type": "object",
+  "properties": {
+    "revenues": {
+      "description": "The revenues of the month in USD within the time range",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "epochStartDates": {
+      "description": "The start dates of the month in Date within the time range",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accumulatedRevenue": {
+      "type": "number",
+      "description": "all time revenues in USD"
+    }
+  },
+  "required": [
+    "revenues",
+    "epochStartDates",
+    "accumulatedRevenue"
+  ]
+}

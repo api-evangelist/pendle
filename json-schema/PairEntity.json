@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PairEntity",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Pendle LPT address"
+    },
+    "dexKey": {
+      "type": "string",
+      "description": "Dex key. Result is always pendle.",
+      "example": "pendle"
+    },
+    "asset0Id": {
+      "type": "string",
+      "description": "PT address"
+    },
+    "asset1Id": {
+      "type": "string",
+      "description": "SY address"
+    }
+  },
+  "required": [
+    "id",
+    "dexKey",
+    "asset0Id",
+    "asset1Id"
+  ]
+}

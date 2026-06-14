@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConvertData",
+  "type": "object",
+  "properties": {
+    "aggregatorType": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "impliedApy": {
+      "$ref": "#/components/schemas/ImpliedApy"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    },
+    "effectiveApy": {
+      "type": "number"
+    },
+    "paramsBreakdown": {
+      "description": "Parameter breakdown for transfer liquidity",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ParamsBreakdown"
+        }
+      ]
+    },
+    "fee": {
+      "description": "Fee in USD",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/FeeUsd"
+        }
+      ]
+    }
+  },
+  "required": [
+    "aggregatorType",
+    "priceImpact",
+    "priceImpactBreakDown"
+  ]
+}

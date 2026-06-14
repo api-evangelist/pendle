@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetAssetPricesResponse",
+  "type": "object",
+  "properties": {
+    "prices": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      },
+      "example": {
+        "0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650": 0.9989673642973003,
+        "0xd393d1ddd6b8811a86d925f5e14014282581bc04": 1.001712
+      }
+    },
+    "total": {
+      "type": "number",
+      "description": "Total number of assets"
+    },
+    "skip": {
+      "type": "number",
+      "description": "Number of assets got skipped"
+    },
+    "limit": {
+      "type": "number",
+      "nullable": true,
+      "description": "Number of assets limited by the query"
+    }
+  },
+  "required": [
+    "prices",
+    "total",
+    "skip"
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PnLTransactionEntity",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number",
+      "description": "Chain ID where the transaction occurred"
+    },
+    "market": {
+      "type": "string",
+      "description": "LP market contract address"
+    },
+    "user": {
+      "type": "string",
+      "description": "User wallet address"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Block timestamp of the transaction"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "addLiquidityDualTokenAndPt",
+        "addLiquiditySinglePt",
+        "addLiquiditySingleToken",
+        "addLiquiditySingleTokenKeepYt",
+        "removeLiquidityDualTokenAndPt",
+        "removeLiquidityToPt",
+        "removeLiquiditySingleToken",
+        "mintPy",
+        "redeemPy",
+        "swapYtToPt",
+        "swapPtToYt",
+        "redeemYtRewards",
+        "redeemYtYield",
+        "redeemMarketRewards",
+        "buyPt",
+        "sellPt",
+        "transferPtIn",
+        "transferPtOut",
+        "buyYt",
+        "sellYt",
+        "transferYtIn",
+        "transferYtOut",
+        "transferLpIn",
+        "transferLpOut",
+        "sellYtLimitOrder",
+        "buyYtLimitOrder",
+        "sellPtLimitOrder",
+        "buyPtLimitOrder"
+      ],
+      "description": "Type of Pendle operation performed (swap, liquidity, limit order, mint/redeem, transfer, or reward claim)"
+    },
+    "ptData": {
+      "description": "PT token balance change and cost basis for this transaction",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/SpendUnitData"
+        }
+      ]
+    },
+    "ytData": {
+      "description": "YT token balance change and cost basis for this transaction",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/SpendUnitData"
+        }
+      ]
+    },
+    "lpData": {
+      "description": "LP token balance change and cost basis for this transaction",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/SpendUnitData"
+        }
+      ]
+    },
+    "priceInAsset": {
+      "description": "Prices of PT, YT, and LP in the market's accounting asset at the time of the transaction",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/PriceAssetData"
+        }
+      ]
+    },
+    "profit": {
+      "description": "Profit or loss of the transaction",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationEntity"
+        }
+      ]
+    },
+    "txValueAsset": {
+      "type": "number",
+      "description": "Total value of the transaction in asset"
+    },
+    "assetUsd": {
+      "type": "number",
+      "description": "Market asset price in USD"
+    },
+    "assetEth": {
+      "type": "number",
+      "description": "Market asset price in ETH"
+    },
+    "ptExchangeRate": {
+      "type": "number",
+      "description": "PT exchange rate at the time of the transaction"
+    },
+    "effectivePtExchangeRate": {
+      "type": "number",
+      "description": "Effective PT exchange rate of this transaction"
+    },
+    "ptExchangeRateAfter": {
+      "type": "number",
+      "description": "PT exchange rate of market after the transaction"
+    },
+    "txHash": {
+      "type": "string",
+      "description": "Transaction hash"
+    }
+  },
+  "required": [
+    "chainId",
+    "market",
+    "user",
+    "timestamp",
+    "action",
+    "ptData",
+    "ytData",
+    "lpData",
+    "priceInAsset",
+    "profit",
+    "txValueAsset",
+    "assetUsd",
+    "assetEth",
+    "ptExchangeRate"
+  ]
+}

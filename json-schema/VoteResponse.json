@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VoteResponse",
+  "type": "object",
+  "properties": {
+    "pool": {
+      "$ref": "#/components/schemas/PoolResponse"
+    },
+    "votes": {
+      "type": "number"
+    },
+    "percentage": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "pool",
+    "votes",
+    "percentage"
+  ]
+}

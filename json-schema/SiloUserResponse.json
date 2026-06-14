@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SiloUserResponse",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "Silo user address"
+    },
+    "asset": {
+      "type": "string",
+      "description": "Silo user address"
+    }
+  },
+  "required": [
+    "user",
+    "asset"
+  ]
+}

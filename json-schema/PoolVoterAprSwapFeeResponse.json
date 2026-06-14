@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PoolVoterAprSwapFeeResponse",
+  "type": "object",
+  "properties": {
+    "pool": {
+      "$ref": "#/components/schemas/PoolResponse"
+    },
+    "currentVoterApr": {
+      "type": "number"
+    },
+    "lastEpochVoterApr": {
+      "type": "number"
+    },
+    "currentSwapFee": {
+      "type": "number"
+    },
+    "lastEpochSwapFee": {
+      "type": "number"
+    },
+    "projectedVoterApr": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "pool",
+    "currentVoterApr",
+    "lastEpochVoterApr",
+    "currentSwapFee",
+    "lastEpochSwapFee",
+    "projectedVoterApr"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UniswapTokenListResponse",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "version": {
+      "$ref": "#/components/schemas/VersionResponse"
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenInfoResponse"
+      }
+    },
+    "tokenMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/TokenInfoResponse"
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "logoURI": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/TagDefinitionResponse"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "timestamp",
+    "version",
+    "tokens",
+    "tokenMap",
+    "keywords",
+    "logoURI",
+    "tags"
+  ]
+}

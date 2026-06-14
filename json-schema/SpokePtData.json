@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SpokePtData",
+  "type": "object",
+  "properties": {
+    "spokeChainId": {
+      "type": "number",
+      "description": "Spoke PT chain ID",
+      "example": 1
+    },
+    "spokeAddress": {
+      "type": "string",
+      "description": "Spoke PT address",
+      "example": "0x1234567890123456789012345678901234567890"
+    }
+  },
+  "required": [
+    "spokeChainId",
+    "spokeAddress"
+  ]
+}

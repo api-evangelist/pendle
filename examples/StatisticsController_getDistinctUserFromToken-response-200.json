@@ -1,0 +1,13 @@
+{
+  "operationId": "StatisticsController_getDistinctUserFromToken",
+  "method": "get",
+  "path": "/v1/statistics/get-distinct-user-from-token",
+  "status": "200",
+  "example": {
+    "users": [
+      "0x1234567890123456789012345678901234567890",
+      "0x0987654321098765432109876543210987654321",
+      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssetData",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "asset name",
+      "example": "PT FRAX-USDC"
+    },
+    "decimals": {
+      "type": "number",
+      "example": 18,
+      "description": "asset decimals"
+    },
+    "address": {
+      "type": "string",
+      "example": "0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650",
+      "description": "asset address"
+    },
+    "symbol": {
+      "type": "string",
+      "example": "PT-FRAXUSDC_CurveLP Convex-30MAR2023",
+      "description": "asset symbol"
+    },
+    "tags": {
+      "example": [
+        "PT"
+      ],
+      "description": "asset tags",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expiry": {
+      "type": "string",
+      "example": "2023-03-30T00:00:00.000Z",
+      "description": "asset expiry"
+    },
+    "proIcon": {
+      "type": "string",
+      "example": "https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/0d3199a2-0565-4355-ad52-6bfdc67e3467.svg",
+      "description": "asset pro icon"
+    }
+  },
+  "required": [
+    "name",
+    "decimals",
+    "address",
+    "symbol",
+    "tags",
+    "expiry",
+    "proIcon"
+  ]
+}

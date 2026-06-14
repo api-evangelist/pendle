@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PtCrossChainMetadataResponse",
+  "type": "object",
+  "properties": {
+    "pairedTokensOut": {
+      "description": "Array of token addresses that the PT can be swapped to",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ammAddress": {
+      "type": "string",
+      "description": "The address of the AMM"
+    }
+  },
+  "required": [
+    "pairedTokensOut"
+  ]
+}

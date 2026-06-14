@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JoinExitEvent",
+  "type": "object",
+  "properties": {
+    "block": {
+      "description": "Block data",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BlockEntity"
+        }
+      ]
+    },
+    "txnId": {
+      "type": "string",
+      "description": "Transaction hash"
+    },
+    "txnIndex": {
+      "type": "number",
+      "description": "Transaction index"
+    },
+    "eventIndex": {
+      "type": "number",
+      "description": "Event index"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Transaction maker"
+    },
+    "pairId": {
+      "type": "string",
+      "description": "Pair ID"
+    },
+    "reserves": {
+      "description": "Reserves after the swap",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Reserves"
+        }
+      ]
+    },
+    "eventType": {
+      "type": "string",
+      "description": "Type of event",
+      "enum": [
+        "swap",
+        "join",
+        "exit"
+      ],
+      "example": "join",
+      "examples": [
+        "join",
+        "exit"
+      ]
+    },
+    "amount0": {
+      "type": "string",
+      "description": "Amount of token0"
+    },
+    "amount1": {
+      "type": "string",
+      "description": "Amount of token1"
+    }
+  },
+  "required": [
+    "block",
+    "txnId",
+    "txnIndex",
+    "eventIndex",
+    "maker",
+    "pairId",
+    "reserves",
+    "eventType",
+    "amount0",
+    "amount1"
+  ]
+}

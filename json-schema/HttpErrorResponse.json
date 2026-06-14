@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HttpErrorResponse",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "statusCode": {
+      "type": "number"
+    },
+    "error": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "message",
+    "statusCode",
+    "error"
+  ]
+}

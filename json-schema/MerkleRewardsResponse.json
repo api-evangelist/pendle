@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MerkleRewardsResponse",
+  "type": "object",
+  "properties": {
+    "accruedAmount": {
+      "type": "string"
+    },
+    "rewardBreakdowns": {
+      "nullable": true,
+      "description": "Only available for arbitrum-grant campaign",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "accruedAmount",
+    "rewardBreakdowns",
+    "updatedAt"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenInfoResponse",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "decimals": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "logoURI": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "chainId",
+    "address",
+    "decimals",
+    "name",
+    "symbol",
+    "logoURI",
+    "tags",
+    "extensions"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RollOverPtData",
+  "type": "object",
+  "properties": {
+    "amountPtOut": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    },
+    "effectiveApy": {
+      "type": "number"
+    },
+    "fee": {
+      "description": "Fee in USD",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/FeeUsd"
+        }
+      ]
+    }
+  },
+  "required": [
+    "amountPtOut",
+    "priceImpact",
+    "priceImpactBreakDown",
+    "fee"
+  ]
+}

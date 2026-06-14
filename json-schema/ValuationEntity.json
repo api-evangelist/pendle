@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ValuationEntity",
+  "type": "object",
+  "properties": {
+    "usd": {
+      "type": "number"
+    },
+    "asset": {
+      "type": "number"
+    },
+    "eth": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "usd",
+    "asset",
+    "eth"
+  ]
+}

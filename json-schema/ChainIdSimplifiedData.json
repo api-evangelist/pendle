@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChainIdSimplifiedData",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number"
+    },
+    "sys": {
+      "description": "list of SY addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "markets": {
+      "description": "list of market addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pts": {
+      "description": "list of PT addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "yts": {
+      "description": "list of YT addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "crossPts": {
+      "description": "list of cross chain pt data",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CrossChainPtData"
+      }
+    }
+  },
+  "required": [
+    "chainId",
+    "sys",
+    "markets",
+    "pts",
+    "yts",
+    "crossPts"
+  ]
+}

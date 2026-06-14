@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketApyHistoryResponse",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp of the APY data point"
+    },
+    "underlyingApy": {
+      "type": "number",
+      "description": "APY of the underlying asset"
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "Implied APY of market"
+    }
+  },
+  "required": [
+    "timestamp",
+    "underlyingApy",
+    "impliedApy"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WlpDistinctUsersResponse",
+  "type": "object",
+  "properties": {
+    "wlpUsersTotal": {
+      "type": "number",
+      "description": "WLP token address"
+    },
+    "eulerUsersTotal": {
+      "type": "number",
+      "description": "WLP token address"
+    },
+    "morphoUsersTotal": {
+      "type": "number",
+      "description": "WLP token address"
+    },
+    "siloUsersTotal": {
+      "type": "number",
+      "description": "WLP token address"
+    },
+    "wlpUsers": {
+      "description": "Array of distinct user addresses that have interacted with WLP",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "eulerUsers": {
+      "description": "Array of Euler users",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/EulerUserResponse"
+      }
+    },
+    "morphoUsers": {
+      "description": "Array of Morpho users",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MorphoUserResponse"
+      }
+    },
+    "siloUsers": {
+      "description": "Array of Silo users",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SiloUserResponse"
+      }
+    },
+    "wlpAddress": {
+      "type": "string",
+      "description": "WLP token address"
+    },
+    "morphoConfigs": {
+      "description": "Morpho config address",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MorphoConfigResponse"
+      }
+    }
+  },
+  "required": [
+    "wlpUsersTotal",
+    "eulerUsersTotal",
+    "morphoUsersTotal",
+    "siloUsersTotal",
+    "wlpUsers",
+    "eulerUsers",
+    "morphoUsers",
+    "siloUsers",
+    "wlpAddress",
+    "morphoConfigs"
+  ]
+}

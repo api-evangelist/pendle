@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VePendleDataResponse",
+  "type": "object",
+  "properties": {
+    "avgLockDuration": {
+      "type": "number",
+      "description": "Average lock duration in days"
+    },
+    "totalPendleLocked": {
+      "type": "number",
+      "description": "Total amount of PENDLE tokens locked in vePENDLE"
+    },
+    "vePendleSupply": {
+      "type": "number",
+      "description": "Total supply of vePENDLE tokens"
+    },
+    "totalProjectedVotes": {
+      "type": "number",
+      "description": "Total projected votes for next epoch"
+    },
+    "totalCurrentVotes": {
+      "type": "number",
+      "description": "Total votes in current epoch"
+    },
+    "pools": {
+      "description": "List of voting pools with their APY, fees, and voting data",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PoolV2Response"
+      }
+    }
+  },
+  "required": [
+    "avgLockDuration",
+    "totalPendleLocked",
+    "vePendleSupply",
+    "totalProjectedVotes",
+    "totalCurrentVotes",
+    "pools"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MorphoUserResponse",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "Morpho user address"
+    },
+    "marketId": {
+      "type": "string",
+      "description": "Morpho user address"
+    }
+  },
+  "required": [
+    "user",
+    "marketId"
+  ]
+}

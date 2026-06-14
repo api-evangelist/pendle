@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketDetails",
+  "type": "object",
+  "properties": {
+    "liquidity": {
+      "type": "number",
+      "description": "market liquidity in USD",
+      "example": 1234567.89
+    },
+    "pendleApy": {
+      "type": "number",
+      "description": "APY from Pendle rewards",
+      "example": 0.456
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "implied APY of market",
+      "example": 0.123
+    },
+    "feeRate": {
+      "type": "number",
+      "description": "market fee rate",
+      "example": 0.003
+    },
+    "yieldRange": {
+      "$ref": "#/components/schemas/YieldRangeResponse"
+    },
+    "aggregatedApy": {
+      "type": "number",
+      "description": "APY including yield, swap fee and Pendle rewards without boosting",
+      "example": 0.123
+    },
+    "maxBoostedApy": {
+      "type": "number",
+      "description": "APY when maximum boost is applies",
+      "example": 0.123
+    }
+  },
+  "required": [
+    "liquidity",
+    "pendleApy",
+    "impliedApy",
+    "feeRate",
+    "yieldRange",
+    "aggregatedApy",
+    "maxBoostedApy"
+  ]
+}

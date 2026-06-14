@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BlockEntity",
+  "type": "object",
+  "properties": {
+    "blockNumber": {
+      "type": "number",
+      "description": "Block number"
+    },
+    "blockTimestamp": {
+      "type": "number",
+      "description": "Block timestamp in seconds"
+    }
+  },
+  "required": [
+    "blockNumber",
+    "blockTimestamp"
+  ]
+}

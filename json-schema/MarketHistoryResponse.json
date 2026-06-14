@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketHistoryResponse",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "liquidity": {
+      "$ref": "#/components/schemas/ValuationResponse"
+    },
+    "tradingVolume": {
+      "$ref": "#/components/schemas/ValuationResponse"
+    },
+    "totalTvl": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "underlyingInterestApy": {
+      "type": "number"
+    },
+    "underlyingRewardApy": {
+      "type": "number"
+    },
+    "underlyingApy": {
+      "type": "number"
+    },
+    "impliedApy": {
+      "type": "number"
+    },
+    "ytFloatingApy": {
+      "type": "number"
+    },
+    "ptDiscount": {
+      "type": "number"
+    },
+    "swapFeeApy": {
+      "type": "number"
+    },
+    "pendleApy": {
+      "type": "number"
+    },
+    "aggregatedApy": {
+      "type": "number"
+    },
+    "lpRewardApy": {
+      "type": "number"
+    },
+    "voterApy": {
+      "type": "number"
+    },
+    "totalPt": {
+      "type": "number"
+    },
+    "totalSy": {
+      "type": "number"
+    },
+    "totalLp": {
+      "type": "number"
+    },
+    "totalActiveSupply": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "timestamp",
+    "liquidity",
+    "tradingVolume",
+    "underlyingInterestApy",
+    "underlyingRewardApy",
+    "underlyingApy",
+    "impliedApy",
+    "ytFloatingApy",
+    "ptDiscount",
+    "swapFeeApy",
+    "pendleApy",
+    "aggregatedApy",
+    "lpRewardApy",
+    "voterApy",
+    "totalPt",
+    "totalSy",
+    "totalLp",
+    "totalActiveSupply"
+  ]
+}

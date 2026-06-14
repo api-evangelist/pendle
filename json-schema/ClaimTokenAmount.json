@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClaimTokenAmount",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "Token id",
+      "example": "1-0x123..."
+    },
+    "amount": {
+      "type": "string",
+      "description": "Amount of tokens",
+      "example": "1000000000000000000"
+    }
+  },
+  "required": [
+    "token",
+    "amount"
+  ]
+}

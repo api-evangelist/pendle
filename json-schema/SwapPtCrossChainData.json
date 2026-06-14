@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SwapPtCrossChainData",
+  "type": "object",
+  "properties": {
+    "netTokenOut": {
+      "type": "string",
+      "description": "Net token output amount"
+    },
+    "netPtIn": {
+      "type": "string",
+      "description": "Net PT input amount"
+    }
+  },
+  "required": [
+    "netTokenOut",
+    "netPtIn"
+  ]
+}

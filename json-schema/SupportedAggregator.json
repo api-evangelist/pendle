@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SupportedAggregator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the aggregator, e.g., kyberswap, okx, odos, paraswap",
+      "example": "kyberswap"
+    },
+    "computingUnit": {
+      "type": "number",
+      "description": "Computing unit required for the aggregator",
+      "example": 5
+    }
+  },
+  "required": [
+    "name",
+    "computingUnit"
+  ]
+}

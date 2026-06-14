@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GenerateLimitOrderDataResponse",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number",
+      "description": "Chain id"
+    },
+    "YT": {
+      "type": "string",
+      "description": "YT address"
+    },
+    "salt": {
+      "type": "string",
+      "description": "BigInt string of salt. Salt is a random generated number to distinguish between orders.Because of some technical reason, this number must be dividable by 12421"
+    },
+    "expiry": {
+      "type": "string",
+      "description": "Limit order expiry, in string"
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Nonce of the limit order, this will help the maker to cancel all the limit order they created"
+    },
+    "token": {
+      "type": "string",
+      "description": "Input token if type is TOKEN_FOR_PT or TOKEN_FOR_YT, output token otherwise"
+    },
+    "orderType": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+    },
+    "failSafeRate": {
+      "type": "string",
+      "description": "BigInt string of failSafeRate"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Maker's address"
+    },
+    "receiver": {
+      "type": "string",
+      "description": "Maker's address"
+    },
+    "makingAmount": {
+      "type": "string",
+      "description": "BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT"
+    },
+    "permit": {
+      "type": "string",
+      "description": ""
+    },
+    "lnImpliedRate": {
+      "format": "int64",
+      "type": "integer",
+      "description": "ln(impliedRate) * 10**18, returned as bigint string"
+    }
+  },
+  "required": [
+    "chainId",
+    "YT",
+    "salt",
+    "expiry",
+    "nonce",
+    "token",
+    "orderType",
+    "failSafeRate",
+    "maker",
+    "receiver",
+    "makingAmount",
+    "permit",
+    "lnImpliedRate"
+  ]
+}

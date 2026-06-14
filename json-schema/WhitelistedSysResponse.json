@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WhitelistedSysResponse",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SyBasicResponse"
+      }
+    }
+  },
+  "required": [
+    "results"
+  ]
+}

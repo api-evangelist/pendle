@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SyBasicResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "decimals": {
+      "type": "number"
+    },
+    "expiry": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "accentColor": {
+      "type": "string",
+      "nullable": true
+    },
+    "price": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "priceUpdatedAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "baseType": {
+      "type": "string"
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "protocol": {
+      "type": "string",
+      "nullable": true
+    },
+    "underlyingPool": {
+      "type": "string",
+      "nullable": true
+    },
+    "proSymbol": {
+      "type": "string",
+      "nullable": true
+    },
+    "proIcon": {
+      "type": "string",
+      "nullable": true
+    },
+    "zappable": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "simpleName": {
+      "type": "string"
+    },
+    "simpleSymbol": {
+      "type": "string"
+    },
+    "simpleIcon": {
+      "type": "string"
+    },
+    "proName": {
+      "type": "string"
+    },
+    "accountingAssetType": {
+      "type": "number"
+    },
+    "accountingAsset": {
+      "type": "string",
+      "description": "Accounting asset id"
+    },
+    "underlyingAsset": {
+      "type": "string",
+      "description": "Underlying asset id"
+    },
+    "rewardTokens": {
+      "description": "Reward token ids",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputTokens": {
+      "description": "Input token ids",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputTokens": {
+      "description": "Output token ids",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "address",
+    "symbol",
+    "decimals",
+    "name",
+    "baseType",
+    "types",
+    "simpleName",
+    "simpleSymbol",
+    "simpleIcon",
+    "proName",
+    "accountingAssetType",
+    "accountingAsset",
+    "underlyingAsset",
+    "rewardTokens",
+    "inputTokens",
+    "outputTokens"
+  ]
+}

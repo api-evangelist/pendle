@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketDataResponse",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp of the market data snapshot"
+    },
+    "liquidity": {
+      "description": "Market liquidity, this is the liquidity of PT and SY in the AMM",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "tradingVolume": {
+      "description": "Market 24h trading volume",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "totalTvl": {
+      "nullable": true,
+      "description": "Market total TVL (including floating PT that are not in the AMM)",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "underlyingInterestApy": {
+      "type": "number",
+      "description": "Annual percentage yield from the underlying asset interest"
+    },
+    "underlyingRewardApy": {
+      "type": "number",
+      "description": "Annual percentage yield from the underlying asset rewards"
+    },
+    "underlyingApy": {
+      "type": "number",
+      "description": "APY of the underlying asset"
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "Implied APY of market"
+    },
+    "ytFloatingApy": {
+      "type": "number",
+      "description": "Floating APY for YT holders (underlyingApy - impliedApy)"
+    },
+    "swapFeeApy": {
+      "type": "number",
+      "description": "Swap fee APY for LP holders, without boosting"
+    },
+    "voterApy": {
+      "type": "number",
+      "description": "APY for voters (vePENDLE holders) from voting on this pool"
+    },
+    "ptDiscount": {
+      "type": "number",
+      "description": "PT discount relative to underlying asset"
+    },
+    "pendleApy": {
+      "type": "number",
+      "description": "APY from Pendle rewards"
+    },
+    "arbApy": {
+      "type": "number",
+      "description": "APY from arbitrage opportunities"
+    },
+    "lpRewardApy": {
+      "type": "number",
+      "description": "APY from LP reward tokens"
+    },
+    "aggregatedApy": {
+      "type": "number",
+      "description": "APY including yield, swap fee and Pendle rewards without boosting"
+    },
+    "maxBoostedApy": {
+      "type": "number",
+      "description": "APY when maximum boost is applied"
+    },
+    "estimatedDailyPoolRewards": {
+      "description": "Estimated daily pool rewards broken down by asset",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/EstimatedDailyPoolRewardResponse"
+      }
+    },
+    "totalPt": {
+      "type": "number",
+      "description": "Total PT in the market"
+    },
+    "totalSy": {
+      "type": "number",
+      "description": "Total SY in the market"
+    },
+    "totalLp": {
+      "type": "number",
+      "description": "Total supply of the LP token"
+    },
+    "totalActiveSupply": {
+      "type": "number",
+      "description": "Total active supply of the LP token, used for calculate boosting"
+    },
+    "assetPriceUsd": {
+      "type": "number",
+      "description": "Price of the accounting asset in USD"
+    }
+  },
+  "required": [
+    "timestamp",
+    "liquidity",
+    "tradingVolume",
+    "underlyingInterestApy",
+    "underlyingRewardApy",
+    "underlyingApy",
+    "impliedApy",
+    "ytFloatingApy",
+    "swapFeeApy",
+    "voterApy",
+    "ptDiscount",
+    "pendleApy",
+    "lpRewardApy",
+    "aggregatedApy",
+    "maxBoostedApy",
+    "estimatedDailyPoolRewards",
+    "totalPt",
+    "totalSy",
+    "totalLp",
+    "totalActiveSupply",
+    "assetPriceUsd"
+  ]
+}

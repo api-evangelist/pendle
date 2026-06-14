@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GenerateScaledOrderDataDto",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number",
+      "description": "Chain Id"
+    },
+    "YT": {
+      "type": "string",
+      "description": "YT address"
+    },
+    "orderType": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+    },
+    "token": {
+      "type": "string",
+      "description": "Input token if type is TOKEN_FOR_PT or TOKEN_FOR_YT, output token otherwise"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Maker address"
+    },
+    "makingAmount": {
+      "type": "string",
+      "description": "BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT"
+    },
+    "lowerImpliedApy": {
+      "type": "number",
+      "description": "Lower implied APY of this scaled order"
+    },
+    "upperImpliedApy": {
+      "type": "number",
+      "description": "Upper implied APY of this scaled order"
+    },
+    "orderCount": {
+      "type": "number",
+      "description": "Upper implied APY of this scaled order"
+    },
+    "sizeDistribution": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "ascending",
+        "descending"
+      ],
+      "description": "Scaled Order Distribution Type {  }"
+    },
+    "expiry": {
+      "type": "string",
+      "description": "Timestamp of order's expiry, in seconds"
+    }
+  },
+  "required": [
+    "chainId",
+    "YT",
+    "orderType",
+    "token",
+    "maker",
+    "makingAmount",
+    "lowerImpliedApy",
+    "upperImpliedApy",
+    "orderCount",
+    "sizeDistribution",
+    "expiry"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SolanaTokenResponse",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "properties": {
+      "$ref": "#/components/schemas/SolanaTokenPropertiesResponse"
+    }
+  },
+  "required": [
+    "name",
+    "symbol",
+    "description",
+    "image",
+    "attributes",
+    "properties"
+  ]
+}

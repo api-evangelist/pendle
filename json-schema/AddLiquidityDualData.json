@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AddLiquidityDualData",
+  "type": "object",
+  "properties": {
+    "amountOut": {
+      "type": "string"
+    },
+    "amountTokenUsed": {
+      "type": "string"
+    },
+    "amountPtUsed": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    }
+  },
+  "required": [
+    "amountOut",
+    "amountTokenUsed",
+    "amountPtUsed",
+    "priceImpact",
+    "priceImpactBreakDown"
+  ]
+}

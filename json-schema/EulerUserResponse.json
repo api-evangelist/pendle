@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EulerUserResponse",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "Euler user address"
+    },
+    "subAccount": {
+      "type": "string",
+      "description": "Euler sub account address"
+    },
+    "asset": {
+      "type": "string",
+      "description": "Euler vault address"
+    }
+  },
+  "required": [
+    "user",
+    "subAccount",
+    "asset"
+  ]
+}

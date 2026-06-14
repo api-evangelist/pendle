@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VePendleApyChartDataPoint",
+  "type": "object",
+  "properties": {
+    "time": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "vePendleBaseApy": {
+      "type": "number"
+    },
+    "vePendleMaxApy": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "time",
+    "vePendleBaseApy",
+    "vePendleMaxApy"
+  ]
+}

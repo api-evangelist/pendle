@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetAssetsResponse",
+  "type": "object",
+  "properties": {
+    "assets": {
+      "description": "list of assets",
+      "example": [
+        {
+          "name": "PT FRAX-USDC",
+          "decimals": 18,
+          "address": "0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650",
+          "symbol": "PT-FRAXUSDC_CurveLP Convex-30MAR2023",
+          "tags": [
+            "PT"
+          ],
+          "expiry": "2023-03-30T00:00:00.000Z",
+          "proIcon": "https://storage.googleapis.com/prod-pendle-bucket-a/images/assets/pro/acad6337-8ce4-47c2-87a7-c270aab01b3d.svg"
+        },
+        {
+          "name": "YT FRAX-USDC",
+          "decimals": 18,
+          "address": "0xc5cd692e9b4622ab8cdb57c83a0f99f874a169cd",
+          "symbol": "YT-FRAXUSDC_CurveLP Convex-30MAR2023",
+          "tags": [
+            "YT"
+          ],
+          "expiry": "2023-03-30T00:00:00.000Z",
+          "proIcon": "https://storage.googleapis.com/prod-pendle-bucket-a/images/assets/pro/2239e536-439d-4c58-a417-805fb63c7ced.svg"
+        }
+      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetData"
+      }
+    }
+  },
+  "required": [
+    "assets"
+  ]
+}

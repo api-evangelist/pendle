@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PoolResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "expiry": {
+      "type": "string"
+    },
+    "protocol": {
+      "type": "string",
+      "nullable": true
+    },
+    "underlyingPool": {
+      "type": "string",
+      "nullable": true
+    },
+    "voterApy": {
+      "type": "number"
+    },
+    "accentColor": {
+      "type": "string",
+      "nullable": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "farmSimpleName": {
+      "type": "string"
+    },
+    "farmSimpleIcon": {
+      "type": "string"
+    },
+    "farmProName": {
+      "type": "string"
+    },
+    "farmProIcon": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "address",
+    "symbol",
+    "expiry",
+    "voterApy",
+    "name",
+    "farmSimpleName",
+    "farmSimpleIcon",
+    "farmProName",
+    "farmProIcon"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChainIdsResponse",
+  "type": "object",
+  "properties": {
+    "chainIds": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "chainIds"
+  ]
+}

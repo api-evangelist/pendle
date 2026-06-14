@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketHistoricalDataPoint",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp in ISO format"
+    },
+    "maxApy": {
+      "type": "number",
+      "description": "APY when maximum boost is applied"
+    },
+    "baseApy": {
+      "type": "number",
+      "description": "APY including yield, swap fee and Pendle rewards without boosting"
+    },
+    "underlyingApy": {
+      "type": "number",
+      "description": "APY of the underlying asset"
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "Implied APY of market"
+    },
+    "tvl": {
+      "type": "number",
+      "description": "Market liquidity (TVL in the pool) in USD"
+    },
+    "totalTvl": {
+      "type": "number",
+      "description": "Market total TVL (including floating PT that are not in the AMM) in USD"
+    },
+    "underlyingInterestApy": {
+      "type": "number",
+      "description": "Annual percentage yield from the underlying asset interest"
+    },
+    "underlyingRewardApy": {
+      "type": "number",
+      "description": "Annual percentage yield from the underlying asset rewards"
+    },
+    "ytFloatingApy": {
+      "type": "number",
+      "description": "Floating APY for YT holders (underlyingApy - impliedApy)"
+    },
+    "swapFeeApy": {
+      "type": "number",
+      "description": "Swap fee APY for LP holders, without boosting"
+    },
+    "voterApr": {
+      "type": "number",
+      "description": "APY for voters (vePENDLE holders) from voting on this pool"
+    },
+    "pendleApy": {
+      "type": "number",
+      "description": "APY from Pendle rewards"
+    },
+    "lpRewardApy": {
+      "type": "number",
+      "description": "APY from LP reward tokens"
+    },
+    "totalPt": {
+      "type": "number",
+      "description": "Total PT in the market"
+    },
+    "totalSy": {
+      "type": "number",
+      "description": "Total SY in the market"
+    },
+    "totalSupply": {
+      "type": "number",
+      "description": "Total supply of the LP token"
+    },
+    "ptPrice": {
+      "type": "number",
+      "description": "PT price in USD"
+    },
+    "ytPrice": {
+      "type": "number",
+      "description": "YT price in USD"
+    },
+    "syPrice": {
+      "type": "number",
+      "description": "SY price in USD"
+    },
+    "lpPrice": {
+      "type": "number",
+      "description": "LP price in USD"
+    },
+    "lastEpochVotes": {
+      "type": "number",
+      "description": "Last epoch votes"
+    },
+    "tradingVolume": {
+      "type": "number",
+      "description": "24h trading volume in USD"
+    },
+    "explicitSwapFee": {
+      "type": "number",
+      "description": "Explicit swap fee in USD (only available for daily and weekly timeframes)"
+    },
+    "implicitSwapFee": {
+      "type": "number",
+      "description": "Implicit swap fee in USD (only available for daily and weekly timeframes)"
+    },
+    "limitOrderFee": {
+      "type": "number",
+      "description": "Limit order fee in USD (only available for daily and weekly timeframes)"
+    }
+  },
+  "required": [
+    "timestamp"
+  ]
+}

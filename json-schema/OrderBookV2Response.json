@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderBookV2Response",
+  "type": "object",
+  "properties": {
+    "longYieldEntries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OrderBookV2EntryResponse"
+      }
+    },
+    "shortYieldEntries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OrderBookV2EntryResponse"
+      }
+    }
+  },
+  "required": [
+    "longYieldEntries",
+    "shortYieldEntries"
+  ]
+}

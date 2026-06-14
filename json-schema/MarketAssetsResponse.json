@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketAssetsResponse",
+  "type": "object",
+  "properties": {
+    "pt": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "yt": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "sy": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "lp": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "accountingAsset": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "underlyingAsset": {
+      "$ref": "#/components/schemas/AssetResponse"
+    },
+    "basePricingAsset": {
+      "description": "Same as accountingAsset",
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "rewardTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    },
+    "inputTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    },
+    "outputTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    }
+  },
+  "required": [
+    "pt",
+    "yt",
+    "sy",
+    "lp",
+    "accountingAsset",
+    "underlyingAsset",
+    "basePricingAsset",
+    "rewardTokens",
+    "inputTokens",
+    "outputTokens"
+  ]
+}

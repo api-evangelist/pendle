@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetAllRelatedInfoFromLpAndWlpResponse",
+  "type": "object",
+  "properties": {
+    "distinctUsers": {
+      "description": "Distinct users for the LP token",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "liquidLockerPools": {
+      "description": "Liquid locker pools info for LP token",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LiquidLockerPoolResponse"
+      }
+    },
+    "wlpDistinctUsersResponse": {
+      "description": "WLP users and related info for WLP token, only available for wrapped market",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/WlpDistinctUsersResponse"
+        }
+      ]
+    },
+    "wlpHolderMappings": {
+      "description": "WLP holder mappings for WLP token",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/WlpHolderMappingResponse"
+      }
+    }
+  },
+  "required": [
+    "distinctUsers",
+    "liquidLockerPools",
+    "wlpDistinctUsersResponse",
+    "wlpHolderMappings"
+  ]
+}

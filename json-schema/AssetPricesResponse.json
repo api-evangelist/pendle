@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssetPricesResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number",
+      "description": "The number of assets returned"
+    },
+    "addresses": {
+      "description": "Addresses of returned assets, can be mapped by index with priceUsd array",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pricesUsd": {
+      "type": "array",
+      "description": "Price in usd of mapped asset, can be mapped by index with addresses array, return null if the asset doesnt have price",
+      "example": [
+        1,
+        2,
+        null,
+        4
+      ],
+      "items": {
+        "type": "number",
+        "nullable": true
+      }
+    }
+  },
+  "required": [
+    "total",
+    "addresses",
+    "pricesUsd"
+  ]
+}

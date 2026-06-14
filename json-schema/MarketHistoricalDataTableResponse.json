@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketHistoricalDataTableResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number"
+    },
+    "timestamp_start": {
+      "type": "number"
+    },
+    "timestamp_end": {
+      "type": "number"
+    },
+    "timestamp": {
+      "description": "Array of timestamp in second",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "maxApy": {
+      "description": "Array of maxApy. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "baseApy": {
+      "description": "Array of baseApy. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "underlyingApy": {
+      "description": "Array of underlyingApy. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "impliedApy": {
+      "description": "Array of impliedApy. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "tvl": {
+      "description": "Array of tvl (market liquidity in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "totalTvl": {
+      "description": "Array of total TVL (in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "underlyingInterestApy": {
+      "description": "Array of underlying interest APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "underlyingRewardApy": {
+      "description": "Array of underlying reward APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "ytFloatingApy": {
+      "description": "Array of YT floating APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "swapFeeApy": {
+      "description": "Array of swap fee APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "voterApr": {
+      "description": "Array of voter APR. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "pendleApy": {
+      "description": "Array of PENDLE APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "lpRewardApy": {
+      "description": "Array of LP reward APY. 0.5 means 50%",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "totalPt": {
+      "description": "Array of total PT amount",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "totalSy": {
+      "description": "Array of total SY amount",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "totalSupply": {
+      "description": "Array of total LP supply",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "ptPrice": {
+      "description": "Array of PT price (in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "ytPrice": {
+      "description": "Array of YT price (in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "syPrice": {
+      "description": "Array of SY price (in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "lpPrice": {
+      "description": "Array of LP price (in USD)",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "lastEpochVotes": {
+      "description": "Array of last epoch votes",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "explicitSwapFee": {
+      "description": "Array of explicit swap fee (in USD). Only available for daily and weekly timeframes",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "implicitSwapFee": {
+      "description": "Array of implicit swap fee (in USD). Only available for daily and weekly timeframes",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "limitOrderFee": {
+      "description": "Array of limit order fee (in USD). Only available for daily and weekly timeframes",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "total",
+    "timestamp_start",
+    "timestamp_end",
+    "timestamp"
+  ]
+}

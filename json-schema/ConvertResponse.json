@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConvertResponse",
+  "type": "object",
+  "properties": {
+    "contractParamInfo": {
+      "description": "Contract params info",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ContractParamInfo"
+        }
+      ]
+    },
+    "tx": {
+      "description": "Transaction data",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/TransactionDto"
+        }
+      ]
+    },
+    "outputs": {
+      "description": "Output token amounts from the action",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenAmountResponse"
+      }
+    },
+    "data": {
+      "$ref": "#/components/schemas/ConvertData"
+    }
+  },
+  "required": [
+    "contractParamInfo",
+    "tx",
+    "outputs",
+    "data"
+  ]
+}

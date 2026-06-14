@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VoteV2Response",
+  "type": "object",
+  "properties": {
+    "votes": {
+      "type": "number",
+      "description": "Absolute number of votes"
+    },
+    "percentage": {
+      "type": "number",
+      "description": "Percentage of total votes"
+    }
+  },
+  "required": [
+    "votes",
+    "percentage"
+  ]
+}

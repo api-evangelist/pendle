@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetDistinctUsersFromTokenEntity",
+  "type": "object",
+  "properties": {
+    "users": {
+      "description": "Array of unique wallet addresses (lowercase) that have interacted with the specified token. Addresses are deduplicated across both Sentio and internal data sources.",
+      "example": [
+        "0x1234567890123456789012345678901234567890",
+        "0x0987654321098765432109876543210987654321",
+        "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+      ],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "users"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ApyBreakdownResponse",
+  "type": "object",
+  "properties": {
+    "asset": {
+      "$ref": "#/components/schemas/AssetBasicResponse"
+    },
+    "absoluteApy": {
+      "type": "number"
+    },
+    "relativeApy": {
+      "type": "number"
+    },
+    "ytExclusive": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "lpExclusive": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "CONTRACT",
+        "EXTERNAL_REWARD",
+        "PORTAL_INCENTIVE",
+        "PENDLE_CO_BRIBE",
+        "PLASMA_INCENTIVE"
+      ],
+      "nullable": true
+    }
+  },
+  "required": [
+    "asset",
+    "absoluteApy",
+    "relativeApy"
+  ]
+}

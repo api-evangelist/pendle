@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetSafePendleAddressesResponse",
+  "type": "object",
+  "properties": {
+    "sys": {
+      "description": "list of safe SY addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pts": {
+      "description": "list of safe PT addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "yts": {
+      "description": "list of safe YT addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "sys",
+    "pts",
+    "yts"
+  ]
+}

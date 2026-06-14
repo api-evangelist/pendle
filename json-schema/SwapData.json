@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SwapData",
+  "type": "object",
+  "properties": {
+    "amountOut": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    },
+    "impliedApy": {
+      "$ref": "#/components/schemas/ImpliedApy"
+    },
+    "effectiveApy": {
+      "type": "number"
+    },
+    "fee": {
+      "description": "Fee in USD",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/FeeUsd"
+        }
+      ]
+    }
+  },
+  "required": [
+    "amountOut",
+    "priceImpact",
+    "priceImpactBreakDown",
+    "fee"
+  ]
+}

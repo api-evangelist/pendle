@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MerkleProofResponse",
+  "type": "object",
+  "properties": {
+    "proof": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accruedAmount": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "verifyCallData": {
+      "type": "string",
+      "description": "Calldata to verify the proof"
+    },
+    "merkleRoot": {
+      "type": "string",
+      "description": "Merkle root hash of the merkle tree"
+    }
+  },
+  "required": [
+    "proof",
+    "accruedAmount",
+    "updatedAt",
+    "merkleRoot"
+  ]
+}

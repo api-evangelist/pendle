@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CrossChainPtData",
+  "type": "object",
+  "properties": {
+    "spokePt": {
+      "type": "string",
+      "description": "spoke pt address"
+    },
+    "hubPt": {
+      "type": "string",
+      "description": "hub pt address"
+    },
+    "hubChainId": {
+      "type": "number",
+      "description": "hub chain id"
+    }
+  },
+  "required": [
+    "spokePt",
+    "hubPt",
+    "hubChainId"
+  ]
+}

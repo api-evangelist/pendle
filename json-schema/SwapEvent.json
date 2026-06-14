@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SwapEvent",
+  "type": "object",
+  "properties": {
+    "block": {
+      "description": "Block data",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BlockEntity"
+        }
+      ]
+    },
+    "txnId": {
+      "type": "string",
+      "description": "Transaction hash"
+    },
+    "txnIndex": {
+      "type": "number",
+      "description": "Transaction index"
+    },
+    "eventIndex": {
+      "type": "number",
+      "description": "Event index"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Transaction maker"
+    },
+    "pairId": {
+      "type": "string",
+      "description": "Pair ID"
+    },
+    "reserves": {
+      "description": "Reserves after the swap",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Reserves"
+        }
+      ]
+    },
+    "eventType": {
+      "type": "string",
+      "description": "Type of event",
+      "enum": [
+        "swap",
+        "join",
+        "exit"
+      ],
+      "example": "swap"
+    },
+    "asset0In": {
+      "type": "string",
+      "description": "Amount of token0 in"
+    },
+    "asset1In": {
+      "type": "string",
+      "description": "Amount of token1 in"
+    },
+    "asset0Out": {
+      "type": "string",
+      "description": "Amount of token0 out"
+    },
+    "asset1Out": {
+      "type": "string",
+      "description": "Amount of token1 out"
+    },
+    "priceNative": {
+      "type": "string",
+      "description": "Price of asset0 quoted in asset1"
+    }
+  },
+  "required": [
+    "block",
+    "txnId",
+    "txnIndex",
+    "eventIndex",
+    "maker",
+    "pairId",
+    "reserves",
+    "eventType",
+    "asset0In",
+    "asset1In",
+    "asset0Out",
+    "asset1Out",
+    "priceNative"
+  ]
+}

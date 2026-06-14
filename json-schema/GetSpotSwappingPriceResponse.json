@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetSpotSwappingPriceResponse",
+  "type": "object",
+  "properties": {
+    "underlyingToken": {
+      "type": "string",
+      "description": "underlying token address that will be used for swapping"
+    },
+    "underlyingTokenToPtRate": {
+      "type": "object",
+      "description": "number of PT by swapping 1 underlying token. If the swap can not be done, this value will be null",
+      "nullable": true
+    },
+    "ptToUnderlyingTokenRate": {
+      "type": "object",
+      "description": "number of underlying token by swapping 1 PT. If the swap can not be done, this value will be null",
+      "nullable": true
+    },
+    "underlyingTokenToYtRate": {
+      "type": "object",
+      "description": "number of YT by swapping 1 underlying token. If the swap can not be done, this value will be null",
+      "nullable": true
+    },
+    "ytToUnderlyingTokenRate": {
+      "type": "object",
+      "description": "number of underlying token by swapping 1 YT. If the swap can not be done, this value will be null",
+      "nullable": true
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "implied apy of the given market"
+    }
+  },
+  "required": [
+    "underlyingToken",
+    "underlyingTokenToPtRate",
+    "ptToUnderlyingTokenRate",
+    "underlyingTokenToYtRate",
+    "ytToUnderlyingTokenRate",
+    "impliedApy"
+  ]
+}

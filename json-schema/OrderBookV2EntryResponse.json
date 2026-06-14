@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderBookV2EntryResponse",
+  "type": "object",
+  "properties": {
+    "impliedApy": {
+      "type": "number",
+      "description": "Order's implied apy, rounded to precision"
+    },
+    "limitOrderSize": {
+      "format": "int64",
+      "type": "integer",
+      "description": "Bigint string of entry size, in PT/YT amounts to fill this entry"
+    },
+    "ammSize": {
+      "format": "int64",
+      "type": "integer",
+      "description": "Bigint string of entry size, in AMM LP tokens (if applicable)"
+    }
+  },
+  "required": [
+    "impliedApy",
+    "limitOrderSize"
+  ]
+}

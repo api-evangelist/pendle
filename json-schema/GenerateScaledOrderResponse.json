@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GenerateScaledOrderResponse",
+  "type": "object",
+  "properties": {
+    "orders": {
+      "description": "List of generated limit orders",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GenerateLimitOrderDataResponse"
+      }
+    }
+  },
+  "required": [
+    "orders"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketImpliedApyDataPoint",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "number"
+    },
+    "impliedApy": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "timestamp",
+    "impliedApy"
+  ]
+}

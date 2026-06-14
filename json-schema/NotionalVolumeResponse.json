@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NotionalVolumeResponse",
+  "type": "object",
+  "properties": {
+    "timestamps": {
+      "description": "List of timestamps, each will be mapped to a notional volume",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "volumes": {
+      "description": "List of notional volumes corresponding to each timestamp. It has the same length with timestamps array",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "ammVolumes": {
+      "description": "List of AMM volumes corresponding to each timestamp. It has the same length with timestamps array. Defaults to 0 if not available.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "limitOrderVolumes": {
+      "description": "List of Limit Order volumes corresponding to each timestamp. It has the same length with timestamps array. Defaults to 0 if not available.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "timestamps",
+    "volumes",
+    "ammVolumes",
+    "limitOrderVolumes"
+  ]
+}

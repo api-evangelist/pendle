@@ -1,0 +1,14 @@
+{
+  "operationId": "PricesController_ohlcv_v4",
+  "method": "get",
+  "path": "/v4/{chainId}/prices/{address}/ohlcv",
+  "status": "200",
+  "example": {
+    "total": 1,
+    "currency": "USD",
+    "timeFrame": "hour",
+    "timestamp_start": 1756245600,
+    "timestamp_end": 1756245600,
+    "results": "time,open,high,low,close,volume\n1756245600,42.4563,42.4563,42.4563,42.4563,0.0000"
+  }
+}

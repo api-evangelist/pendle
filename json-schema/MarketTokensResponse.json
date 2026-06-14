@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketTokensResponse",
+  "type": "object",
+  "properties": {
+    "tokensMintSy": {
+      "description": "tokens can be use for tokenMintSy",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokensRedeemSy": {
+      "description": "tokens can be use for tokenRedeemSy",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokensIn": {
+      "description": "input tokens of swap or zap function",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokensOut": {
+      "description": "output tokens of swap or zap function",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "tokensMintSy",
+    "tokensRedeemSy",
+    "tokensIn",
+    "tokensOut"
+  ]
+}

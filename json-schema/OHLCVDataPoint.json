@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OHLCVDataPoint",
+  "type": "object",
+  "properties": {
+    "time": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp of the OHLCV data point"
+    },
+    "open": {
+      "type": "number",
+      "description": "Opening price at the start of the time period"
+    },
+    "high": {
+      "type": "number",
+      "description": "Highest price during the time period"
+    },
+    "low": {
+      "type": "number",
+      "description": "Lowest price during the time period"
+    },
+    "close": {
+      "type": "number",
+      "description": "Closing price at the end of the time period"
+    },
+    "volume": {
+      "type": "number",
+      "description": "Trading volume during the time period"
+    }
+  },
+  "required": [
+    "time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume"
+  ]
+}

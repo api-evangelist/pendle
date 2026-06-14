@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketExtendedInfoResponse",
+  "type": "object",
+  "properties": {
+    "floatingPt": {
+      "type": "number"
+    },
+    "floatingSy": {
+      "type": "number"
+    },
+    "sySupplyCap": {
+      "type": "number",
+      "description": "Sy supply cap. Only available for sy with cap, otherwise null. Number is in decimal format",
+      "nullable": true
+    },
+    "syCurrentSupply": {
+      "type": "number",
+      "description": "Sy current supply. Only available for sy with cap, otherwise null. Number is in decimal format",
+      "nullable": true
+    },
+    "pyUnit": {
+      "type": "string"
+    },
+    "ptEqualsPyUnit": {
+      "type": "boolean"
+    },
+    "underlyingAssetWorthMore": {
+      "type": "string"
+    },
+    "nativeWithdrawalURL": {
+      "type": "string"
+    },
+    "nativeDepositURL": {
+      "type": "string"
+    },
+    "defaultMigratePool": {
+      "type": "string"
+    },
+    "feeRate": {
+      "type": "number"
+    },
+    "yieldRange": {
+      "$ref": "#/components/schemas/YieldRangeResponse"
+    }
+  },
+  "required": [
+    "floatingPt",
+    "floatingSy",
+    "pyUnit",
+    "ptEqualsPyUnit"
+  ]
+}

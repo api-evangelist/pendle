@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetAllCrossPtsResponse",
+  "type": "object",
+  "properties": {
+    "result": {
+      "description": "Data",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PtCrossChainData"
+      }
+    }
+  },
+  "required": [
+    "result"
+  ]
+}

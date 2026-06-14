@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LimitOrderResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Hash of the order"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Signature of order, signed by maker"
+    },
+    "chainId": {
+      "type": "number",
+      "description": "Chain id"
+    },
+    "salt": {
+      "type": "string",
+      "description": "BigInt string of salt. Salt is a random generated number to distinguish between orders.Because of some technical reason, this number must be dividable by 12421"
+    },
+    "expiry": {
+      "type": "string",
+      "description": "BigInt string of expiry, in second"
+    },
+    "nonce": {
+      "type": "string",
+      "description": "BigInt string of nonce"
+    },
+    "type": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+    },
+    "token": {
+      "type": "string",
+      "description": "Token used by user to make order"
+    },
+    "yt": {
+      "type": "string",
+      "description": "YT address"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Maker address"
+    },
+    "receiver": {
+      "type": "string",
+      "description": "Receiver address"
+    },
+    "makingAmount": {
+      "type": "string",
+      "description": "BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT"
+    },
+    "currentMakingAmount": {
+      "type": "string",
+      "description": "BigInt string of remaining making amount, the unit is the same as makingAmount"
+    },
+    "lnImpliedRate": {
+      "type": "string",
+      "description": "BigInt string of lnImpliedRate. Natural logarithm of the implied rate"
+    },
+    "failSafeRate": {
+      "type": "string",
+      "description": "BigInt string of failSafeRate"
+    },
+    "permit": {
+      "type": "string",
+      "description": "Bytes string for permit"
+    },
+    "orderFilledStatus": {
+      "description": "Order filled status",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/OrderFilledStatusResponse"
+        }
+      ]
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "isCanceled": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "orderState": {
+      "description": "Order state",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/OrderStateResponse"
+        }
+      ]
+    },
+    "fullyExecutedTimestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Fully filled timestamp"
+    },
+    "canceledTimestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Canceled timestamp"
+    },
+    "latestEventTimestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp of latest event"
+    },
+    "sy": {
+      "type": "string",
+      "description": "SY address"
+    },
+    "pt": {
+      "type": "string",
+      "description": "PT address"
+    },
+    "makerBalance": {
+      "type": "string",
+      "description": "Min(maker balance, maker allowance). How much token the maker has available to use for this order"
+    },
+    "failedMintSy": {
+      "type": "boolean",
+      "description": "Simulate result of the order to mint sy"
+    },
+    "failedMintSyReason": {
+      "type": "string",
+      "description": "Error reason of the order to mint sy"
+    },
+    "orderBookBalance": {
+      "type": "string",
+      "description": "Bigint string of amount shown on order book"
+    },
+    "makingToken": {
+      "type": "string",
+      "description": "Making token address"
+    },
+    "takingToken": {
+      "type": "string",
+      "description": "Taking token address"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "FILLABLE",
+        "PARTIAL_FILLABLE",
+        "FAILED_TRANSFER_TOKEN",
+        "EMPTY_MAKER_BALANCE",
+        "CANCELLED",
+        "FULLY_FILLED",
+        "EXPIRED"
+      ],
+      "description": "LimitOrderStatus"
+    }
+  },
+  "required": [
+    "id",
+    "signature",
+    "chainId",
+    "salt",
+    "expiry",
+    "nonce",
+    "type",
+    "token",
+    "yt",
+    "maker",
+    "receiver",
+    "makingAmount",
+    "currentMakingAmount",
+    "lnImpliedRate",
+    "failSafeRate",
+    "permit",
+    "orderFilledStatus",
+    "isActive",
+    "isCanceled",
+    "createdAt",
+    "sy",
+    "pt",
+    "makerBalance",
+    "failedMintSy",
+    "failedMintSyReason",
+    "orderBookBalance",
+    "makingToken",
+    "takingToken",
+    "status"
+  ]
+}

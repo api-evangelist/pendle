@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketDetailsV2Entity",
+  "type": "object",
+  "properties": {
+    "liquidity": {
+      "type": "number",
+      "description": "market liquidity in USD, this is the liquidity of PT and SY in the AMM",
+      "example": 1234567.89
+    },
+    "totalTvl": {
+      "type": "number",
+      "description": "market total TVL (including floating PT that are not in the AMM) in USD",
+      "example": 1234567.89
+    },
+    "tradingVolume": {
+      "type": "number",
+      "description": "market 24h trading volume in USD",
+      "example": 1234567.89
+    },
+    "underlyingApy": {
+      "type": "number",
+      "description": "APY of the underlying asset",
+      "example": 0.01
+    },
+    "swapFeeApy": {
+      "type": "number",
+      "description": "swap fee APY for LP holders, without boosting",
+      "example": 0.01
+    },
+    "pendleApy": {
+      "type": "number",
+      "description": "APY from Pendle rewards",
+      "example": 0.456
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "implied APY of market",
+      "example": 0.123
+    },
+    "feeRate": {
+      "type": "number",
+      "description": "market fee rate",
+      "example": 0.003
+    },
+    "yieldRange": {
+      "description": "Historical implied APY range for this market",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/YieldRangeResponse"
+        }
+      ]
+    },
+    "aggregatedApy": {
+      "type": "number",
+      "description": "APY including yield, swap fee and Pendle rewards without boosting",
+      "example": 0.123
+    },
+    "maxBoostedApy": {
+      "type": "number",
+      "description": "APY when maximum boost is applies",
+      "example": 0.123
+    },
+    "totalPt": {
+      "type": "number",
+      "description": "total PT in the market",
+      "example": 1234567.89
+    },
+    "totalSy": {
+      "type": "number",
+      "description": "total SY in the market",
+      "example": 1234567.89
+    },
+    "totalSupply": {
+      "type": "number",
+      "description": "total supply of the LP token",
+      "example": 1234567.89
+    },
+    "totalActiveSupply": {
+      "type": "number",
+      "description": "total active supply of the LP token, used for calculate boosting",
+      "example": 1234567.89
+    }
+  },
+  "required": [
+    "liquidity",
+    "totalTvl",
+    "tradingVolume",
+    "underlyingApy",
+    "swapFeeApy",
+    "pendleApy",
+    "impliedApy",
+    "feeRate",
+    "yieldRange",
+    "aggregatedApy",
+    "maxBoostedApy",
+    "totalPt",
+    "totalSy",
+    "totalSupply",
+    "totalActiveSupply"
+  ]
+}

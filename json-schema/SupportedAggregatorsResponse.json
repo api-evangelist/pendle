@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SupportedAggregatorsResponse",
+  "type": "object",
+  "properties": {
+    "aggregators": {
+      "description": "List of supported aggregators with their computing units",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SupportedAggregator"
+      }
+    }
+  },
+  "required": [
+    "aggregators"
+  ]
+}

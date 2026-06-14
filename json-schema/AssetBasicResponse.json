@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssetBasicResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "decimals": {
+      "type": "number"
+    },
+    "expiry": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "accentColor": {
+      "type": "string",
+      "nullable": true
+    },
+    "price": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "priceUpdatedAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "address",
+    "symbol",
+    "decimals",
+    "name"
+  ]
+}

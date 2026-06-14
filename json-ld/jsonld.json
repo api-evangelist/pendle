@@ -1,0 +1,278 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "pendle": "https://pendle.finance/vocab/",
+    "openapi": "https://spec.openapis.org/oas/v3.0.0#",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dcterms": "http://purl.org/dc/terms/"
+  },
+  "@type": "WebAPI",
+  "@id": "https://pendle.finance/api/v2",
+  "name": "Pendle V2 API Docs",
+  "description": "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n",
+  "version": "1.0",
+  "url": "http://127.0.0.1:9000",
+  "documentation": "https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview",
+  "provider": {
+    "@type": "Organization",
+    "name": "Pendle Finance",
+    "url": "https://pendle.finance",
+    "sameAs": [
+      "https://github.com/pendle-finance",
+      "https://x.com/pendle_fi"
+    ]
+  },
+  "termsOfService": "",
+  "license": "",
+  "endpointDescription": [
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/limit-orders",
+      "httpMethod": "GET",
+      "name": "Get all limit orders for analytics",
+      "description": "This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully fill"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/limit-orders/archived",
+      "httpMethod": "GET",
+      "name": "Get all archived limit orders for analytics",
+      "description": "This have the same interface and usecase as the endpoint above, but it returns the archived orders\n\nWhen an order is not fillable anymore, we **might** archive it to save storage space, to fetch it, u"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/limit-orders/makers/limit-orders",
+      "httpMethod": "GET",
+      "name": "Get user limit orders in market",
+      "description": "Returns the active and historical limit orders placed by a specific user in a market. Supports richer filtering than the analytics endpoint (e.g. by YT, status, market).\n\nA user can have at most 50 op"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/limit-orders/makers/limit-orders",
+      "httpMethod": "POST",
+      "name": "Create limit order",
+      "description": "Submit a signed limit order to the Pendle order book. Once created, the order is visible to takers and will be filled against incoming swaps at or better than the specified implied APY.\n\nBefore callin"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/limit-orders/makers/generate-limit-order-data",
+      "httpMethod": "POST",
+      "name": "Generate limit order data for signing",
+      "description": "Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker's private key, then submit the order via [Create limit order](#tag/limit-orders/post/v1/limit-orders/ma"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/limit-orders/makers/generate-scaled-order-data",
+      "httpMethod": "POST",
+      "name": "Generate list of limit orders (scaled) for signing",
+      "description": "Generate a batch of limit orders spread across a price (implied APY) range for signing. Scaled orders distribute your total size across multiple price levels, providing better market depth than a sing"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/limit-orders/takers/limit-orders",
+      "httpMethod": "GET",
+      "name": "Get limit orders to match by YT address",
+      "description": "Returns the best-matching active limit orders for a given YT address, sorted by implied APY for efficient taker fill selection.\n\nThe response includes full order structs and maker signatures ready to "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/limit-orders/book/{chainId}",
+      "httpMethod": "GET",
+      "name": "Get order book v2",
+      "description": "Returns the consolidated order book for a market, aggregating both limit orders and AMM liquidity depth into a unified view.\n\nThe book is split into two sides:\n- **longYieldEntries**: available liquid"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/prices/assets",
+      "httpMethod": "GET",
+      "name": "Get asset prices (cross-chain)",
+      "description": "Returns USD prices for Pendle-supported tokens across all chains. Covers all token types in the Pendle app, including non-Pendle tokens (USDC, WETH, etc.) when they appear as underlying assets.\n\nPrice"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v4/{chainId}/prices/{address}/ohlcv",
+      "httpMethod": "GET",
+      "name": "Get PT / YT / LP historical price by address",
+      "description": "\nHistorical price data for PT / YT tokens / LP tokens. We do not support historical prices for **SY and non-Pendle tokens**.\n\nThe data is OHLCV data, returned in CSV format with open, high, low, close"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/assets/all",
+      "httpMethod": "GET",
+      "name": "Get all assets (cross-chain)",
+      "description": "Returns the flat list of all PT, YT, LP, and SY tokens supported in the Pendle app, across all chains.\n\nEach entry includes: name, symbol, contract address, decimals, expiry timestamp (for PT/YT), and"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/markets/all",
+      "httpMethod": "GET",
+      "name": "Get all markets (cross-chain)",
+      "description": "Returns the complete list of whitelisted Pendle markets across all supported chains with their metadata and current data.\n\nFilter by `chainId`, `isActive`, or `ids` (comma-separated market IDs in `cha"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/markets/points-market",
+      "httpMethod": "GET",
+      "name": "Get points markets",
+      "description": "Returns all active markets that have a points reward programme \u2014 markets where trading or providing liquidity earns points from the underlying protocol.\n\nThe response includes the points configuration"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/{chainId}/markets/{address}/data",
+      "httpMethod": "GET",
+      "name": "Get latest/historical market data by address",
+      "description": "Returns the latest or historical data snapshot for a given market.\n\nPass a `timestamp` query param (Unix seconds) to retrieve the market state at a specific point in time. Omit it for the current snap"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/{chainId}/markets/{address}/historical-data",
+      "httpMethod": "GET",
+      "name": "Get market time-series data by address",
+      "description": "\nReturns the time-series data for a given market. Useful to draw charts or do data analysis.\n\nThis endpoint supports field selection via the `fields` query parameter. \n\nTable below shows the available"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/ve-pendle/data",
+      "httpMethod": "GET",
+      "name": "Get vePendle statistics",
+      "description": "**Deprecated**: vePENDLE has been replaced by sPENDLE. This endpoint returns vePENDLE governance data and will not reflect the new sPENDLE staking system.\n\nReturns aggregate vePENDLE governance statis"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/ve-pendle/market-fees-chart",
+      "httpMethod": "GET",
+      "name": "Get market fees chart",
+      "description": "**Deprecated**: vePENDLE has been replaced by sPENDLE. The epoch-based fee distribution model no longer applies.\n\nReturns weekly trading fee revenue across all Pendle markets, grouped by voting epoch "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/markets/{market}/tokens",
+      "httpMethod": "GET",
+      "name": "Get supported tokens for market",
+      "description": "Returns the two sets of tokens relevant for a given market:\n\n- **SY input tokens**: tokens accepted by the SY wrapper for minting/redeeming (e.g. USDC for a USDC-based market).\n- **Zap tokens**: token"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/supported-aggregators",
+      "httpMethod": "GET",
+      "name": "Get supported aggregators for a chain",
+      "description": "Returns the list of DEX aggregators available on this chain for routing token swaps, along with the additional computing unit cost each one adds to SDK requests.\n\nUse this to decide which aggregators "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/markets/{market}/swapping-prices",
+      "httpMethod": "GET",
+      "name": "Get real-time PT/YT swap price of a market",
+      "description": "Return price by swapping  1 unit underlying token to PT/ YT, and 1 unit of PT/YT to the underlying token.\n\nOne unit is defined as 10**decimal. The result is updated every block.\n\nImplied APY of the ma"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/limit-order/cancel-single",
+      "httpMethod": "GET",
+      "name": "Cancel one single limit order by order hash",
+      "description": "Generate the transaction payload to cancel a specific limit order on-chain.\n\nPass the full signed order struct (from the original order creation) to identify which order to cancel. The order becomes i"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/limit-order/cancel-all",
+      "httpMethod": "GET",
+      "name": "Cancel all limit orders",
+      "description": "Generate the transaction payload to cancel all active limit orders for a user in a single on-chain call.\n\nThis works by incrementing the user's nonce on-chain, which invalidates all previously signed "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/redeem-interests-and-rewards",
+      "httpMethod": "GET",
+      "name": "Redeem rewards and interests from positions",
+      "description": "Generate a transaction payload to claim all accrued interest and incentive rewards across multiple positions in a single call.\n\nSpecify which positions to claim from by passing arrays of:\n- `sys`: SY "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/sdk/{chainId}/convert",
+      "httpMethod": "GET",
+      "name": "Universal convert function",
+      "description": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints \u2014 handling 21 "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v3/sdk/{chainId}/convert",
+      "httpMethod": "POST",
+      "name": "Universal convert function (recommended \u2014 POST body variant)",
+      "description": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints \u2014 handling 21 "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v2/sdk/{chainId}/swap-pt-cross-chain",
+      "httpMethod": "GET",
+      "name": "Swap PT using fixed price AMM for cross-chain operations",
+      "description": "Swap a bridged PT on a spoke chain back to a regular token using the fixed-price PT AMM.\n\nThis is specifically for **cross-chain PT redemption flows** where PT has been bridged to a non-primary chain."
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/sdk/{chainId}/cross-chain-pt-metadata/{pt}",
+      "httpMethod": "GET",
+      "name": "PT cross-chain metadata",
+      "description": "Returns metadata for a PT that has been bridged to a spoke chain, including maturity, underlying asset details, and fixed-price AMM parameters.\n\nUse this to verify that a bridged PT is supported on th"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v5/{chainId}/transactions/{address}",
+      "httpMethod": "GET",
+      "name": "Get market transactions by address",
+      "description": "Return transactions with: user action (long or short yield, add or remove liquidity), valuation, implied apy.\n\n**Pagination**: This endpoint supports cursor-based pagination using `resumeToken`. The r"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/statistics/get-distinct-user-from-token",
+      "httpMethod": "GET",
+      "name": "Get distinct users for a specific token",
+      "description": "Returns a list of unique wallet addresses that have interacted with a specific token across Pendle markets. \n\nUse the optional `chainId` parameter to filter results to a specific chain, or omit it to "
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/chains",
+      "httpMethod": "GET",
+      "name": "Get supported chain IDs",
+      "description": "Get supported chain IDs"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/dashboard/positions/database/{user}",
+      "httpMethod": "GET",
+      "name": "Get user positions by address",
+      "description": "Returns a complete snapshot of a user's Pendle positions across all supported chains, including PT, YT, LP, and SY holdings.\n\nFor each position the response includes token amounts, USD valuations, and"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/dashboard/merkle-claimed-rewards/{user}",
+      "httpMethod": "GET",
+      "name": "Get all merkle claimed rewards for a user",
+      "description": "Returns the historical record of all merkle rewards that a user has already claimed.\n\nUseful for displaying claim history in a dashboard or verifying that a specific reward distribution has been colle"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/pnl/transactions",
+      "httpMethod": "GET",
+      "name": "Get user transaction history",
+      "description": "Returns the on-chain transaction history for a user address across all Pendle operations.\n\nResults are paginated. Use the `resumeToken` from the response to fetch the next page.\n\nData may lag chain ti"
+    },
+    {
+      "@type": "EntryPoint",
+      "urlTemplate": "http://127.0.0.1:9000/v1/pendle-emission",
+      "httpMethod": "GET",
+      "name": "Get Pendle Emission",
+      "description": "Returns the latest confirmed PENDLE emission across all eligible markets. Each market includes a breakdown of emission by TVL, fee, discretionary, and co-bribing components."
+    }
+  ],
+  "keywords": [
+    "DeFi",
+    "Yield Tokenization",
+    "Principal Tokens",
+    "Yield Tokens",
+    "AMM",
+    "Liquidity Pools",
+    "Crypto",
+    "Web3",
+    "Cross-Chain"
+  ]
+}

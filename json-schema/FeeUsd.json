@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FeeUsd",
+  "type": "object",
+  "properties": {
+    "usd": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "usd"
+  ]
+}

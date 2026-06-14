@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IntegrationEventResponse",
+  "type": "object",
+  "properties": {
+    "events": {
+      "description": "List of events",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SwapEvent"
+          },
+          {
+            "$ref": "#/components/schemas/JoinExitEvent"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "events"
+  ]
+}

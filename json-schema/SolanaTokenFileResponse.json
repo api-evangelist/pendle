@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SolanaTokenFileResponse",
+  "type": "object",
+  "properties": {
+    "uri": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "uri",
+    "type"
+  ]
+}

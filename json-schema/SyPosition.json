@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SyPosition",
+  "type": "object",
+  "properties": {
+    "syId": {
+      "type": "string",
+      "description": "Unique identifier of the market",
+      "example": "1-0xabc"
+    },
+    "balance": {
+      "type": "string",
+      "description": "Sy token (SY) balance in wei",
+      "example": "1000000000000000000"
+    },
+    "claimTokenAmounts": {
+      "description": "Array of claimable rewards",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClaimTokenAmount"
+      }
+    }
+  },
+  "required": [
+    "syId",
+    "balance"
+  ]
+}

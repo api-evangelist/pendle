@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RemoveLiquidityDualData",
+  "type": "object",
+  "properties": {
+    "amountTokenOut": {
+      "type": "string"
+    },
+    "amountPtOut": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    }
+  },
+  "required": [
+    "amountTokenOut",
+    "amountPtOut",
+    "priceImpact",
+    "priceImpactBreakDown"
+  ]
+}

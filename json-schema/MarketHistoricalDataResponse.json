@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketHistoricalDataResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number",
+      "description": "Total number of data points available"
+    },
+    "timestamp_start": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Start timestamp of the data range"
+    },
+    "timestamp_end": {
+      "format": "date-time",
+      "type": "string",
+      "description": "End timestamp of the data range"
+    },
+    "results": {
+      "description": "Array of historical data points",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MarketHistoricalDataPoint"
+      }
+    }
+  },
+  "required": [
+    "total",
+    "timestamp_start",
+    "timestamp_end",
+    "results"
+  ]
+}

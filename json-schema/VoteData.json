@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VoteData",
+  "type": "object",
+  "properties": {
+    "txHash": {
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "poolChainId": {
+      "type": "number"
+    },
+    "poolAddress": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "weight": {
+      "type": "number"
+    },
+    "vePendleVote": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "txHash",
+    "timestamp",
+    "poolChainId",
+    "poolAddress",
+    "user",
+    "weight",
+    "vePendleVote"
+  ]
+}

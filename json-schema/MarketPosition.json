@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketPosition",
+  "type": "object",
+  "properties": {
+    "marketId": {
+      "type": "string",
+      "description": "Unique identifier of the market",
+      "example": "1-0xabc..."
+    },
+    "pt": {
+      "description": "Principal token (PT) position",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Position"
+        }
+      ]
+    },
+    "yt": {
+      "description": "Yield token (YT) position",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Position"
+        }
+      ]
+    },
+    "lp": {
+      "description": "Liquidity provider (LP) token position",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Position"
+        }
+      ]
+    },
+    "crossPtPositions": {
+      "description": "Array of cross PT positions",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CrossPtPosition"
+      }
+    }
+  },
+  "required": [
+    "marketId",
+    "pt",
+    "yt",
+    "lp",
+    "crossPtPositions"
+  ]
+}

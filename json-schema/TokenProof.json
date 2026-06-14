@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenProof",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string"
+    },
+    "proof": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accruedAmount": {
+      "type": "string"
+    },
+    "verifyCallData": {
+      "type": "string",
+      "description": "Calldata to verify the proof"
+    }
+  },
+  "required": [
+    "token",
+    "proof",
+    "accruedAmount"
+  ]
+}

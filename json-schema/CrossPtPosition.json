@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CrossPtPosition",
+  "type": "object",
+  "properties": {
+    "spokePt": {
+      "type": "string",
+      "description": "Spoke PT",
+      "example": "0x123..."
+    },
+    "balance": {
+      "type": "string",
+      "description": "Balance of the position",
+      "example": "1000000000000000000"
+    }
+  },
+  "required": [
+    "spokePt",
+    "balance"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MerklRewardResponse",
+  "type": "object",
+  "properties": {
+    "sumAmount": {
+      "type": "string",
+      "description": "Chain ID",
+      "example": 1
+    },
+    "fromEpoch": {
+      "type": "number",
+      "description": "From epoch",
+      "example": 1732294694
+    },
+    "toEpoch": {
+      "type": "number",
+      "description": "To epoch",
+      "example": 1732294694
+    },
+    "hash": {
+      "type": "string",
+      "description": "Hash of the distribution file",
+      "example": "0x1234567890abcdef"
+    },
+    "rewardToken": {
+      "type": "string",
+      "description": "Reward token address being distributed",
+      "example": "0xE0688A2FE90d0f93F17f273235031062a210d691"
+    },
+    "rewards": {
+      "type": "object",
+      "description": "User rewards mapping",
+      "example": {
+        "0x9f76a95AA7535bb0893cf88A146396e00ed21A12": {
+          "epoch-1": {
+            "amount": "40000000000000000000",
+            "timestamp": "1732294694"
+          }
+        },
+        "0xfdA462548Ce04282f4B6D6619823a7C64Fdc0185": {
+          "epoch-2": {
+            "amount": "100000000000000000000",
+            "timestamp": "1741370722"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "sumAmount",
+    "fromEpoch",
+    "toEpoch",
+    "hash",
+    "rewardToken",
+    "rewards"
+  ]
+}

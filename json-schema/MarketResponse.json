@@ -1,0 +1,475 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the market in format \"{chainId}-{address}\""
+    },
+    "chainId": {
+      "type": "number",
+      "description": "Chain ID where the market is deployed"
+    },
+    "address": {
+      "type": "string",
+      "description": "Contract address of the market"
+    },
+    "symbol": {
+      "type": "string",
+      "description": "Symbol of the market"
+    },
+    "expiry": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Expiry date of the PT/YT tokens"
+    },
+    "pt": {
+      "description": "Principal Token (PT) asset information",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "yt": {
+      "description": "Yield Token (YT) asset information",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "sy": {
+      "description": "Standardized Yield (SY) token asset information",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "lp": {
+      "description": "Liquidity Pool (LP) token asset information",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "accountingAsset": {
+      "description": "Asset used for accounting and pricing in this market",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "underlyingAsset": {
+      "description": "The underlying asset that generates yield",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "basePricingAsset": {
+      "nullable": true,
+      "description": "Same as accountingAsset",
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AssetResponse"
+        }
+      ]
+    },
+    "rewardTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    },
+    "inputTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    },
+    "outputTokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetResponse"
+      }
+    },
+    "protocol": {
+      "type": "string",
+      "nullable": true
+    },
+    "underlyingPool": {
+      "type": "string",
+      "nullable": true
+    },
+    "proSymbol": {
+      "type": "string",
+      "nullable": true
+    },
+    "proIcon": {
+      "type": "string",
+      "nullable": true
+    },
+    "assetRepresentation": {
+      "type": "string",
+      "description": "String representation of the asset type for this market"
+    },
+    "isWhitelistedPro": {
+      "type": "boolean",
+      "description": "Whether this market is whitelisted for pro interface"
+    },
+    "isWhitelistedSimple": {
+      "type": "boolean",
+      "description": "Whether this market is whitelisted for simple interface",
+      "deprecated": true
+    },
+    "votable": {
+      "type": "boolean",
+      "description": "Whether this market can receive vePENDLE votes"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the market is currently active (not expired and not manually deactivated)",
+      "deprecated": true
+    },
+    "isWhitelistedLimitOrder": {
+      "type": "boolean",
+      "description": "Whether limit orders are enabled for this market"
+    },
+    "accentColor": {
+      "type": "string",
+      "nullable": true
+    },
+    "totalPt": {
+      "type": "number",
+      "nullable": true,
+      "description": "Total PT in the market"
+    },
+    "totalSy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Total SY in the market"
+    },
+    "totalLp": {
+      "type": "number",
+      "nullable": true,
+      "description": "Total supply of the LP token"
+    },
+    "totalActiveSupply": {
+      "type": "number",
+      "nullable": true,
+      "description": "Total active supply of the LP token, used for calculate boosting"
+    },
+    "liquidity": {
+      "nullable": true,
+      "description": "Market liquidity, this is the liquidity of PT and SY in the AMM",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "tradingVolume": {
+      "nullable": true,
+      "description": "Market 24h trading volume",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationResponse"
+        }
+      ]
+    },
+    "underlyingInterestApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Annual percentage yield from the underlying asset interest"
+    },
+    "underlyingRewardApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Annual percentage yield from the underlying asset rewards"
+    },
+    "underlyingRewardApyBreakdown": {
+      "nullable": true,
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApyBreakdownResponse"
+      }
+    },
+    "underlyingApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY of the underlying asset"
+    },
+    "impliedApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Implied APY of market"
+    },
+    "ytFloatingApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Floating APY for YT holders (underlyingApy - impliedApy)"
+    },
+    "ptDiscount": {
+      "type": "number",
+      "nullable": true,
+      "description": "PT discount relative to underlying asset"
+    },
+    "swapFeeApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "Swap fee APY for LP holders, without boosting"
+    },
+    "pendleApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY from Pendle rewards"
+    },
+    "arbApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY from arbitrage opportunities"
+    },
+    "aggregatedApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY including yield, swap fee and Pendle rewards without boosting"
+    },
+    "maxBoostedApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY when maximum boost is applied"
+    },
+    "lpRewardApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY from LP reward tokens"
+    },
+    "voterApy": {
+      "type": "number",
+      "nullable": true,
+      "description": "APY for voters (vePENDLE holders) from voting on this pool"
+    },
+    "ytRoi": {
+      "type": "number",
+      "nullable": true,
+      "description": "Return on investment for YT holders"
+    },
+    "ptRoi": {
+      "type": "number",
+      "nullable": true,
+      "description": "Return on investment for PT holders"
+    },
+    "estimatedDailyPoolRewards": {
+      "nullable": true,
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/EstimatedDailyPoolRewardResponse"
+      }
+    },
+    "dataUpdatedAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "liquidityChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour percentage change in liquidity"
+    },
+    "tradingVolumeChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour percentage change in trading volume"
+    },
+    "underlyingInterestApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in underlying interest APY (in percentage points)"
+    },
+    "underlyingRewardApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in underlying reward APY (in percentage points)"
+    },
+    "underlyingApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in underlying APY (in percentage points)"
+    },
+    "impliedApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in implied APY (in percentage points)"
+    },
+    "ytFloatingApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in YT floating APY (in percentage points)"
+    },
+    "ptDiscountChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in PT discount (in percentage points)"
+    },
+    "swapFeeApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in swap fee APY (in percentage points)"
+    },
+    "pendleApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in PENDLE APY (in percentage points)"
+    },
+    "aggregatedApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in aggregated APY (in percentage points)"
+    },
+    "lpRewardApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in LP reward APY (in percentage points)"
+    },
+    "voterApyChange24h": {
+      "type": "number",
+      "nullable": true,
+      "description": "24-hour change in voter APY (in percentage points)"
+    },
+    "categoryIds": {
+      "description": "Array of category IDs this market belongs to",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp when the market data was last updated"
+    },
+    "scalarRoot": {
+      "type": "number"
+    },
+    "initialAnchor": {
+      "type": "number"
+    },
+    "extendedInfo": {
+      "description": "Additional market data, only available when market is whitelisted.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/MarketExtendedInfoResponse"
+        }
+      ]
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "isPopular": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "tvlThresholdTimestamp": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "whitelistedProAt": {
+      "format": "date-time",
+      "type": "string",
+      "nullable": true
+    },
+    "isNew": {
+      "type": "boolean",
+      "description": "Market which whitelisted in the last 2 weeks will have isNew==true"
+    },
+    "name": {
+      "type": "string"
+    },
+    "simpleName": {
+      "type": "string"
+    },
+    "simpleSymbol": {
+      "type": "string"
+    },
+    "simpleIcon": {
+      "type": "string"
+    },
+    "proName": {
+      "type": "string"
+    },
+    "farmName": {
+      "type": "string"
+    },
+    "farmSymbol": {
+      "type": "string"
+    },
+    "farmSimpleName": {
+      "type": "string"
+    },
+    "farmSimpleSymbol": {
+      "type": "string"
+    },
+    "farmSimpleIcon": {
+      "type": "string"
+    },
+    "farmProName": {
+      "type": "string"
+    },
+    "farmProSymbol": {
+      "type": "string"
+    },
+    "farmProIcon": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "address",
+    "symbol",
+    "expiry",
+    "pt",
+    "yt",
+    "sy",
+    "lp",
+    "accountingAsset",
+    "underlyingAsset",
+    "rewardTokens",
+    "inputTokens",
+    "outputTokens",
+    "assetRepresentation",
+    "isWhitelistedPro",
+    "isWhitelistedSimple",
+    "votable",
+    "isActive",
+    "isWhitelistedLimitOrder",
+    "categoryIds",
+    "timestamp",
+    "scalarRoot",
+    "initialAnchor",
+    "extendedInfo",
+    "isNew",
+    "name",
+    "simpleName",
+    "simpleSymbol",
+    "simpleIcon",
+    "proName",
+    "farmName",
+    "farmSymbol",
+    "farmSimpleName",
+    "farmSimpleSymbol",
+    "farmSimpleIcon",
+    "farmProName",
+    "farmProSymbol",
+    "farmProIcon"
+  ]
+}

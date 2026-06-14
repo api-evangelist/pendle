@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserPositionsCrossChainResponse",
+  "type": "object",
+  "properties": {
+    "positions": {
+      "description": "Array of user positions",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/UserPositionsResponse"
+      }
+    }
+  },
+  "required": [
+    "positions"
+  ]
+}

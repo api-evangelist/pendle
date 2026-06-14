@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PendleTokenSupplyResponse",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp of the token supply data"
+    },
+    "totalPendleCirculating": {
+      "type": "number",
+      "description": "Total circulating supply of PENDLE tokens (not locked)"
+    },
+    "totalPendleLocked": {
+      "type": "number",
+      "description": "Total amount of PENDLE tokens locked in vePENDLE"
+    },
+    "totalPendleSupply": {
+      "type": "number",
+      "description": "Total supply of PENDLE tokens"
+    }
+  },
+  "required": [
+    "timestamp",
+    "totalPendleCirculating",
+    "totalPendleLocked",
+    "totalPendleSupply"
+  ]
+}

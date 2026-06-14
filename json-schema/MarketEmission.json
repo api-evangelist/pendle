@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketEmission",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number",
+      "description": "Chain ID of the market"
+    },
+    "address": {
+      "type": "string",
+      "description": "Contract address of the market"
+    },
+    "totalIncentive": {
+      "type": "number",
+      "description": "Total PENDLE emission allocated to this market"
+    },
+    "tvlIncentive": {
+      "type": "number",
+      "description": "Emission allocated based on TVL proportion"
+    },
+    "feeIncentive": {
+      "type": "number",
+      "description": "Emission allocated based on fee proportion"
+    },
+    "discretionaryIncentive": {
+      "type": "number",
+      "description": "Discretionary emission manually assigned to this market"
+    },
+    "cobribingIncentive": {
+      "type": "number",
+      "description": "Co-bribing emission allocated to this market"
+    }
+  },
+  "required": [
+    "chainId",
+    "address",
+    "totalIncentive",
+    "tvlIncentive",
+    "feeIncentive",
+    "discretionaryIncentive",
+    "cobribingIncentive"
+  ]
+}

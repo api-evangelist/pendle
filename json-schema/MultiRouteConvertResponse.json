@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MultiRouteConvertResponse",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "swap",
+        "add-liquidity",
+        "remove-liquidity",
+        "exit-market",
+        "transfer-liquidity",
+        "roll-over-pt",
+        "add-liquidity-dual",
+        "remove-liquidity-dual",
+        "mint-py",
+        "redeem-py",
+        "mint-sy",
+        "redeem-sy",
+        "pendle-swap",
+        "convert-lp-to-pt"
+      ],
+      "description": "The action that was performed"
+    },
+    "inputs": {
+      "description": "Input token amounts for the action",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenAmountResponse"
+      }
+    },
+    "requiredApprovals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenAmountResponse"
+      }
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ConvertResponse"
+      }
+    },
+    "rewards": {
+      "description": "Reward token amounts from redeem action",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenAmountResponse"
+      }
+    }
+  },
+  "required": [
+    "action",
+    "inputs",
+    "routes"
+  ]
+}

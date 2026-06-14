@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TransactionV5Response",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the transaction"
+    },
+    "market": {
+      "type": "string",
+      "description": "Market address where the transaction occurred"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Timestamp when the transaction occurred"
+    },
+    "chainId": {
+      "type": "number",
+      "description": "Chain ID where the transaction occurred"
+    },
+    "txHash": {
+      "type": "string",
+      "description": "Transaction hash on the blockchain"
+    },
+    "value": {
+      "type": "number",
+      "description": "Transaction value in USD"
+    },
+    "type": {
+      "type": "string",
+      "description": "Transaction type (e.g., TRADES, ADD_LIQUIDITY, REMOVE_LIQUIDITY)"
+    },
+    "action": {
+      "type": "string",
+      "description": "Transaction action (e.g., BUY_PT, SELL_PT, ADD_LIQUIDITY_DUAL)"
+    },
+    "txOrigin": {
+      "type": "string",
+      "description": "Original transaction sender address"
+    },
+    "impliedApy": {
+      "type": "number",
+      "description": "Weighted average implied APY for this transaction"
+    },
+    "notional": {
+      "description": "Notional amounts traded (only for TRADES type)",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/NotionalV5"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "market",
+    "timestamp",
+    "chainId",
+    "txHash",
+    "value",
+    "type",
+    "action",
+    "impliedApy"
+  ]
+}

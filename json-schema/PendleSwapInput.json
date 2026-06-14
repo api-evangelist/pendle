@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PendleSwapInput",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "Input token address"
+    },
+    "amount": {
+      "type": "string",
+      "description": "Amount of input tokens used for swapping"
+    }
+  },
+  "required": [
+    "token",
+    "amount"
+  ]
+}

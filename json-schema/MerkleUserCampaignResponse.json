@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MerkleUserCampaignResponse",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string"
+    },
+    "token": {
+      "type": "string"
+    },
+    "merkleRoot": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "assetId": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "toTimestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "fromTimestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user",
+    "token",
+    "merkleRoot",
+    "chainId",
+    "assetId",
+    "amount",
+    "toTimestamp",
+    "fromTimestamp"
+  ]
+}

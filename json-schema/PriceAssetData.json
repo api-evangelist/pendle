@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PriceAssetData",
+  "type": "object",
+  "properties": {
+    "pt": {
+      "type": "number",
+      "description": "PT price in the market's accounting asset at the time of the transaction"
+    },
+    "yt": {
+      "type": "number",
+      "description": "YT price in the market's accounting asset at the time of the transaction"
+    },
+    "lp": {
+      "type": "number",
+      "description": "LP price in the market's accounting asset at the time of the transaction"
+    }
+  },
+  "required": [
+    "pt",
+    "yt",
+    "lp"
+  ]
+}

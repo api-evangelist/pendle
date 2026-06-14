@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SyTokenOutRouteListResponse",
+  "type": "object",
+  "properties": {
+    "tokenOutRoutes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SyTokenOutRouteResponse"
+      }
+    }
+  },
+  "required": [
+    "tokenOutRoutes"
+  ]
+}

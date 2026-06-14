@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TransactionResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "number"
+    },
+    "txHash": {
+      "type": "string"
+    },
+    "blockNumber": {
+      "type": "number"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "market": {
+      "$ref": "#/components/schemas/MarketBasicResponse"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetAmountResponse"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AssetAmountResponse"
+      }
+    },
+    "user": {
+      "type": "string"
+    },
+    "valuation": {
+      "$ref": "#/components/schemas/ValuationResponse"
+    },
+    "implicitSwapFeeSy": {
+      "type": "number"
+    },
+    "explicitSwapFeeSy": {
+      "type": "number"
+    },
+    "impliedApy": {
+      "type": "number"
+    },
+    "assetPrices": {
+      "type": "object"
+    },
+    "gasUsed": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "chainId",
+    "txHash",
+    "blockNumber",
+    "timestamp",
+    "action",
+    "origin",
+    "market",
+    "inputs",
+    "outputs",
+    "user",
+    "valuation",
+    "implicitSwapFeeSy",
+    "explicitSwapFeeSy",
+    "impliedApy",
+    "assetPrices",
+    "gasUsed"
+  ]
+}

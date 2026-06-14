@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketPointsEntity",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Market id"
+    },
+    "points": {
+      "description": "Points configs",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PointMetadataEntity"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "points"
+  ]
+}

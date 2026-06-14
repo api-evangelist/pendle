@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConvertV3Dto",
+  "type": "object",
+  "properties": {
+    "receiver": {
+      "type": "string",
+      "description": "Recipient address for transaction output"
+    },
+    "slippage": {
+      "type": "number",
+      "description": "Maximum slippage tolerance (0-1, where 0.01 equals 1%)"
+    },
+    "enableAggregator": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset"
+    },
+    "aggregators": {
+      "description": "List of aggregator names to use for the swap. If not provided, default aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "description": "List of input tokens and their amounts",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenAmountDto"
+      }
+    },
+    "outputs": {
+      "description": "Output token addresses",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "redeemRewards": {
+      "type": "boolean",
+      "description": "Redeem rewards",
+      "default": false
+    },
+    "needScale": {
+      "type": "boolean",
+      "description": "Aggregators needScale value, only set to true when amounts are updated onchain. When enabled, please make sure to buffer the amountIn by about 2%",
+      "default": false
+    },
+    "additionalData": {
+      "type": "string",
+      "description": "Available fields: `impliedApy`, `effectiveApy`. Comma separated list of fields to return. For example: `field1,field2`. More fields will consume more computing units."
+    },
+    "useLimitOrder": {
+      "type": "boolean",
+      "description": "To use limit orders when converting, default to true",
+      "default": true
+    },
+    "okxSwapParams": {
+      "$ref": "#/components/schemas/OKXCustomParamsDto"
+    }
+  },
+  "required": [
+    "slippage",
+    "inputs",
+    "outputs"
+  ]
+}

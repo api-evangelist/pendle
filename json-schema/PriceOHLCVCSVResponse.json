@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PriceOHLCVCSVResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number",
+      "description": "Total number of data points available"
+    },
+    "currency": {
+      "type": "string",
+      "deprecated": true,
+      "description": "Always return USD"
+    },
+    "timeFrame": {
+      "type": "string",
+      "description": "Time frame of each OHLCV data point (e.g., \"1h\", \"1d\", \"1w\")"
+    },
+    "timestamp_start": {
+      "type": "number",
+      "description": "Start timestamp of the data range in seconds"
+    },
+    "timestamp_end": {
+      "type": "number",
+      "description": "End timestamp of the data range in seconds"
+    },
+    "results": {
+      "type": "string",
+      "example": "time,open,high,low,close,volume\n1756245600,42.4563,42.4563,42.4563,42.4563,0.0000",
+      "description": "Resulting CSV string following the format: time,open,high,low,close,volume"
+    }
+  },
+  "required": [
+    "total",
+    "currency",
+    "timeFrame",
+    "timestamp_start",
+    "timestamp_end",
+    "results"
+  ]
+}

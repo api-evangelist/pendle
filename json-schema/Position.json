@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Position",
+  "type": "object",
+  "properties": {
+    "balance": {
+      "type": "string",
+      "description": "Balance of the position",
+      "example": "1000000000000000000"
+    },
+    "activeBalance": {
+      "type": "string",
+      "description": "Active balance of the position (for LP only)",
+      "example": "1000000000000000000"
+    },
+    "valuation": {
+      "type": "number",
+      "description": "Valuation of the position in USD",
+      "example": 10
+    },
+    "claimTokenAmounts": {
+      "description": "Array of claimable rewards",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClaimTokenAmount"
+      }
+    }
+  },
+  "required": [
+    "balance",
+    "valuation"
+  ]
+}

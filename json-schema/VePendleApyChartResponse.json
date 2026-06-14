@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VePendleApyChartResponse",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/VePendleApyChartDataPoint"
+      }
+    },
+    "timeFrame": {
+      "type": "string"
+    },
+    "timestamp_gte": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "timestamp_lte": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "results",
+    "timeFrame",
+    "timestamp_gte",
+    "timestamp_lte"
+  ]
+}

@@ -1,0 +1,1405 @@
+{
+  "vocabulary": "Pendle V2 API",
+  "description": "Terms extracted from the Pendle V2 API OpenAPI specification",
+  "terms": [
+    {
+      "term": "Limit Orders",
+      "type": "tag",
+      "description": "API tag grouping: Limit Orders"
+    },
+    {
+      "term": "LimitOrdersController_getAllLimitOrders",
+      "type": "operation",
+      "summary": "Get all limit orders for analytics",
+      "description": "This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully fill"
+    },
+    {
+      "term": "LimitOrdersController_getAllArchivedLimitOrders",
+      "type": "operation",
+      "summary": "Get all archived limit orders for analytics",
+      "description": "This have the same interface and usecase as the endpoint above, but it returns the archived orders\n\nWhen an order is not fillable anymore, we **might** archive it to save storage space, to fetch it, u"
+    },
+    {
+      "term": "LimitOrdersController_getMakerLimitOrder",
+      "type": "operation",
+      "summary": "Get user limit orders in market",
+      "description": "Returns the active and historical limit orders placed by a specific user in a market. Supports richer filtering than the analytics endpoint (e.g. by YT, status, market).\n\nA user can have at most 50 op"
+    },
+    {
+      "term": "LimitOrdersController_createOrder",
+      "type": "operation",
+      "summary": "Create limit order",
+      "description": "Submit a signed limit order to the Pendle order book. Once created, the order is visible to takers and will be filled against incoming swaps at or better than the specified implied APY.\n\nBefore callin"
+    },
+    {
+      "term": "LimitOrdersController_generateLimitOrderData",
+      "type": "operation",
+      "summary": "Generate limit order data for signing",
+      "description": "Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker's private key, then submit the order via [Create limit order](#tag/limit-orders/post/v1/limit-orders/ma"
+    },
+    {
+      "term": "LimitOrdersController_generateScaledLimitOrderData",
+      "type": "operation",
+      "summary": "Generate list of limit orders (scaled) for signing",
+      "description": "Generate a batch of limit orders spread across a price (implied APY) range for signing. Scaled orders distribute your total size across multiple price levels, providing better market depth than a sing"
+    },
+    {
+      "term": "LimitOrdersController_getTakerLimitOrders",
+      "type": "operation",
+      "summary": "Get limit orders to match by YT address",
+      "description": "Returns the best-matching active limit orders for a given YT address, sorted by implied APY for efficient taker fill selection.\n\nThe response includes full order structs and maker signatures ready to "
+    },
+    {
+      "term": "LimitOrdersController_getLimitOrderBookV2",
+      "type": "operation",
+      "summary": "Get order book v2",
+      "description": "Returns the consolidated order book for a market, aggregating both limit orders and AMM liquidity depth into a unified view.\n\nThe book is split into two sides:\n- **longYieldEntries**: available liquid"
+    },
+    {
+      "term": "Assets",
+      "type": "tag",
+      "description": "API tag grouping: Assets"
+    },
+    {
+      "term": "PricesCrossChainController_getAllAssetPricesByAddressesCrossChains",
+      "type": "operation",
+      "summary": "Get asset prices (cross-chain)",
+      "description": "Returns USD prices for Pendle-supported tokens across all chains. Covers all token types in the Pendle app, including non-Pendle tokens (USDC, WETH, etc.) when they appear as underlying assets.\n\nPrice"
+    },
+    {
+      "term": "PricesController_ohlcv_v4",
+      "type": "operation",
+      "summary": "Get PT / YT / LP historical price by address",
+      "description": "\nHistorical price data for PT / YT tokens / LP tokens. We do not support historical prices for **SY and non-Pendle tokens**.\n\nThe data is OHLCV data, returned in CSV format with open, high, low, close"
+    },
+    {
+      "term": "AssetsCrossChainController_getPendleAssetsMetadata",
+      "type": "operation",
+      "summary": "Get all assets (cross-chain)",
+      "description": "Returns the flat list of all PT, YT, LP, and SY tokens supported in the Pendle app, across all chains.\n\nEach entry includes: name, symbol, contract address, decimals, expiry timestamp (for PT/YT), and"
+    },
+    {
+      "term": "Markets",
+      "type": "tag",
+      "description": "API tag grouping: Markets"
+    },
+    {
+      "term": "MarketsCrossChainController_getAllMarkets",
+      "type": "operation",
+      "summary": "Get all markets (cross-chain)",
+      "description": "Returns the complete list of whitelisted Pendle markets across all supported chains with their metadata and current data.\n\nFilter by `chainId`, `isActive`, or `ids` (comma-separated market IDs in `cha"
+    },
+    {
+      "term": "MarketsCrossChainController_getPointsMarkets",
+      "type": "operation",
+      "summary": "Get points markets",
+      "description": "Returns all active markets that have a points reward programme \u2014 markets where trading or providing liquidity earns points from the underlying protocol.\n\nThe response includes the points configuration"
+    },
+    {
+      "term": "MarketsController_marketData_v2",
+      "type": "operation",
+      "summary": "Get latest/historical market data by address",
+      "description": "Returns the latest or historical data snapshot for a given market.\n\nPass a `timestamp` query param (Unix seconds) to retrieve the market state at a specific point in time. Omit it for the current snap"
+    },
+    {
+      "term": "MarketsController_marketHistoricalData_v2",
+      "type": "operation",
+      "summary": "Get market time-series data by address",
+      "description": "\nReturns the time-series data for a given market. Useful to draw charts or do data analysis.\n\nThis endpoint supports field selection via the `fields` query parameter. \n\nTable below shows the available"
+    },
+    {
+      "term": "Ve Pendle",
+      "type": "tag",
+      "description": "API tag grouping: Ve Pendle"
+    },
+    {
+      "term": "VePendleController_vePendleExtendedData",
+      "type": "operation",
+      "summary": "Get vePendle statistics",
+      "description": "**Deprecated**: vePENDLE has been replaced by sPENDLE. This endpoint returns vePENDLE governance data and will not reflect the new sPENDLE staking system.\n\nReturns aggregate vePENDLE governance statis"
+    },
+    {
+      "term": "VePendleController_allMarketTotalFees",
+      "type": "operation",
+      "summary": "Get market fees chart",
+      "description": "**Deprecated**: vePENDLE has been replaced by sPENDLE. The epoch-based fee distribution model no longer applies.\n\nReturns weekly trading fee revenue across all Pendle markets, grouped by voting epoch "
+    },
+    {
+      "term": "SDK",
+      "type": "tag",
+      "description": "API tag grouping: SDK"
+    },
+    {
+      "term": "SdkController_getMarketTokens",
+      "type": "operation",
+      "summary": "Get supported tokens for market",
+      "description": "Returns the two sets of tokens relevant for a given market:\n\n- **SY input tokens**: tokens accepted by the SY wrapper for minting/redeeming (e.g. USDC for a USDC-based market).\n- **Zap tokens**: token"
+    },
+    {
+      "term": "SdkController_getSupportedAggregators",
+      "type": "operation",
+      "summary": "Get supported aggregators for a chain",
+      "description": "Returns the list of DEX aggregators available on this chain for routing token swaps, along with the additional computing unit cost each one adds to SDK requests.\n\nUse this to decide which aggregators "
+    },
+    {
+      "term": "SdkController_getMarketSpotSwappingPrice",
+      "type": "operation",
+      "summary": "Get real-time PT/YT swap price of a market",
+      "description": "Return price by swapping  1 unit underlying token to PT/ YT, and 1 unit of PT/YT to the underlying token.\n\nOne unit is defined as 10**decimal. The result is updated every block.\n\nImplied APY of the ma"
+    },
+    {
+      "term": "SdkController_cancelSingleLimitOrder",
+      "type": "operation",
+      "summary": "Cancel one single limit order by order hash",
+      "description": "Generate the transaction payload to cancel a specific limit order on-chain.\n\nPass the full signed order struct (from the original order creation) to identify which order to cancel. The order becomes i"
+    },
+    {
+      "term": "SdkController_cancelAllLimitOrders",
+      "type": "operation",
+      "summary": "Cancel all limit orders",
+      "description": "Generate the transaction payload to cancel all active limit orders for a user in a single on-chain call.\n\nThis works by incrementing the user's nonce on-chain, which invalidates all previously signed "
+    },
+    {
+      "term": "SdkController_redeemInterestsAndRewards",
+      "type": "operation",
+      "summary": "Redeem rewards and interests from positions",
+      "description": "Generate a transaction payload to claim all accrued interest and incentive rewards across multiple positions in a single call.\n\nSpecify which positions to claim from by passing arrays of:\n- `sys`: SY "
+    },
+    {
+      "term": "SdkController_convert",
+      "type": "operation",
+      "summary": "Universal convert function",
+      "description": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints \u2014 handling 21 "
+    },
+    {
+      "term": "SdkController_convertV3",
+      "type": "operation",
+      "summary": "Universal convert function (recommended \u2014 POST body variant)",
+      "description": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints \u2014 handling 21 "
+    },
+    {
+      "term": "SdkController_swapPtCrossChainV2",
+      "type": "operation",
+      "summary": "Swap PT using fixed price AMM for cross-chain operations",
+      "description": "Swap a bridged PT on a spoke chain back to a regular token using the fixed-price PT AMM.\n\nThis is specifically for **cross-chain PT redemption flows** where PT has been bridged to a non-primary chain."
+    },
+    {
+      "term": "SdkController_getPtCrossChainMetadata",
+      "type": "operation",
+      "summary": "PT cross-chain metadata",
+      "description": "Returns metadata for a PT that has been bridged to a spoke chain, including maturity, underlying asset details, and fixed-price AMM parameters.\n\nUse this to verify that a bridged PT is supported on th"
+    },
+    {
+      "term": "Transactions",
+      "type": "tag",
+      "description": "API tag grouping: Transactions"
+    },
+    {
+      "term": "TransactionsController_transactionsV5",
+      "type": "operation",
+      "summary": "Get market transactions by address",
+      "description": "Return transactions with: user action (long or short yield, add or remove liquidity), valuation, implied apy.\n\n**Pagination**: This endpoint supports cursor-based pagination using `resumeToken`. The r"
+    },
+    {
+      "term": "Statistics",
+      "type": "tag",
+      "description": "API tag grouping: Statistics"
+    },
+    {
+      "term": "StatisticsController_getDistinctUserFromToken",
+      "type": "operation",
+      "summary": "Get distinct users for a specific token",
+      "description": "Returns a list of unique wallet addresses that have interacted with a specific token across Pendle markets. \n\nUse the optional `chainId` parameter to filter results to a specific chain, or omit it to "
+    },
+    {
+      "term": "Chains",
+      "type": "tag",
+      "description": "API tag grouping: Chains"
+    },
+    {
+      "term": "ChainsController_getSupportedChainIds",
+      "type": "operation",
+      "summary": "Get supported chain IDs",
+      "description": "Get supported chain IDs"
+    },
+    {
+      "term": "Dashboard",
+      "type": "tag",
+      "description": "API tag grouping: Dashboard"
+    },
+    {
+      "term": "DashboardController_getUserPositions",
+      "type": "operation",
+      "summary": "Get user positions by address",
+      "description": "Returns a complete snapshot of a user's Pendle positions across all supported chains, including PT, YT, LP, and SY holdings.\n\nFor each position the response includes token amounts, USD valuations, and"
+    },
+    {
+      "term": "DashboardController_getMerkleClaimedRewards",
+      "type": "operation",
+      "summary": "Get all merkle claimed rewards for a user",
+      "description": "Returns the historical record of all merkle rewards that a user has already claimed.\n\nUseful for displaying claim history in a dashboard or verifying that a specific reward distribution has been colle"
+    },
+    {
+      "term": "TransactionsController_getTransactions",
+      "type": "operation",
+      "summary": "Get user transaction history",
+      "description": "Returns the on-chain transaction history for a user address across all Pendle operations.\n\nResults are paginated. Use the `resumeToken` from the response to fetch the next page.\n\nData may lag chain ti"
+    },
+    {
+      "term": "Pendle Emission",
+      "type": "tag",
+      "description": "API tag grouping: Pendle Emission"
+    },
+    {
+      "term": "PendleEmissionController_pendleEmission",
+      "type": "operation",
+      "summary": "Get Pendle Emission",
+      "description": "Returns the latest confirmed PENDLE emission across all eligible markets. Each market includes a breakdown of emission by TVL, fee, discretionary, and co-bribing components."
+    },
+    {
+      "term": "OrderFilledStatusResponse",
+      "type": "schema",
+      "description": "Data model: OrderFilledStatusResponse"
+    },
+    {
+      "term": "OrderStateResponse",
+      "type": "schema",
+      "description": "Data model: OrderStateResponse"
+    },
+    {
+      "term": "LimitOrderResponse",
+      "type": "schema",
+      "description": "Data model: LimitOrderResponse"
+    },
+    {
+      "term": "LimitOrdersResponse",
+      "type": "schema",
+      "description": "Data model: LimitOrdersResponse"
+    },
+    {
+      "term": "LimitOrdersV2Response",
+      "type": "schema",
+      "description": "Data model: LimitOrdersV2Response"
+    },
+    {
+      "term": "MakerResponse",
+      "type": "schema",
+      "description": "Data model: MakerResponse"
+    },
+    {
+      "term": "MakersResponse",
+      "type": "schema",
+      "description": "Data model: MakersResponse"
+    },
+    {
+      "term": "GenerateLimitOrderDataDto",
+      "type": "schema",
+      "description": "Data model: GenerateLimitOrderDataDto"
+    },
+    {
+      "term": "GenerateLimitOrderDataResponse",
+      "type": "schema",
+      "description": "Data model: GenerateLimitOrderDataResponse"
+    },
+    {
+      "term": "HttpErrorResponse",
+      "type": "schema",
+      "description": "Data model: HttpErrorResponse"
+    },
+    {
+      "term": "GenerateScaledOrderDataDto",
+      "type": "schema",
+      "description": "Data model: GenerateScaledOrderDataDto"
+    },
+    {
+      "term": "GenerateScaledOrderResponse",
+      "type": "schema",
+      "description": "Data model: GenerateScaledOrderResponse"
+    },
+    {
+      "term": "CreateLimitOrderDto",
+      "type": "schema",
+      "description": "Data model: CreateLimitOrderDto"
+    },
+    {
+      "term": "LimitOrderTakerResponse",
+      "type": "schema",
+      "description": "Data model: LimitOrderTakerResponse"
+    },
+    {
+      "term": "LimitOrdersTakerResponse",
+      "type": "schema",
+      "description": "Data model: LimitOrdersTakerResponse"
+    },
+    {
+      "term": "OrderBookV2EntryResponse",
+      "type": "schema",
+      "description": "Data model: OrderBookV2EntryResponse"
+    },
+    {
+      "term": "OrderBookV2Response",
+      "type": "schema",
+      "description": "Data model: OrderBookV2Response"
+    },
+    {
+      "term": "PendleAssetType",
+      "type": "schema",
+      "description": "Data model: PendleAssetType"
+    },
+    {
+      "term": "GetAssetPricesCrossChainResponse",
+      "type": "schema",
+      "description": "Data model: GetAssetPricesCrossChainResponse"
+    },
+    {
+      "term": "PriceOHLCVCSVResponse",
+      "type": "schema",
+      "description": "Data model: PriceOHLCVCSVResponse"
+    },
+    {
+      "term": "AssetPricesResponse",
+      "type": "schema",
+      "description": "Data model: AssetPricesResponse"
+    },
+    {
+      "term": "NotionalVolumeResponse",
+      "type": "schema",
+      "description": "Data model: NotionalVolumeResponse"
+    },
+    {
+      "term": "OHLCVDataPoint",
+      "type": "schema",
+      "description": "Data model: OHLCVDataPoint"
+    },
+    {
+      "term": "PriceOHLCVResponse",
+      "type": "schema",
+      "description": "Data model: PriceOHLCVResponse"
+    },
+    {
+      "term": "AssetDataCrossChain",
+      "type": "schema",
+      "description": "Data model: AssetDataCrossChain"
+    },
+    {
+      "term": "GetAllAssetsCrossChainResponse",
+      "type": "schema",
+      "description": "Data model: GetAllAssetsCrossChainResponse"
+    },
+    {
+      "term": "AssetData",
+      "type": "schema",
+      "description": "Data model: AssetData"
+    },
+    {
+      "term": "GetAssetsResponse",
+      "type": "schema",
+      "description": "Data model: GetAssetsResponse"
+    },
+    {
+      "term": "GetAssetPricesResponse",
+      "type": "schema",
+      "description": "Data model: GetAssetPricesResponse"
+    },
+    {
+      "term": "ValuationResponse",
+      "type": "schema",
+      "description": "Data model: ValuationResponse"
+    },
+    {
+      "term": "AssetResponse",
+      "type": "schema",
+      "description": "Data model: AssetResponse"
+    },
+    {
+      "term": "AssetsResponse",
+      "type": "schema",
+      "description": "Data model: AssetsResponse"
+    },
+    {
+      "term": "AssetCSVResponse",
+      "type": "schema",
+      "description": "Data model: AssetCSVResponse"
+    },
+    {
+      "term": "VersionResponse",
+      "type": "schema",
+      "description": "Data model: VersionResponse"
+    },
+    {
+      "term": "TokenInfoResponse",
+      "type": "schema",
+      "description": "Data model: TokenInfoResponse"
+    },
+    {
+      "term": "UniswapTokenListResponse",
+      "type": "schema",
+      "description": "Data model: UniswapTokenListResponse"
+    },
+    {
+      "term": "SolanaTokenFileResponse",
+      "type": "schema",
+      "description": "Data model: SolanaTokenFileResponse"
+    },
+    {
+      "term": "SolanaTokenPropertiesResponse",
+      "type": "schema",
+      "description": "Data model: SolanaTokenPropertiesResponse"
+    },
+    {
+      "term": "SolanaTokenResponse",
+      "type": "schema",
+      "description": "Data model: SolanaTokenResponse"
+    },
+    {
+      "term": "SyBasicResponse",
+      "type": "schema",
+      "description": "Data model: SyBasicResponse"
+    },
+    {
+      "term": "WhitelistedSysResponse",
+      "type": "schema",
+      "description": "Data model: WhitelistedSysResponse"
+    },
+    {
+      "term": "SyResponse",
+      "type": "schema",
+      "description": "Data model: SyResponse"
+    },
+    {
+      "term": "YieldRangeResponse",
+      "type": "schema",
+      "description": "Data model: YieldRangeResponse"
+    },
+    {
+      "term": "MarketDetailsV2Entity",
+      "type": "schema",
+      "description": "Data model: MarketDetailsV2Entity"
+    },
+    {
+      "term": "MarketCrossChainData",
+      "type": "schema",
+      "description": "Data model: MarketCrossChainData"
+    },
+    {
+      "term": "GetMarketsCrossChainResponse",
+      "type": "schema",
+      "description": "Data model: GetMarketsCrossChainResponse"
+    },
+    {
+      "term": "PointMetadataEntity",
+      "type": "schema",
+      "description": "Data model: PointMetadataEntity"
+    },
+    {
+      "term": "MarketPointsEntity",
+      "type": "schema",
+      "description": "Data model: MarketPointsEntity"
+    },
+    {
+      "term": "GetPointsMarketsResponse",
+      "type": "schema",
+      "description": "Data model: GetPointsMarketsResponse"
+    },
+    {
+      "term": "MarketDetails",
+      "type": "schema",
+      "description": "Data model: MarketDetails"
+    },
+    {
+      "term": "MarketData",
+      "type": "schema",
+      "description": "Data model: MarketData"
+    },
+    {
+      "term": "GetActiveMarketsResponse",
+      "type": "schema",
+      "description": "Data model: GetActiveMarketsResponse"
+    },
+    {
+      "term": "GetInactiveMarketsResponse",
+      "type": "schema",
+      "description": "Data model: GetInactiveMarketsResponse"
+    },
+    {
+      "term": "MarketApyHistoriesCSVResponse",
+      "type": "schema",
+      "description": "Data model: MarketApyHistoriesCSVResponse"
+    },
+    {
+      "term": "MarketExtendedInfoResponse",
+      "type": "schema",
+      "description": "Data model: MarketExtendedInfoResponse"
+    },
+    {
+      "term": "MarketBasicMetadataResponse",
+      "type": "schema",
+      "description": "Data model: MarketBasicMetadataResponse"
+    },
+    {
+      "term": "MarketsResponse",
+      "type": "schema",
+      "description": "Data model: MarketsResponse"
+    },
+    {
+      "term": "CurrenyAmountEntity",
+      "type": "schema",
+      "description": "Data model: CurrenyAmountEntity"
+    },
+    {
+      "term": "FeaturedMarketEntity",
+      "type": "schema",
+      "description": "Data model: FeaturedMarketEntity"
+    },
+    {
+      "term": "FeaturedMarketsResponseEntity",
+      "type": "schema",
+      "description": "Data model: FeaturedMarketsResponseEntity"
+    },
+    {
+      "term": "AssetBasicResponse",
+      "type": "schema",
+      "description": "Data model: AssetBasicResponse"
+    },
+    {
+      "term": "ApyBreakdownResponse",
+      "type": "schema",
+      "description": "Data model: ApyBreakdownResponse"
+    },
+    {
+      "term": "EstimatedDailyPoolRewardResponse",
+      "type": "schema",
+      "description": "Data model: EstimatedDailyPoolRewardResponse"
+    },
+    {
+      "term": "MarketResponse",
+      "type": "schema",
+      "description": "Data model: MarketResponse"
+    },
+    {
+      "term": "MarketDataResponse",
+      "type": "schema",
+      "description": "Data model: MarketDataResponse"
+    },
+    {
+      "term": "MarketHistoryResponse",
+      "type": "schema",
+      "description": "Data model: MarketHistoryResponse"
+    },
+    {
+      "term": "MarketHistoriesResponse",
+      "type": "schema",
+      "description": "Data model: MarketHistoriesResponse"
+    },
+    {
+      "term": "MarketApyHistoryResponse",
+      "type": "schema",
+      "description": "Data model: MarketApyHistoryResponse"
+    },
+    {
+      "term": "MarketApyHistoriesResponse",
+      "type": "schema",
+      "description": "Data model: MarketApyHistoriesResponse"
+    },
+    {
+      "term": "GetMarketStatHistoryCSVResponse",
+      "type": "schema",
+      "description": "Data model: GetMarketStatHistoryCSVResponse"
+    },
+    {
+      "term": "MarketHistoricalDataPoint",
+      "type": "schema",
+      "description": "Data model: MarketHistoricalDataPoint"
+    },
+    {
+      "term": "MarketHistoricalDataResponse",
+      "type": "schema",
+      "description": "Data model: MarketHistoricalDataResponse"
+    },
+    {
+      "term": "MarketHistoricalDataTableResponse",
+      "type": "schema",
+      "description": "Data model: MarketHistoricalDataTableResponse"
+    },
+    {
+      "term": "MarketImpliedApyDataPoint",
+      "type": "schema",
+      "description": "Data model: MarketImpliedApyDataPoint"
+    },
+    {
+      "term": "MarketImpliedApyResponseEntity",
+      "type": "schema",
+      "description": "Data model: MarketImpliedApyResponseEntity"
+    },
+    {
+      "term": "MarketAssetsResponse",
+      "type": "schema",
+      "description": "Data model: MarketAssetsResponse"
+    },
+    {
+      "term": "MarketCategoryResponse",
+      "type": "schema",
+      "description": "Data model: MarketCategoryResponse"
+    },
+    {
+      "term": "GetAllMarketCategoriesResponse",
+      "type": "schema",
+      "description": "Data model: GetAllMarketCategoriesResponse"
+    },
+    {
+      "term": "UtilizedProtocolResponse",
+      "type": "schema",
+      "description": "Data model: UtilizedProtocolResponse"
+    },
+    {
+      "term": "GetAllUtilizedProtocolsResponse",
+      "type": "schema",
+      "description": "Data model: GetAllUtilizedProtocolsResponse"
+    },
+    {
+      "term": "VoteV2Response",
+      "type": "schema",
+      "description": "Data model: VoteV2Response"
+    },
+    {
+      "term": "PoolV2Response",
+      "type": "schema",
+      "description": "Data model: PoolV2Response"
+    },
+    {
+      "term": "VePendleDataResponse",
+      "type": "schema",
+      "description": "Data model: VePendleDataResponse"
+    },
+    {
+      "term": "PendleTokenSupplyResponse",
+      "type": "schema",
+      "description": "Data model: PendleTokenSupplyResponse"
+    },
+    {
+      "term": "GetMonthlyRevenueResponse",
+      "type": "schema",
+      "description": "Data model: GetMonthlyRevenueResponse"
+    },
+    {
+      "term": "VePendleExtendedDataResponse",
+      "type": "schema",
+      "description": "Data model: VePendleExtendedDataResponse"
+    },
+    {
+      "term": "PoolResponse",
+      "type": "schema",
+      "description": "Data model: PoolResponse"
+    },
+    {
+      "term": "VoteResponse",
+      "type": "schema",
+      "description": "Data model: VoteResponse"
+    },
+    {
+      "term": "VoteSnapshotResponse",
+      "type": "schema",
+      "description": "Data model: VoteSnapshotResponse"
+    },
+    {
+      "term": "PoolVoterApyResponse",
+      "type": "schema",
+      "description": "Data model: PoolVoterApyResponse"
+    },
+    {
+      "term": "PoolVoterApysResponse",
+      "type": "schema",
+      "description": "Data model: PoolVoterApysResponse"
+    },
+    {
+      "term": "PoolVoterAprSwapFeeResponse",
+      "type": "schema",
+      "description": "Data model: PoolVoterAprSwapFeeResponse"
+    },
+    {
+      "term": "PoolVoterAprsSwapFeesResponse",
+      "type": "schema",
+      "description": "Data model: PoolVoterAprsSwapFeesResponse"
+    },
+    {
+      "term": "VoterApyChartDataPoint",
+      "type": "schema",
+      "description": "Data model: VoterApyChartDataPoint"
+    },
+    {
+      "term": "PoolVoterApyChart",
+      "type": "schema",
+      "description": "Data model: PoolVoterApyChart"
+    },
+    {
+      "term": "VoterApyChartResponse",
+      "type": "schema",
+      "description": "Data model: VoterApyChartResponse"
+    },
+    {
+      "term": "VePendleApyChartDataPoint",
+      "type": "schema",
+      "description": "Data model: VePendleApyChartDataPoint"
+    },
+    {
+      "term": "VePendleApyChartResponse",
+      "type": "schema",
+      "description": "Data model: VePendleApyChartResponse"
+    },
+    {
+      "term": "VoteData",
+      "type": "schema",
+      "description": "Data model: VoteData"
+    },
+    {
+      "term": "GetHistoricalVotesResponse",
+      "type": "schema",
+      "description": "Data model: GetHistoricalVotesResponse"
+    },
+    {
+      "term": "MarketMetaData",
+      "type": "schema",
+      "description": "Data model: MarketMetaData"
+    },
+    {
+      "term": "TotalFeesWithTimestamp",
+      "type": "schema",
+      "description": "Data model: TotalFeesWithTimestamp"
+    },
+    {
+      "term": "MarketTotalFeesData",
+      "type": "schema",
+      "description": "Data model: MarketTotalFeesData"
+    },
+    {
+      "term": "AllMarketTotalFeesResponse",
+      "type": "schema",
+      "description": "Data model: AllMarketTotalFeesResponse"
+    },
+    {
+      "term": "GetOngoingVotesResponse",
+      "type": "schema",
+      "description": "Data model: GetOngoingVotesResponse"
+    },
+    {
+      "term": "GetVePendleCapResponse",
+      "type": "schema",
+      "description": "Data model: GetVePendleCapResponse"
+    },
+    {
+      "term": "MetadataQueryDto",
+      "type": "schema",
+      "description": "Data model: MetadataQueryDto"
+    },
+    {
+      "term": "MetadataResponse",
+      "type": "schema",
+      "description": "Data model: MetadataResponse"
+    },
+    {
+      "term": "MetadataValuesResponse",
+      "type": "schema",
+      "description": "Data model: MetadataValuesResponse"
+    },
+    {
+      "term": "GetMetadataByTemplateResponse",
+      "type": "schema",
+      "description": "Data model: GetMetadataByTemplateResponse"
+    },
+    {
+      "term": "MarketTokensResponse",
+      "type": "schema",
+      "description": "Data model: MarketTokensResponse"
+    },
+    {
+      "term": "SupportedAggregator",
+      "type": "schema",
+      "description": "Data model: SupportedAggregator"
+    },
+    {
+      "term": "SupportedAggregatorsResponse",
+      "type": "schema",
+      "description": "Data model: SupportedAggregatorsResponse"
+    },
+    {
+      "term": "GetSpotSwappingPriceResponse",
+      "type": "schema",
+      "description": "Data model: GetSpotSwappingPriceResponse"
+    },
+    {
+      "term": "TransactionDto",
+      "type": "schema",
+      "description": "Data model: TransactionDto"
+    },
+    {
+      "term": "TokenAmountResponse",
+      "type": "schema",
+      "description": "Data model: TokenAmountResponse"
+    },
+    {
+      "term": "PriceImpactBreakDownData",
+      "type": "schema",
+      "description": "Data model: PriceImpactBreakDownData"
+    },
+    {
+      "term": "ImpliedApy",
+      "type": "schema",
+      "description": "Data model: ImpliedApy"
+    },
+    {
+      "term": "FeeUsd",
+      "type": "schema",
+      "description": "Data model: FeeUsd"
+    },
+    {
+      "term": "SwapData",
+      "type": "schema",
+      "description": "Data model: SwapData"
+    },
+    {
+      "term": "SwapResponse",
+      "type": "schema",
+      "description": "Data model: SwapResponse"
+    },
+    {
+      "term": "AddLiquidityData",
+      "type": "schema",
+      "description": "Data model: AddLiquidityData"
+    },
+    {
+      "term": "AddLiquidityResponse",
+      "type": "schema",
+      "description": "Data model: AddLiquidityResponse"
+    },
+    {
+      "term": "RemoveLiquidityData",
+      "type": "schema",
+      "description": "Data model: RemoveLiquidityData"
+    },
+    {
+      "term": "RemoveLiquidityResponse",
+      "type": "schema",
+      "description": "Data model: RemoveLiquidityResponse"
+    },
+    {
+      "term": "MintData",
+      "type": "schema",
+      "description": "Data model: MintData"
+    },
+    {
+      "term": "MintResponse",
+      "type": "schema",
+      "description": "Data model: MintResponse"
+    },
+    {
+      "term": "RedeemData",
+      "type": "schema",
+      "description": "Data model: RedeemData"
+    },
+    {
+      "term": "RedeemResponse",
+      "type": "schema",
+      "description": "Data model: RedeemResponse"
+    },
+    {
+      "term": "MintSyData",
+      "type": "schema",
+      "description": "Data model: MintSyData"
+    },
+    {
+      "term": "MintSyResponse",
+      "type": "schema",
+      "description": "Data model: MintSyResponse"
+    },
+    {
+      "term": "RedeemSyData",
+      "type": "schema",
+      "description": "Data model: RedeemSyData"
+    },
+    {
+      "term": "RedeemSyResponse",
+      "type": "schema",
+      "description": "Data model: RedeemSyResponse"
+    },
+    {
+      "term": "TransferLiquidityData",
+      "type": "schema",
+      "description": "Data model: TransferLiquidityData"
+    },
+    {
+      "term": "ContractParamInfo",
+      "type": "schema",
+      "description": "Data model: ContractParamInfo"
+    },
+    {
+      "term": "ParamsBreakdown",
+      "type": "schema",
+      "description": "Data model: ParamsBreakdown"
+    },
+    {
+      "term": "TransferLiquidityResponse",
+      "type": "schema",
+      "description": "Data model: TransferLiquidityResponse"
+    },
+    {
+      "term": "RollOverPtData",
+      "type": "schema",
+      "description": "Data model: RollOverPtData"
+    },
+    {
+      "term": "RollOverPtResponse",
+      "type": "schema",
+      "description": "Data model: RollOverPtResponse"
+    },
+    {
+      "term": "AddLiquidityDualData",
+      "type": "schema",
+      "description": "Data model: AddLiquidityDualData"
+    },
+    {
+      "term": "AddLiquidityDualResponse",
+      "type": "schema",
+      "description": "Data model: AddLiquidityDualResponse"
+    },
+    {
+      "term": "RemoveLiquidityDualData",
+      "type": "schema",
+      "description": "Data model: RemoveLiquidityDualData"
+    },
+    {
+      "term": "RemoveLiquidityDualResponse",
+      "type": "schema",
+      "description": "Data model: RemoveLiquidityDualResponse"
+    },
+    {
+      "term": "SdkResponse",
+      "type": "schema",
+      "description": "Data model: SdkResponse"
+    },
+    {
+      "term": "PendleSwapInput",
+      "type": "schema",
+      "description": "Data model: PendleSwapInput"
+    },
+    {
+      "term": "PendleSwapDtoV2",
+      "type": "schema",
+      "description": "Data model: PendleSwapDtoV2"
+    },
+    {
+      "term": "PendleSwapData",
+      "type": "schema",
+      "description": "Data model: PendleSwapData"
+    },
+    {
+      "term": "PendleSwapResponse",
+      "type": "schema",
+      "description": "Data model: PendleSwapResponse"
+    },
+    {
+      "term": "ExitMarketData",
+      "type": "schema",
+      "description": "Data model: ExitMarketData"
+    },
+    {
+      "term": "ExitMarketResponse",
+      "type": "schema",
+      "description": "Data model: ExitMarketResponse"
+    },
+    {
+      "term": "RedeemInterestsAndRewardsResponse",
+      "type": "schema",
+      "description": "Data model: RedeemInterestsAndRewardsResponse"
+    },
+    {
+      "term": "ConvertData",
+      "type": "schema",
+      "description": "Data model: ConvertData"
+    },
+    {
+      "term": "ConvertResponse",
+      "type": "schema",
+      "description": "Data model: ConvertResponse"
+    },
+    {
+      "term": "MultiRouteConvertResponse",
+      "type": "schema",
+      "description": "Data model: MultiRouteConvertResponse"
+    },
+    {
+      "term": "TokenAmountDto",
+      "type": "schema",
+      "description": "Data model: TokenAmountDto"
+    },
+    {
+      "term": "OKXCustomParamsDto",
+      "type": "schema",
+      "description": "Data model: OKXCustomParamsDto"
+    },
+    {
+      "term": "ConvertV3Dto",
+      "type": "schema",
+      "description": "Data model: ConvertV3Dto"
+    },
+    {
+      "term": "SwapPtCrossChainData",
+      "type": "schema",
+      "description": "Data model: SwapPtCrossChainData"
+    },
+    {
+      "term": "SwapPtCrossChainResponse",
+      "type": "schema",
+      "description": "Data model: SwapPtCrossChainResponse"
+    },
+    {
+      "term": "SwapWithFixedPricePtAmmData",
+      "type": "schema",
+      "description": "Data model: SwapWithFixedPricePtAmmData"
+    },
+    {
+      "term": "SwapWithFixedPricePtAmmResponse",
+      "type": "schema",
+      "description": "Data model: SwapWithFixedPricePtAmmResponse"
+    },
+    {
+      "term": "PtCrossChainMetadataResponse",
+      "type": "schema",
+      "description": "Data model: PtCrossChainMetadataResponse"
+    },
+    {
+      "term": "MarketBasicResponse",
+      "type": "schema",
+      "description": "Data model: MarketBasicResponse"
+    },
+    {
+      "term": "AssetAmountResponse",
+      "type": "schema",
+      "description": "Data model: AssetAmountResponse"
+    },
+    {
+      "term": "TransactionResponse",
+      "type": "schema",
+      "description": "Data model: TransactionResponse"
+    },
+    {
+      "term": "TransactionsResponse",
+      "type": "schema",
+      "description": "Data model: TransactionsResponse"
+    },
+    {
+      "term": "TransactionType",
+      "type": "schema",
+      "description": "Data model: TransactionType"
+    },
+    {
+      "term": "TransactionAction",
+      "type": "schema",
+      "description": "Data model: TransactionAction"
+    },
+    {
+      "term": "NotionalV5",
+      "type": "schema",
+      "description": "Data model: NotionalV5"
+    },
+    {
+      "term": "TransactionV5Response",
+      "type": "schema",
+      "description": "Data model: TransactionV5Response"
+    },
+    {
+      "term": "TransactionsV5Response",
+      "type": "schema",
+      "description": "Data model: TransactionsV5Response"
+    },
+    {
+      "term": "TransactionsV4Response",
+      "type": "schema",
+      "description": "Data model: TransactionsV4Response"
+    },
+    {
+      "term": "TvlAndTradingVolumeResponseEntity",
+      "type": "schema",
+      "description": "Data model: TvlAndTradingVolumeResponseEntity"
+    },
+    {
+      "term": "GetDistinctUsersFromTokenEntity",
+      "type": "schema",
+      "description": "Data model: GetDistinctUsersFromTokenEntity"
+    },
+    {
+      "term": "EulerUserResponse",
+      "type": "schema",
+      "description": "Data model: EulerUserResponse"
+    },
+    {
+      "term": "MorphoUserResponse",
+      "type": "schema",
+      "description": "Data model: MorphoUserResponse"
+    },
+    {
+      "term": "SiloUserResponse",
+      "type": "schema",
+      "description": "Data model: SiloUserResponse"
+    },
+    {
+      "term": "MorphoConfigResponse",
+      "type": "schema",
+      "description": "Data model: MorphoConfigResponse"
+    },
+    {
+      "term": "WlpDistinctUsersResponse",
+      "type": "schema",
+      "description": "Data model: WlpDistinctUsersResponse"
+    },
+    {
+      "term": "LiquidLockerPoolResponse",
+      "type": "schema",
+      "description": "Data model: LiquidLockerPoolResponse"
+    },
+    {
+      "term": "LiquidLockerPoolsResponse",
+      "type": "schema",
+      "description": "Data model: LiquidLockerPoolsResponse"
+    },
+    {
+      "term": "WlpHolderMappingResponse",
+      "type": "schema",
+      "description": "Data model: WlpHolderMappingResponse"
+    },
+    {
+      "term": "GetAllRelatedInfoFromLpAndWlpResponse",
+      "type": "schema",
+      "description": "Data model: GetAllRelatedInfoFromLpAndWlpResponse"
+    },
+    {
+      "term": "MerkleRewardsResponse",
+      "type": "schema",
+      "description": "Data model: MerkleRewardsResponse"
+    },
+    {
+      "term": "MerkleProofResponse",
+      "type": "schema",
+      "description": "Data model: MerkleProofResponse"
+    },
+    {
+      "term": "NotFoundResponse",
+      "type": "schema",
+      "description": "Data model: NotFoundResponse"
+    },
+    {
+      "term": "TokenProof",
+      "type": "schema",
+      "description": "Data model: TokenProof"
+    },
+    {
+      "term": "MultiTokenMerkleProofResponse",
+      "type": "schema",
+      "description": "Data model: MultiTokenMerkleProofResponse"
+    },
+    {
+      "term": "MerkleProofV2Response",
+      "type": "schema",
+      "description": "Data model: MerkleProofV2Response"
+    },
+    {
+      "term": "SyTokenOutRouteResponse",
+      "type": "schema",
+      "description": "Data model: SyTokenOutRouteResponse"
+    },
+    {
+      "term": "SyTokenOutRouteListResponse",
+      "type": "schema",
+      "description": "Data model: SyTokenOutRouteListResponse"
+    },
+    {
+      "term": "GetLiquidityTransferableMarketsResponse",
+      "type": "schema",
+      "description": "Data model: GetLiquidityTransferableMarketsResponse"
+    },
+    {
+      "term": "CrossChainPtData",
+      "type": "schema",
+      "description": "Data model: CrossChainPtData"
+    },
+    {
+      "term": "ChainIdSimplifiedData",
+      "type": "schema",
+      "description": "Data model: ChainIdSimplifiedData"
+    },
+    {
+      "term": "GetSimplifiedDataResponse",
+      "type": "schema",
+      "description": "Data model: GetSimplifiedDataResponse"
+    },
+    {
+      "term": "GetSafePendleAddressesResponse",
+      "type": "schema",
+      "description": "Data model: GetSafePendleAddressesResponse"
+    },
+    {
+      "term": "ChainIdsResponse",
+      "type": "schema",
+      "description": "Data model: ChainIdsResponse"
+    },
+    {
+      "term": "ClaimTokenAmount",
+      "type": "schema",
+      "description": "Data model: ClaimTokenAmount"
+    },
+    {
+      "term": "Position",
+      "type": "schema",
+      "description": "Data model: Position"
+    },
+    {
+      "term": "CrossPtPosition",
+      "type": "schema",
+      "description": "Data model: CrossPtPosition"
+    },
+    {
+      "term": "MarketPosition",
+      "type": "schema",
+      "description": "Data model: MarketPosition"
+    },
+    {
+      "term": "SyPosition",
+      "type": "schema",
+      "description": "Data model: SyPosition"
+    },
+    {
+      "term": "UserPositionsResponse",
+      "type": "schema",
+      "description": "Data model: UserPositionsResponse"
+    },
+    {
+      "term": "UserPositionsCrossChainResponse",
+      "type": "schema",
+      "description": "Data model: UserPositionsCrossChainResponse"
+    },
+    {
+      "term": "MerkleUserCampaignResponse",
+      "type": "schema",
+      "description": "Data model: MerkleUserCampaignResponse"
+    },
+    {
+      "term": "MerkleClaimableRewardsResponse",
+      "type": "schema",
+      "description": "Data model: MerkleClaimableRewardsResponse"
+    },
+    {
+      "term": "MerkleClaimedRewardsResponse",
+      "type": "schema",
+      "description": "Data model: MerkleClaimedRewardsResponse"
+    },
+    {
+      "term": "SpokePtData",
+      "type": "schema",
+      "description": "Data model: SpokePtData"
+    },
+    {
+      "term": "PtCrossChainData",
+      "type": "schema",
+      "description": "Data model: PtCrossChainData"
+    },
+    {
+      "term": "GetAllCrossPtsResponse",
+      "type": "schema",
+      "description": "Data model: GetAllCrossPtsResponse"
+    },
+    {
+      "term": "ValuationEntity",
+      "type": "schema",
+      "description": "Data model: ValuationEntity"
+    },
+    {
+      "term": "SpendUnitData",
+      "type": "schema",
+      "description": "Data model: SpendUnitData"
+    },
+    {
+      "term": "PriceAssetData",
+      "type": "schema",
+      "description": "Data model: PriceAssetData"
+    },
+    {
+      "term": "PnLTransactionEntity",
+      "type": "schema",
+      "description": "Data model: PnLTransactionEntity"
+    },
+    {
+      "term": "TransactionsResponseEntity",
+      "type": "schema",
+      "description": "Data model: TransactionsResponseEntity"
+    },
+    {
+      "term": "BlockEntity",
+      "type": "schema",
+      "description": "Data model: BlockEntity"
+    },
+    {
+      "term": "IntegrationAssetEntity",
+      "type": "schema",
+      "description": "Data model: IntegrationAssetEntity"
+    },
+    {
+      "term": "IntegrationAssetResponse",
+      "type": "schema",
+      "description": "Data model: IntegrationAssetResponse"
+    },
+    {
+      "term": "PairEntity",
+      "type": "schema",
+      "description": "Data model: PairEntity"
+    },
+    {
+      "term": "IntegrationPairResponse",
+      "type": "schema",
+      "description": "Data model: IntegrationPairResponse"
+    },
+    {
+      "term": "Reserves",
+      "type": "schema",
+      "description": "Data model: Reserves"
+    },
+    {
+      "term": "SwapEvent",
+      "type": "schema",
+      "description": "Data model: SwapEvent"
+    },
+    {
+      "term": "JoinExitEvent",
+      "type": "schema",
+      "description": "Data model: JoinExitEvent"
+    },
+    {
+      "term": "IntegrationEventResponse",
+      "type": "schema",
+      "description": "Data model: IntegrationEventResponse"
+    },
+    {
+      "term": "MerklRewardResponse",
+      "type": "schema",
+      "description": "Data model: MerklRewardResponse"
+    },
+    {
+      "term": "MerklDataResponse",
+      "type": "schema",
+      "description": "Data model: MerklDataResponse"
+    },
+    {
+      "term": "MarketEmission",
+      "type": "schema",
+      "description": "Data model: MarketEmission"
+    },
+    {
+      "term": "GetPendleEmissionResponse",
+      "type": "schema",
+      "description": "Data model: GetPendleEmissionResponse"
+    },
+    {
+      "term": "TagDefinitionResponse",
+      "type": "schema",
+      "description": "Data model: TagDefinitionResponse"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LiquidLockerPoolsResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LiquidLockerPoolResponse"
+      }
+    }
+  },
+  "required": [
+    "total",
+    "results"
+  ]
+}

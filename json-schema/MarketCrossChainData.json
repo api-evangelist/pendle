@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketCrossChainData",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "market name",
+      "example": "crvUSD"
+    },
+    "address": {
+      "type": "string",
+      "description": "market address",
+      "example": "0x386f90eb964a477498b528a39d9405e73ed4032b"
+    },
+    "expiry": {
+      "type": "string",
+      "description": "market expiry date",
+      "example": "2024-03-28T00:00:00.000Z"
+    },
+    "pt": {
+      "type": "string",
+      "description": "market pt id",
+      "example": "1-0xb87511364014c088e30f872efc4a00d7efb843ac"
+    },
+    "yt": {
+      "type": "string",
+      "description": "market yt id",
+      "example": "1-0xed97f94dd94255637a054098604e0201c442a3fd"
+    },
+    "sy": {
+      "type": "string",
+      "description": "market sy id",
+      "example": "1-0xe05082b184a34668cd8a904d85fa815802bbb04c"
+    },
+    "underlyingAsset": {
+      "type": "string",
+      "description": "market underlying asset id",
+      "example": "1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32"
+    },
+    "details": {
+      "description": "Market details including liquidity, APY, fee rate, and yield range",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/MarketDetailsV2Entity"
+        }
+      ]
+    },
+    "isNew": {
+      "type": "boolean",
+      "description": "Whether the market is new"
+    },
+    "isPrime": {
+      "type": "boolean",
+      "description": "Whether the market is prime"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Market deployed timestamp"
+    },
+    "lpWrapper": {
+      "type": "string",
+      "description": "LP wrapper address"
+    },
+    "categoryIds": {
+      "description": "Market category IDs",
+      "example": [
+        "btc",
+        "stables"
+      ],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isVolatile": {
+      "type": "boolean",
+      "description": "Whether the market is volatile"
+    },
+    "chainId": {
+      "type": "number",
+      "description": "chain id",
+      "example": 1
+    }
+  },
+  "required": [
+    "name",
+    "address",
+    "expiry",
+    "pt",
+    "yt",
+    "sy",
+    "underlyingAsset",
+    "details",
+    "isNew",
+    "isPrime",
+    "timestamp",
+    "chainId"
+  ]
+}

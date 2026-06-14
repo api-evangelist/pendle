@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MintSyData",
+  "type": "object",
+  "properties": {
+    "amountOut": {
+      "type": "string"
+    },
+    "priceImpact": {
+      "type": "number"
+    },
+    "priceImpactBreakDown": {
+      "$ref": "#/components/schemas/PriceImpactBreakDownData"
+    }
+  },
+  "required": [
+    "amountOut",
+    "priceImpact",
+    "priceImpactBreakDown"
+  ]
+}

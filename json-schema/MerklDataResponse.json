@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MerklDataResponse",
+  "type": "object",
+  "properties": {
+    "tvl": {
+      "type": "string",
+      "description": "Total Value Locked as a string",
+      "example": "1000000000000000000000"
+    },
+    "apr": {
+      "type": "string",
+      "description": "Annual Percentage Rate in decimal format",
+      "example": "0.15"
+    },
+    "opportunityName": {
+      "type": "string",
+      "description": "Optional opportunity name",
+      "example": "Pendle Market Maker Incentive"
+    }
+  },
+  "required": [
+    "tvl",
+    "apr"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetMarketStatHistoryCSVResponse",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number",
+      "description": "total data point of the result"
+    },
+    "timestamp_start": {
+      "type": "number",
+      "description": "timestamp start of the result"
+    },
+    "timestamp_end": {
+      "type": "number",
+      "description": "timestamp end of the result"
+    },
+    "results": {
+      "type": "string",
+      "description": "csv result with 4 column: timestamp,maxApy,baseApy,tvl. Timestamp is in second, tvl is in usd"
+    }
+  },
+  "required": [
+    "total",
+    "timestamp_start",
+    "timestamp_end",
+    "results"
+  ]
+}

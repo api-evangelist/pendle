@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WlpHolderMappingResponse",
+  "type": "object",
+  "properties": {
+    "holder": {
+      "type": "string",
+      "description": "The address of the holder"
+    },
+    "asset": {
+      "type": "string",
+      "description": "The address of the asset"
+    },
+    "moneyMarket": {
+      "type": "string",
+      "description": "The address of the money market"
+    }
+  },
+  "required": [
+    "holder",
+    "asset",
+    "moneyMarket"
+  ]
+}

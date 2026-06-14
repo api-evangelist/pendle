@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NotionalV5",
+  "type": "object",
+  "properties": {
+    "pt": {
+      "type": "number",
+      "description": "Notional amount of PT traded"
+    }
+  },
+  "required": [
+    "pt"
+  ]
+}

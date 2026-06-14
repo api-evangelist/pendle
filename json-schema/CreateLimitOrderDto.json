@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateLimitOrderDto",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "number",
+      "description": "Chain Id"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Signature of order, signed by maker"
+    },
+    "salt": {
+      "type": "string",
+      "description": "BigInt string of salt"
+    },
+    "expiry": {
+      "type": "string",
+      "description": "BigInt string of expiry"
+    },
+    "nonce": {
+      "type": "string",
+      "description": "BigInt string of nonce"
+    },
+    "type": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+    },
+    "token": {
+      "type": "string",
+      "description": "Token used by user to make order"
+    },
+    "yt": {
+      "type": "string",
+      "description": "YT address"
+    },
+    "maker": {
+      "type": "string",
+      "description": "Maker address"
+    },
+    "receiver": {
+      "type": "string",
+      "description": "Receiver address"
+    },
+    "makingAmount": {
+      "type": "string",
+      "description": "BigInt string of making amount"
+    },
+    "lnImpliedRate": {
+      "type": "string",
+      "description": "BigInt string of lnImpliedRate"
+    },
+    "failSafeRate": {
+      "type": "string",
+      "description": "BigInt string of failSafeRate"
+    },
+    "permit": {
+      "type": "string",
+      "description": "Bytes string for permit"
+    }
+  },
+  "required": [
+    "chainId",
+    "signature",
+    "salt",
+    "expiry",
+    "nonce",
+    "type",
+    "token",
+    "yt",
+    "maker",
+    "receiver",
+    "makingAmount",
+    "lnImpliedRate",
+    "failSafeRate",
+    "permit"
+  ]
+}

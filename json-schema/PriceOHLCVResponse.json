@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PriceOHLCVResponse",
+  "type": "object",
+  "properties": {
+    "limit": {
+      "type": "number",
+      "description": "Maximum number of results returned"
+    },
+    "total": {
+      "type": "number",
+      "description": "Total number of data points available"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency of the price data (e.g., USD)"
+    },
+    "timeFrame": {
+      "type": "string",
+      "description": "Time frame of each OHLCV data point (e.g., \"hour\", \"day\", \"week\")"
+    },
+    "timestamp_start": {
+      "format": "date-time",
+      "type": "string",
+      "description": "Start timestamp of the data range"
+    },
+    "timestamp_end": {
+      "format": "date-time",
+      "type": "string",
+      "description": "End timestamp of the data range"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OHLCVDataPoint"
+      }
+    }
+  },
+  "required": [
+    "limit",
+    "total",
+    "currency",
+    "timeFrame",
+    "results"
+  ]
+}

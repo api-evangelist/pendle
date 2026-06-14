@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SpendUnitData",
+  "type": "object",
+  "properties": {
+    "unit": {
+      "type": "number",
+      "description": "Balance of user in wei"
+    },
+    "spent_v2": {
+      "description": "Total spent to purchase this asset",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ValuationEntity"
+        }
+      ]
+    }
+  },
+  "required": [
+    "unit",
+    "spent_v2"
+  ]
+}

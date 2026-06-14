@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TransactionAction",
+  "type": "string",
+  "enum": [
+    "LONG_YIELD",
+    "SHORT_YIELD",
+    "ADD_LIQUIDITY",
+    "REMOVE_LIQUIDITY"
+  ]
+}

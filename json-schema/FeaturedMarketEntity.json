@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FeaturedMarketEntity",
+  "type": "object",
+  "properties": {
+    "marketAddress": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "tokenSymbol": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "accentColor": {
+      "type": "string"
+    },
+    "discountedPrice": {
+      "$ref": "#/components/schemas/CurrenyAmountEntity"
+    },
+    "fixedApy": {
+      "type": "number"
+    },
+    "currentPrice": {
+      "$ref": "#/components/schemas/CurrenyAmountEntity"
+    }
+  },
+  "required": [
+    "marketAddress",
+    "icon",
+    "tokenSymbol",
+    "symbol",
+    "accentColor",
+    "discountedPrice",
+    "fixedApy",
+    "currentPrice"
+  ]
+}
