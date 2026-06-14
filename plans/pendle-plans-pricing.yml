@@ -1,0 +1,111 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Pendle
+providerId: pendle
+created: '2026-06-14'
+modified: '2026-06-14'
+reconciled: true
+tags:
+  - DeFi
+  - Yield Tokenization
+  - Crypto
+  - Plans
+description: >-
+  Pendle V2 API uses a Computing Unit (CU) billing model. A free tier is available with 100
+  CU/minute and 200,000 CU/week at no cost; API key required. Paid plans scale in $10/week
+  increments, each doubling the per-minute and weekly CU allowances. Most data endpoints cost
+  1-5 CU; the Hosted SDK convert endpoint has dynamic cost depending on which aggregators are
+  enabled (KyberSwap: 1 CU, OKX: 1 CU, Odos: 10 CU, ParaSwap: 15 CU per route).
+sources:
+  - https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - https://api-v2.pendle.finance/dashboard
+plans:
+  - id: pendle-free
+    name: Free
+    type: freemium
+    description: >-
+      No-cost tier requiring an API key. Suitable for development and low-volume integrations.
+      100 CU per minute and 200,000 CU per week.
+    entries:
+      - label: Weekly subscription
+        name: free_weekly
+        type: subscription
+        metric: week
+        limit: -1
+        timeFrame: week
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: API key required
+      - name: 100 CU per minute
+      - name: 200,000 CU per week
+      - name: All public endpoints
+  - id: pendle-starter
+    name: Starter
+    type: subscription
+    description: >-
+      $10/week paid plan with 500 CU/minute and 1,000,000 CU/week. Suitable for production
+      integrations with moderate query volume.
+    entries:
+      - label: Weekly subscription
+        name: starter_weekly
+        type: subscription
+        metric: week
+        limit: -1
+        timeFrame: week
+        geo: global
+        unit: 1
+        price: '10.00'
+        userMultiplied: false
+    elements:
+      - name: 500 CU per minute
+      - name: 1,000,000 CU per week
+      - name: All public endpoints
+  - id: pendle-growth
+    name: Growth
+    type: subscription
+    description: >-
+      $20/week paid plan with 1,000 CU/minute and 2,000,000 CU/week. For higher-frequency
+      analytics and automated trading integrations.
+    entries:
+      - label: Weekly subscription
+        name: growth_weekly
+        type: subscription
+        metric: week
+        limit: -1
+        timeFrame: week
+        geo: global
+        unit: 1
+        price: '20.00'
+        userMultiplied: false
+    elements:
+      - name: 1,000 CU per minute
+      - name: 2,000,000 CU per week
+      - name: All public endpoints
+  - id: pendle-scale
+    name: Scale
+    type: subscription
+    description: >-
+      $40/week paid plan with 2,000 CU/minute and 4,000,000 CU/week. Designed for high-
+      throughput production systems, bots, and institutional integrations.
+    entries:
+      - label: Weekly subscription
+        name: scale_weekly
+        type: subscription
+        metric: week
+        limit: -1
+        timeFrame: week
+        geo: global
+        unit: 1
+        price: '40.00'
+        userMultiplied: false
+    elements:
+      - name: 2,000 CU per minute
+      - name: 4,000,000 CU per week
+      - name: All public endpoints
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

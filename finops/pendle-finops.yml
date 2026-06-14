@@ -1,0 +1,102 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Pendle
+providerId: pendle
+created: '2026-06-14'
+modified: '2026-06-14'
+reconciled: true
+tags:
+  - DeFi
+  - Yield Tokenization
+  - Crypto
+  - FinOps
+  - FOCUS
+description: >-
+  FinOps view of Pendle V2 API costs. Billing is weekly rather than monthly, using a Computing
+  Unit (CU) model. The free tier has no cost. Paid plans are $10, $20, or $40 per week (flat),
+  with no additional usage-based overage; instead, requests are throttled once CU limits are
+  reached. Cost allocation is per API key. Hosted SDK aggregator CU costs are dynamic and can
+  be zeroed out by supplying custom aggregator keys in request headers.
+sources:
+  - https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - https://api-v2.pendle.finance/dashboard
+  - https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Pendle
+serviceCategory: DeFi Protocol API
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Weekly
+  billingCurrency: USD
+  chargeCategories:
+    - Subscription
+focusColumns:
+  ServiceName: Pendle V2 Core API
+  ServiceCategory: DeFi Protocol API
+  ProviderName: Pendle
+  PublisherName: Pendle
+  InvoiceIssuerName: Pendle
+  BillingCurrency: USD
+  ChargeCategory: Subscription
+meters:
+  - name: free_weekly_subscription
+    description: No-cost weekly access, 100 CU/min and 200,000 CU/week.
+    unit: week
+    aggregation: sum
+    price: 0.00
+    dimensions:
+      - api_key
+      - plan_tier
+  - name: starter_weekly_subscription
+    description: Flat $10/week subscription, 500 CU/min and 1,000,000 CU/week.
+    unit: week
+    aggregation: sum
+    price: 10.00
+    dimensions:
+      - api_key
+      - plan_tier
+  - name: growth_weekly_subscription
+    description: Flat $20/week subscription, 1,000 CU/min and 2,000,000 CU/week.
+    unit: week
+    aggregation: sum
+    price: 20.00
+    dimensions:
+      - api_key
+      - plan_tier
+  - name: scale_weekly_subscription
+    description: Flat $40/week subscription, 2,000 CU/min and 4,000,000 CU/week.
+    unit: week
+    aggregation: sum
+    price: 40.00
+    dimensions:
+      - api_key
+      - plan_tier
+principles:
+  - name: Visibility
+    description: >-
+      Tag each API key to the consuming workload or team. Monitor X-RateLimit-Remaining and
+      X-RateLimit-Weekly-Remaining headers to track CU burn rate in real time.
+  - name: Allocation
+    description: >-
+      Allocate weekly subscription cost directly to the team or product owning each API key.
+      Maintain one key per bounded context to avoid cross-team attribution confusion.
+  - name: Optimization
+    description: >-
+      Stay on the free tier for development and low-frequency queries. Upgrade only when CU
+      limits are consistently saturated. Supply custom aggregator keys (KyberSwap, Odos, OKX,
+      ParaSwap) via request headers to reduce Hosted SDK CU costs to zero for those aggregators.
+      Use cross-chain endpoints (/v1/markets/all, /v1/assets/all) instead of per-chain loops
+      to reduce total CU consumption.
+  - name: Accountability
+    description: >-
+      Assign a billing owner per API key. Review weekly CU consumption against plan limits
+      each billing period. Set alerts when weekly CU remaining drops below 20%.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

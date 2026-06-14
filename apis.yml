@@ -1,0 +1,133 @@
+aid: pendle
+url: https://raw.githubusercontent.com/api-evangelist/pendle/refs/heads/main/apis.yml
+name: Pendle
+kind: company
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Web3
+  - DeFi
+  - Yield Tokenization
+  - Crypto
+  - Principal Tokens
+  - Yield Tokens
+  - AMM
+  - Liquidity Pools
+created: '2026-06-14'
+modified: '2026-06-14'
+specificationVersion: '0.19'
+description: >-
+  Pendle is a permissionless yield tokenization protocol that splits yield-bearing assets into
+  Principal Tokens (PT) and Yield Tokens (YT), enabling fixed-yield strategies and yield trading
+  on-chain. The Pendle V2 REST API provides endpoints for querying markets, assets, prices, limit
+  orders, liquidity pool data, implied APY, and user positions across Ethereum, Arbitrum, BSC,
+  Base, Mantle, Optimism, Sonic, Berachain, and other supported chains. A Hosted SDK converts
+  API calls into ready-to-broadcast transaction payloads for swaps, minting, redeeming, and
+  liquidity operations.
+apis:
+  - aid: pendle:core-api
+    name: Pendle V2 Core API
+    tags:
+      - DeFi
+      - Yield Tokenization
+      - Markets
+      - Principal Tokens
+      - Yield Tokens
+      - Liquidity Pools
+      - Implied APY
+      - Cross-Chain
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api-v2.pendle.finance/core
+    humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+    description: >-
+      REST API for the Pendle V2 protocol. Exposes 33 endpoints across markets, assets, pricing,
+      limit orders, sPENDLE/vePENDLE governance, transactions, dashboard positions, and statistics.
+      Cross-chain endpoints return data across all supported networks in a single request; chain-
+      scoped endpoints accept a chainId path parameter for per-network queries. Authenticated via
+      Bearer API key; free tier provides 100 CU/minute and 200,000 CU/week.
+    properties:
+      - type: Documentation
+        url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
+      - type: Pricing
+        url: https://api-v2.pendle.finance/dashboard
+    x-features:
+      - 33 endpoints across 8 tag categories
+      - Cross-chain market and asset queries
+      - Principal Token and Yield Token price history (OHLCV)
+      - Limit order creation, matching, and cancellation
+      - vePENDLE governance statistics and market fees
+      - User positions and merkle reward claims
+      - Pendle emission schedule
+      - GET /v1/chains to enumerate supported chain IDs
+    x-use-cases:
+      - DeFi yield dashboards and analytics
+      - Fixed-rate strategy research tools
+      - Portfolio trackers for PT and YT positions
+      - Automated trading bots using limit order endpoints
+      - Cross-chain yield comparison tools
+  - aid: pendle:hosted-sdk
+    name: Pendle Hosted SDK
+    tags:
+      - DeFi
+      - Yield Tokenization
+      - SDK
+      - Transaction Builder
+      - Swaps
+      - Liquidity
+      - Cross-Chain
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api-v2.pendle.finance/core
+    humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+    description: >-
+      Server-side SDK exposed as a REST endpoint that generates ready-to-broadcast Ethereum
+      transaction payloads. A single POST /v3/sdk/{chainId}/convert call handles 13 operations:
+      token swaps, adding/removing single and dual liquidity, minting and redeeming PT and YT,
+      minting and redeeming SY, zero-principal-investment liquidity, liquidity transfer between
+      markets, and PT rollover across expiries. Supports KyberSwap, Odos, OKX, and ParaSwap
+      aggregators for optimal routing.
+    properties:
+      - type: Documentation
+        url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
+      - type: Pricing
+        url: https://api-v2.pendle.finance/dashboard
+    x-features:
+      - 13 supported operations via single convert endpoint
+      - Returns complete tx object ready to broadcast
+      - Multi-route response sorted by output value
+      - KyberSwap, Odos, OKX, ParaSwap aggregator support
+      - Custom aggregator API keys reduce CU cost to zero
+      - Cross-chain PT swap via fixed-price AMM
+    x-use-cases:
+      - Wallet integrations for Pendle trading
+      - Automated yield-rollover bots
+      - DeFi aggregator routing through Pendle markets
+      - Protocol composability without local SDK dependency
+common:
+  - type: Portal
+    url: https://www.pendle.finance
+  - type: Documentation
+    url: https://docs.pendle.finance
+  - type: APIReference
+    url: https://api-v2.pendle.finance/core/docs
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
+  - type: GitHub
+    url: https://github.com/pendle-finance
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: X
+    url: https://x.com/pendle_fi
+  - type: Discord
+    url: https://discord.gg/pendle
+  - type: Plans
+    url: plans/pendle-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/pendle-rate-limits.yml
+  - type: FinOps
+    url: finops/pendle-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

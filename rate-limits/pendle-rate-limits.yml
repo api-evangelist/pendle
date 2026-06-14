@@ -1,0 +1,123 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Pendle
+providerId: pendle
+created: '2026-06-14'
+modified: '2026-06-14'
+reconciled: true
+tags:
+  - DeFi
+  - Yield Tokenization
+  - Crypto
+  - Rate Limiting
+description: >-
+  Pendle V2 API enforces rate limits using a Computing Unit (CU) model. Each endpoint has a
+  fixed or dynamic CU cost. Free accounts are capped at 100 CU/minute and 200,000 CU/week.
+  Paid plans scale from 500 CU/min (Starter, $10/week) up to 2,000 CU/min (Scale, $40/week).
+  The Hosted SDK convert endpoint has dynamic costs based on which aggregators are invoked.
+  Custom aggregator API keys passed via request headers reduce that aggregator's CU cost to zero.
+  Rate limit headers are returned on every response; throttled requests return HTTP 429.
+notes: >-
+  CU costs per endpoint are documented at https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview.
+  Aggregator CU costs are additive: KyberSwap=1, OKX=1, Odos=10, ParaSwap=15 per route.
+sources:
+  - https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+responseCodes:
+  throttled: 429
+headers:
+  - name: X-Computing-Unit
+    description: CU cost charged for the request.
+  - name: X-RateLimit-Limit
+    description: CU per-minute limit for the current plan.
+  - name: X-RateLimit-Remaining
+    description: Remaining CU in the current minute window.
+  - name: X-RateLimit-Reset
+    description: Unix timestamp when the per-minute window resets.
+  - name: X-RateLimit-Weekly-Limit
+    description: Total CU allowed per week for the current plan.
+  - name: X-RateLimit-Weekly-Remaining
+    description: Remaining weekly CU allowance.
+  - name: X-RateLimit-Weekly-Reset
+    description: Unix timestamp when the weekly window resets.
+limits:
+  - name: Free tier — per minute
+    scope: api_key
+    metric: computing_units_per_minute
+    limit: 100
+    plan: pendle-free
+    notes: Applies to all endpoints on the free tier.
+  - name: Free tier — per week
+    scope: api_key
+    metric: computing_units_per_week
+    limit: 200000
+    plan: pendle-free
+  - name: Starter — per minute
+    scope: api_key
+    metric: computing_units_per_minute
+    limit: 500
+    plan: pendle-starter
+  - name: Starter — per week
+    scope: api_key
+    metric: computing_units_per_week
+    limit: 1000000
+    plan: pendle-starter
+  - name: Growth — per minute
+    scope: api_key
+    metric: computing_units_per_minute
+    limit: 1000
+    plan: pendle-growth
+  - name: Growth — per week
+    scope: api_key
+    metric: computing_units_per_week
+    limit: 2000000
+    plan: pendle-growth
+  - name: Scale — per minute
+    scope: api_key
+    metric: computing_units_per_minute
+    limit: 2000
+    plan: pendle-scale
+  - name: Scale — per week
+    scope: api_key
+    metric: computing_units_per_week
+    limit: 4000000
+    plan: pendle-scale
+endpointCosts:
+  - endpoint: GET /v1/spendle/data
+    cuCost: 1
+  - endpoint: GET /v1/spendle/:address
+    cuCost: 3
+  - endpoint: GET /v1/dashboard/merkle-rewards/:user
+    cuCost: 4
+  - endpoint: POST /v3/sdk/{chainId}/convert (KyberSwap aggregator)
+    cuCost: 1
+  - endpoint: POST /v3/sdk/{chainId}/convert (OKX aggregator)
+    cuCost: 1
+  - endpoint: POST /v3/sdk/{chainId}/convert (Odos aggregator)
+    cuCost: 10
+  - endpoint: POST /v3/sdk/{chainId}/convert (ParaSwap aggregator)
+    cuCost: 15
+policies:
+  - name: Exponential Backoff
+    description: >-
+      On 429 responses, apply exponential backoff with jitter. Do not poll at fixed intervals.
+  - name: HTTP Timeouts
+    description: >-
+      Set client HTTP timeout to at least 120 seconds; Hosted SDK convert calls can take
+      several seconds when routing through multiple aggregators.
+  - name: Pagination
+    description: >-
+      For large datasets use skip/limit parameters and resumeToken. Default page size is 10;
+      maximum is 100. Avoid fetching all pages in rapid succession.
+  - name: Custom Aggregator Keys
+    description: >-
+      Pass KYBERSWAP-API-KEY, ODOS-API-KEY, OKX-API-KEY, or PARASWAP-API-KEY headers to
+      reduce that aggregator's CU cost to zero.
+  - name: No Hardcoded Limits
+    description: >-
+      Pendle advises against hardcoding rate limits in client code as limits may change
+      without notice; read limits from response headers dynamically.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
