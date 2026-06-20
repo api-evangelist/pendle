@@ -2,7 +2,7 @@ aid: pendle
 url: https://raw.githubusercontent.com/api-evangelist/pendle/refs/heads/main/apis.yml
 name: Pendle
 kind: company
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Web3
   - DeFi
@@ -35,7 +35,7 @@ apis:
       - Liquidity Pools
       - Implied APY
       - Cross-Chain
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://api-v2.pendle.finance/core
     humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
     description: >-
@@ -76,7 +76,7 @@ apis:
       - Swaps
       - Liquidity
       - Cross-Chain
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://api-v2.pendle.finance/core
     humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
     description: >-
