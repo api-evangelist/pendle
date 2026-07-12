@@ -106,6 +106,10 @@ apis:
       - DeFi aggregator routing through Pendle markets
       - Protocol composability without local SDK dependency
 common:
+  - type: VulnerabilityDisclosure
+    url: security/pendle-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/pendle-domain-security.yml
   - type: Portal
     url: https://www.pendle.finance
   - type: Documentation
@@ -128,6 +132,8 @@ common:
     url: rate-limits/pendle-rate-limits.yml
   - type: FinOps
     url: finops/pendle-finops.yml
+  - url: https://medium.com/feed/@pendle
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
