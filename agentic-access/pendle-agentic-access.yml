@@ -1,0 +1,380 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 34
+  by_action_class:
+    connected: 30
+    acting: 4
+  by_consequence:
+    read: 30
+    safety-critical: 4
+  human_in_the_loop_required: 4
+operations:
+- path: /v2/limit-orders
+  method: get
+  operationId: LimitOrdersController_getAllLimitOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/limit-orders/archived
+  method: get
+  operationId: LimitOrdersController_getAllArchivedLimitOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/limit-orders/makers/limit-orders
+  method: get
+  operationId: LimitOrdersController_getMakerLimitOrder
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/limit-orders/makers/limit-orders
+  method: post
+  operationId: LimitOrdersController_createOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/limit-orders/makers/generate-limit-order-data
+  method: post
+  operationId: LimitOrdersController_generateLimitOrderData
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/limit-orders/makers/generate-scaled-order-data
+  method: post
+  operationId: LimitOrdersController_generateScaledLimitOrderData
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/limit-orders/takers/limit-orders
+  method: get
+  operationId: LimitOrdersController_getTakerLimitOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/limit-orders/book/{chainId}
+  method: get
+  operationId: LimitOrdersController_getLimitOrderBookV2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/prices/assets
+  method: get
+  operationId: PricesCrossChainController_getAllAssetPricesByAddressesCrossChains
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v4/{chainId}/prices/{address}/ohlcv
+  method: get
+  operationId: PricesController_ohlcv_v4
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/assets/all
+  method: get
+  operationId: AssetsCrossChainController_getPendleAssetsMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/markets/all
+  method: get
+  operationId: MarketsCrossChainController_getAllMarkets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/markets/points-market
+  method: get
+  operationId: MarketsCrossChainController_getPointsMarkets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/{chainId}/markets/{address}/data
+  method: get
+  operationId: MarketsController_marketData_v2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/{chainId}/markets/{address}/historical-data
+  method: get
+  operationId: MarketsController_marketHistoricalData_v2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/ve-pendle/data
+  method: get
+  operationId: VePendleController_vePendleExtendedData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/ve-pendle/market-fees-chart
+  method: get
+  operationId: VePendleController_allMarketTotalFees
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/markets/{market}/tokens
+  method: get
+  operationId: SdkController_getMarketTokens
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/supported-aggregators
+  method: get
+  operationId: SdkController_getSupportedAggregators
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/markets/{market}/swapping-prices
+  method: get
+  operationId: SdkController_getMarketSpotSwappingPrice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/limit-order/cancel-single
+  method: get
+  operationId: SdkController_cancelSingleLimitOrder
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/limit-order/cancel-all
+  method: get
+  operationId: SdkController_cancelAllLimitOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/redeem-interests-and-rewards
+  method: get
+  operationId: SdkController_redeemInterestsAndRewards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/sdk/{chainId}/convert
+  method: get
+  operationId: SdkController_convert
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v3/sdk/{chainId}/convert
+  method: post
+  operationId: SdkController_convertV3
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v2/sdk/{chainId}/swap-pt-cross-chain
+  method: get
+  operationId: SdkController_swapPtCrossChainV2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/sdk/{chainId}/cross-chain-pt-metadata/{pt}
+  method: get
+  operationId: SdkController_getPtCrossChainMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v5/{chainId}/transactions/{address}
+  method: get
+  operationId: TransactionsController_transactionsV5
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/statistics/get-distinct-user-from-token
+  method: get
+  operationId: StatisticsController_getDistinctUserFromToken
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/chains
+  method: get
+  operationId: ChainsController_getSupportedChainIds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/dashboard/positions/database/{user}
+  method: get
+  operationId: DashboardController_getUserPositions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/dashboard/merkle-claimed-rewards/{user}
+  method: get
+  operationId: DashboardController_getMerkleClaimedRewards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/pnl/transactions
+  method: get
+  operationId: TransactionsController_getTransactions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/pendle-emission
+  method: get
+  operationId: PendleEmissionController_pendleEmission
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
