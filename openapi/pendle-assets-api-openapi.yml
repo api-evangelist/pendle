@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  title: Pendle V2 API Docs Assets API
+  description: "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n"
+  version: '1.0'
+  contact: {}
+servers:
+- url: http://127.0.0.1:9000
+tags:
+- name: Assets
+paths:
+  /v1/prices/assets:
+    get:
+      description: 'Returns USD prices for Pendle-supported tokens across all chains. Covers all token types in the Pendle app, including non-Pendle tokens (USDC, WETH, etc.) when they appear as underlying assets.
+
+
+        Prices update approximately every minute.
+
+
+        Filter by `chainId`, asset `id`, or `type` to narrow results.
+
+
+        For real-time PT/YT pre-trade prices that reflect current pool depth, use [Get swapping prices](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices) instead.'
+      operationId: PricesCrossChainController_getAllAssetPricesByAddressesCrossChains
+      parameters:
+      - name: ids
+        required: false
+        in: query
+        description: Token ids to data for (comma-separated), leave blank to fetch all tokens. Up to 20 ids allowed.
+        schema:
+          example: 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650,1-0xc5cd692e9b4622ab8cdb57c83a0f99f874a169cd
+          type: string
+      - name: chainId
+        required: false
+        in: query
+        description: Chain id to filter by, leave blank to fetch all chains.
+        schema:
+          example: 1
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of results to skip.
+        schema:
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of results to return. Leave blank to fetch all results.
+        schema:
+          type: number
+      - name: type
+        required: false
+        in: query
+        description: 'Asset types to filter by (comma-separated). Valid values: `PENDLE_LP`, `SY`, `PT`, `YT`. Leave blank to fetch all assets types.'
+        schema:
+          $ref: '#/components/schemas/PendleAssetType'
+      responses:
+        '200':
+          description: Assets chainId-address mapped to their current USD prices across all chains.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAssetPricesCrossChainResponse'
+      summary: Get asset prices (cross-chain)
+      tags:
+      - Assets
+      x-computing-unit: '1'
+      x-retail-api-rank: 6969
+  /v4/{chainId}/prices/{address}/ohlcv:
+    get:
+      description: '
+
+        Historical price data for PT / YT tokens / LP tokens. We do not support historical prices for **SY and non-Pendle tokens**.
+
+
+        The data is OHLCV data, returned in CSV format with open, high, low, close prices, and volume.
+
+
+        In the case of LP, volume data will be 0. To get the correct volume, use our [Get market time-series data by address](#tag/markets/get/v2/{chainId}/markets/{address}/historical-data) endpoint.
+
+
+
+        Returns at most 1440 data points.
+
+
+        The cost for the endpoint is based on how many data points are returned. The calculation is: `ceil(number of data points / 300)`.
+
+
+        At 1440 data points (which is 2 months of data with an hourly interval, or 4 years with a daily interval), the cost will be 5 computing units.
+
+
+        '
+      operationId: PricesController_ohlcv_v4
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: address
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: time_frame
+        required: false
+        in: query
+        description: 'Time interval for OHLCV data aggregation. Valid values: `hour`, `day`, `week`.'
+        schema:
+          default: hour
+          enum:
+          - hour
+          - day
+          - week
+          type: string
+      - name: timestamp_start
+        required: false
+        in: query
+        description: ISO Date string of the start time you want to query
+        schema:
+          format: date-time
+          type: string
+      - name: timestamp_end
+        required: false
+        in: query
+        description: ISO Date string of the end time you want to query
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: OHLCV data in CSV format with time, open, high, low, close, volume.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceOHLCVCSVResponse'
+              example:
+                total: 1
+                currency: USD
+                timeFrame: hour
+                timestamp_start: 1756245600
+                timestamp_end: 1756245600
+                results: 'time,open,high,low,close,volume
+
+                  1756245600,42.4563,42.4563,42.4563,42.4563,0.0000'
+      summary: Get PT / YT / LP historical price by address
+      tags:
+      - Assets
+      x-computing-unit: 1+
+      x-retail-api-rank: 6969
+  /v1/assets/all:
+    get:
+      description: 'Returns the flat list of all PT, YT, LP, and SY tokens supported in the Pendle app, across all chains.
+
+
+        Each entry includes: name, symbol, contract address, decimals, expiry timestamp (for PT/YT), and icon URL.
+
+
+        Filter by `chainId`, asset `id`, or `type` (pt, yt, lp, sy).
+
+
+        Prices are not included — use [Get asset prices](#tag/assets/get/v1/prices/assets) to retrieve them separately.
+
+
+        For chain-specific asset lists with richer metadata and prices bundled, use the chain-scoped [Get all assets](#tag/assets/get/v1/{chainId}/assets/all) endpoint instead.'
+      operationId: AssetsCrossChainController_getPendleAssetsMetadata
+      parameters:
+      - name: ids
+        required: false
+        in: query
+        description: Token ids to data for (comma-separated), leave blank to fetch all tokens. Up to 20 ids allowed.
+        schema:
+          example: 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650,1-0xc5cd692e9b4622ab8cdb57c83a0f99f874a169cd
+          type: string
+      - name: chainId
+        required: false
+        in: query
+        description: Chain id to filter by, leave blank to fetch all chains.
+        schema:
+          example: 1
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of results to skip.
+        schema:
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of results to return. Leave blank to fetch all results.
+        schema:
+          type: number
+      - name: type
+        required: false
+        in: query
+        description: 'Asset types to filter by (comma-separated). Valid values: `PENDLE_LP`, `SY`, `PT`, `YT`. Leave blank to fetch all assets types.'
+        schema:
+          $ref: '#/components/schemas/PendleAssetType'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAssetsCrossChainResponse'
+      summary: Get all assets (cross-chain)
+      tags:
+      - Assets
+      x-computing-unit: '1'
+      x-retail-api-rank: 1
+components:
+  schemas:
+    GetAllAssetsCrossChainResponse:
+      type: object
+      properties:
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDataCrossChain'
+      required:
+      - assets
+    PriceOHLCVCSVResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of data points available
+        currency:
+          type: string
+          deprecated: true
+          description: Always return USD
+        timeFrame:
+          type: string
+          description: Time frame of each OHLCV data point (e.g., "1h", "1d", "1w")
+        timestamp_start:
+          type: number
+          description: Start timestamp of the data range in seconds
+        timestamp_end:
+          type: number
+          description: End timestamp of the data range in seconds
+        results:
+          type: string
+          example: 'time,open,high,low,close,volume
+
+            1756245600,42.4563,42.4563,42.4563,42.4563,0.0000'
+          description: 'Resulting CSV string following the format: time,open,high,low,close,volume'
+      required:
+      - total
+      - currency
+      - timeFrame
+      - timestamp_start
+      - timestamp_end
+      - results
+    AssetDataCrossChain:
+      type: object
+      properties:
+        name:
+          type: string
+          description: asset name
+          example: PT FRAX-USDC
+        decimals:
+          type: number
+          example: 18
+          description: asset decimals
+        address:
+          type: string
+          example: '0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650'
+          description: asset address
+        symbol:
+          type: string
+          example: PT-FRAXUSDC_CurveLP Convex-30MAR2023
+          description: asset symbol
+        tags:
+          example:
+          - PT
+          description: asset tags
+          type: array
+          items:
+            type: string
+        expiry:
+          type: string
+          example: '2023-03-30T00:00:00.000Z'
+          description: asset expiry
+        proIcon:
+          type: string
+          example: https://storage.googleapis.com/prod-pendle-bucket-a/images/uploads/0d3199a2-0565-4355-ad52-6bfdc67e3467.svg
+          description: asset pro icon
+        chainId:
+          type: number
+          description: chain id
+          example: 1
+      required:
+      - name
+      - decimals
+      - address
+      - symbol
+      - tags
+      - expiry
+      - proIcon
+      - chainId
+    PendleAssetType:
+      type: string
+      enum:
+      - PENDLE_LP
+      - SY
+      - PT
+      - YT
+    GetAssetPricesCrossChainResponse:
+      type: object
+      properties:
+        prices:
+          type: object
+          additionalProperties:
+            type: number
+          example:
+            1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650: 0.9989673642973003
+            1-0xd393d1ddd6b8811a86d925f5e14014282581bc04: 1.001712
+          description: Assets prices mapped by chainId-address
+        total:
+          type: number
+          description: Total number of assets
+        skip:
+          type: number
+          description: Number of assets got skipped
+        limit:
+          type: number
+          nullable: true
+          description: Number of assets limited by the query
+      required:
+      - prices
+      - total
+      - skip

@@ -1,0 +1,1132 @@
+openapi: 3.0.0
+info:
+  title: Pendle V2 API Docs Assets SDK API
+  description: "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n"
+  version: '1.0'
+  contact: {}
+servers:
+- url: http://127.0.0.1:9000
+tags:
+- name: SDK
+paths:
+  /v1/sdk/{chainId}/markets/{market}/tokens:
+    get:
+      description: 'Returns the two sets of tokens relevant for a given market:
+
+
+        - **SY input tokens**: tokens accepted by the SY wrapper for minting/redeeming (e.g. USDC for a USDC-based market).
+
+        - **Zap tokens**: tokens that can be used as input when buying PT/YT or providing liquidity, routed via aggregators.
+
+
+        Call this before building a Convert or Swap request to know which input tokens are valid for a given market.'
+      operationId: SdkController_getMarketTokens
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: market
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketTokensResponse'
+      summary: Get supported tokens for market
+      tags:
+      - SDK
+      x-retail-api-rank: 6969
+  /v1/sdk/{chainId}/supported-aggregators:
+    get:
+      description: 'Returns the list of DEX aggregators available on this chain for routing token swaps, along with the additional computing unit cost each one adds to SDK requests.
+
+
+        Use this to decide which aggregators to include in Convert/Swap calls via the `aggregators` query param.
+
+
+        You can reduce any aggregator''s CU cost to 0 by providing your own API key in the corresponding request header. See [Reducing Aggregator Costs](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units) for details.'
+      operationId: SdkController_getSupportedAggregators
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedAggregatorsResponse'
+      summary: Get supported aggregators for a chain
+      tags:
+      - SDK
+      x-retail-api-rank: 6969
+  /v1/sdk/{chainId}/markets/{market}/swapping-prices:
+    get:
+      description: 'Return price by swapping  1 unit underlying token to PT/ YT, and 1 unit of PT/YT to the underlying token.
+
+
+        One unit is defined as 10**decimal. The result is updated every block.
+
+
+        Implied APY of the market is also included.'
+      operationId: SdkController_getMarketSpotSwappingPrice
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: market
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Return the swap output. Data is returned with corresponding asset decimals. Null indicates that it's not possible to swap the quantity, either because the market has insufficient liquidity or the market has matured.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSpotSwappingPriceResponse'
+      summary: Get real-time PT/YT swap price of a market
+      tags:
+      - SDK
+      x-retail-api-rank: 1
+  /v1/sdk/{chainId}/limit-order/cancel-single:
+    get:
+      description: 'Generate the transaction payload to cancel a specific limit order on-chain.
+
+
+        Pass the full signed order struct (from the original order creation) to identify which order to cancel. The order becomes invalid once the cancellation transaction is confirmed.'
+      operationId: SdkController_cancelSingleLimitOrder
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userAddress
+        required: true
+        in: query
+        description: User Address
+        schema:
+          type: string
+      - name: salt
+        required: true
+        in: query
+        description: BigInt string of salt
+        schema:
+          type: string
+      - name: expiry
+        required: true
+        in: query
+        description: BigInt string of expiry
+        schema:
+          type: string
+      - name: nonce
+        required: true
+        in: query
+        description: BigInt string of nonce
+        schema:
+          type: string
+      - name: orderType
+        required: true
+        in: query
+        description: 'LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }'
+        schema:
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          type: number
+      - name: token
+        required: true
+        in: query
+        description: Token used by user to make order
+        schema:
+          type: string
+      - name: YT
+        required: true
+        in: query
+        description: YT address
+        schema:
+          type: string
+      - name: maker
+        required: true
+        in: query
+        description: Maker address
+        schema:
+          type: string
+      - name: receiver
+        required: true
+        in: query
+        description: Receiver address
+        schema:
+          type: string
+      - name: makingAmount
+        required: true
+        in: query
+        description: BigInt string of making amount
+        schema:
+          type: string
+      - name: lnImpliedRate
+        required: true
+        in: query
+        description: BigInt string of lnImpliedRate (natural logarithm of the implied rate)
+        schema:
+          type: string
+      - name: failSafeRate
+        required: true
+        in: query
+        description: BigInt string of failSafeRate
+        schema:
+          type: string
+      - name: permit
+        required: true
+        in: query
+        description: Bytes string for permit
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkResponse'
+      summary: Cancel one single limit order by order hash
+      tags:
+      - SDK
+      x-computing-unit: '2'
+      x-retail-api-rank: 6969
+  /v1/sdk/{chainId}/limit-order/cancel-all:
+    get:
+      description: 'Generate the transaction payload to cancel all active limit orders for a user in a single on-chain call.
+
+
+        This works by incrementing the user''s nonce on-chain, which invalidates all previously signed orders at once. More efficient than cancelling orders one by one when clearing all open positions.'
+      operationId: SdkController_cancelAllLimitOrders
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userAddress
+        required: true
+        in: query
+        description: User Address
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Cancel all limit orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkResponse'
+      summary: Cancel all limit orders
+      tags:
+      - SDK
+      x-computing-unit: '2'
+      x-retail-api-rank: 6969
+  /v1/sdk/{chainId}/redeem-interests-and-rewards:
+    get:
+      description: 'Generate a transaction payload to claim all accrued interest and incentive rewards across multiple positions in a single call.
+
+
+        Specify which positions to claim from by passing arrays of:
+
+        - `sys`: SY token addresses (to claim SY interest)
+
+        - `yts`: YT token addresses (to claim YT interest and rewards)
+
+        - `markets`: LP market addresses (to claim LP rewards)
+
+
+        Useful for portfolio management bots or dashboards that batch-claim on behalf of users.'
+      operationId: SdkController_redeemInterestsAndRewards
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: receiver
+        required: true
+        in: query
+        description: The address to receive the output of the action
+        schema:
+          type: string
+      - name: sys
+        required: false
+        in: query
+        description: Use comma separated values to search by multiple addresses
+        schema:
+          type: string
+      - name: yts
+        required: false
+        in: query
+        description: Use comma separated values to search by multiple addresses
+        schema:
+          type: string
+      - name: markets
+        required: false
+        in: query
+        description: Use comma separated values to search by multiple addresses
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Redeem rewards and interests from positions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedeemInterestsAndRewardsResponse'
+      summary: Redeem rewards and interests from positions
+      tags:
+      - SDK
+      x-computing-unit: '5'
+      x-retail-api-rank: 2
+  /v2/sdk/{chainId}/convert:
+    get:
+      description: '
+
+        The **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.
+
+
+        The action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.
+
+
+        | Action                                                | tokensIn              | tokensOut       | Note                                                                                                                                                                                                                                 |
+
+        |-------------------------------------------------------|-----------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | Swap from PT to token (sell PT)                       | [PT]                  | [token]         | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Swap from token to PT (buy PT)                        | [token]               | [PT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap from YT to token (sell YT)                       | [YT]                  | [token]         | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap from token to YT (buy YT)                        | [token]               | [YT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap between PT and YT                                | [PT] or [YT]          | [YT] or [PT]    | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Add liquidity dual (using both token and PT)          | [token, PT]           | [LP]            | Only callable until the market''s expiry.                                                                                                                                                                                             |
+
+        | Add liquidity single (using token or PT)              | [token] or [PT]       | [LP]            | Only callable until the market''s expiry.                                                                                                                                                                                             |
+
+        | Add liquidity single ZPI (using token or PT, keep YT) | [token] or [PT]       | [LP, YT]        | Zero-price impact provision is supported where no price impact will incur, and users will receive LP and YT (less LP compared to normal mode). Only callable until the market''s expiry.                                              |
+
+        | Remove liquidity dual (get back both token and PT)    | [LP]                  | [token, PT]     | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Remove liquidity single (get back either token or PT) | [LP]                  | [token] or [PT] | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Mint PT & YT                                          | [token]               | [PT, YT]        | Only callable until YT''s expiry                                                                                                                                                                                                      |
+
+        | Redeem PT & YT                                        | [PT, YT]              | [token]         | If called before YT''s expiry, both PT & YT of equal amounts are needed and will be burned. Else, only PT is needed and will be burned.                                                                                               |
+
+        | Transfer liquidity between markets                    | [LP, PT, YT]          | [LP]            | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market.                      |
+
+        | Transfer liquidity ZPI                                | [LP, PT, YT]          | [LP, YT]        | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market with no price impact. |
+
+        | Mint SY                                               | [token]               | [SY]            |                                                                                                                                                                                                                                      |
+
+        | Redeem SY                                             | [SY]                  | [token]         |                                                                                                                                                                                                                                      |
+
+        | Swap PT between markets (Roll over pts)               | [PT]                  | [PT]            | PT is redeemed for the underlying asset and used to buy the new PT.                                                                                                                                                                  |
+
+        | Exit market                                           | [LP, PT, YT]          | [token]         | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work.                                                                                                                                                       |
+
+        | Swap LP to PT between markets                         | [LP]                  | [PT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Pendle swap (swap multiple ERC20 tokens to 1 token)   | [token1, token2, ...] | [token]         | Support at most 3 tokens in                                                                                                                                                                                                          |
+
+
+        `tokensIn` and `tokensOut` are the input and output tokens for the action, should be seperate by comma with no spaces.
+
+
+        Example if your action requires 2 tokensIn, you can pass `tokensIn=0x123,0x456`
+
+
+        For code examples and migration from individual SDK endpoints, see the [Hosted SDK documentation](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#examples).
+
+
+        ## Computing cost
+
+
+        This API will consume 5 computing units if no aggregator is used, with no additional data.
+
+        Enabling aggregator will consume additional computing units, each aggregator cost differently, and could be check at: [Get supported aggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)
+
+
+        Refer to our document for guide to reduce CU usage with aggregators: [Reduce CU Usage](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units-v2-endpoints-only)
+
+        '
+      operationId: SdkController_convert
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: receiver
+        required: false
+        in: query
+        description: Recipient address for transaction output
+        schema:
+          type: string
+      - name: slippage
+        required: true
+        in: query
+        description: Maximum slippage tolerance (0-1, where 0.01 equals 1%)
+        schema:
+          type: number
+      - name: enableAggregator
+        required: false
+        in: query
+        description: Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset
+        schema:
+          default: false
+          type: boolean
+      - name: aggregators
+        required: false
+        in: query
+        description: 'List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)'
+        schema:
+          example: kyberswap,okx
+          type: string
+      - name: tokensIn
+        required: true
+        in: query
+        description: Input token addresses, seperate by comma with no spaces
+        schema:
+          example: 0x123,0x456
+          type: string
+      - name: amountsIn
+        required: true
+        in: query
+        description: Input token amounts in wei, seperate by comma with no spaces
+        schema:
+          example: 1000000000000000000,2000000000000000000
+          type: string
+      - name: tokensOut
+        required: true
+        in: query
+        description: Output token addresses, seperate by comma with no spaces
+        schema:
+          example: 0x123,0x456
+          type: string
+      - name: redeemRewards
+        required: false
+        in: query
+        description: Redeem rewards
+        schema:
+          default: false
+          type: boolean
+      - name: needScale
+        required: false
+        in: query
+        description: Aggregators needScale value, only set to true when amounts are updated onchain. When enabled, please make sure to buffer the amountIn by about 2%
+        schema:
+          default: false
+          type: boolean
+      - name: additionalData
+        required: false
+        in: query
+        description: 'Available fields: `impliedApy`, `effectiveApy`. Comma separated list of fields to return. For example: `field1,field2`. More fields will consume more computing units.'
+        schema:
+          type: string
+      - name: useLimitOrder
+        required: false
+        in: query
+        description: To use limit orders when converting, default to true
+        schema:
+          default: true
+          type: boolean
+      responses:
+        '200':
+          description: The detected action and data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiRouteConvertResponse'
+      summary: Universal convert function
+      tags:
+      - SDK
+      x-computing-unit: 5+
+      x-retail-api-rank: 0
+  /v3/sdk/{chainId}/convert:
+    post:
+      description: '
+
+        The **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.
+
+
+        The action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.
+
+
+        | Action                                                | tokensIn              | tokensOut       | Note                                                                                                                                                                                                                                 |
+
+        |-------------------------------------------------------|-----------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+        | Swap from PT to token (sell PT)                       | [PT]                  | [token]         | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Swap from token to PT (buy PT)                        | [token]               | [PT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap from YT to token (sell YT)                       | [YT]                  | [token]         | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap from token to YT (buy YT)                        | [token]               | [YT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Swap between PT and YT                                | [PT] or [YT]          | [YT] or [PT]    | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Add liquidity dual (using both token and PT)          | [token, PT]           | [LP]            | Only callable until the market''s expiry.                                                                                                                                                                                             |
+
+        | Add liquidity single (using token or PT)              | [token] or [PT]       | [LP]            | Only callable until the market''s expiry.                                                                                                                                                                                             |
+
+        | Add liquidity single ZPI (using token or PT, keep YT) | [token] or [PT]       | [LP, YT]        | Zero-price impact provision is supported where no price impact will incur, and users will receive LP and YT (less LP compared to normal mode). Only callable until the market''s expiry.                                              |
+
+        | Remove liquidity dual (get back both token and PT)    | [LP]                  | [token, PT]     | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Remove liquidity single (get back either token or PT) | [LP]                  | [token] or [PT] | Callable regardless of the market''s expiry                                                                                                                                                                                           |
+
+        | Mint PT & YT                                          | [token]               | [PT, YT]        | Only callable until YT''s expiry                                                                                                                                                                                                      |
+
+        | Redeem PT & YT                                        | [PT, YT]              | [token]         | If called before YT''s expiry, both PT & YT of equal amounts are needed and will be burned. Else, only PT is needed and will be burned.                                                                                               |
+
+        | Transfer liquidity between markets                    | [LP, PT, YT]          | [LP]            | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market.                      |
+
+        | Transfer liquidity ZPI                                | [LP, PT, YT]          | [LP, YT]        | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market with no price impact. |
+
+        | Mint SY                                               | [token]               | [SY]            |                                                                                                                                                                                                                                      |
+
+        | Redeem SY                                             | [SY]                  | [token]         |                                                                                                                                                                                                                                      |
+
+        | Swap PT between markets (Roll over pts)               | [PT]                  | [PT]            | PT is redeemed for the underlying asset and used to buy the new PT.                                                                                                                                                                  |
+
+        | Exit market                                           | [LP, PT, YT]          | [token]         | tokensIn doesn''t need to include all 3 tokens; any number of tokens will work.                                                                                                                                                       |
+
+        | Swap LP to PT between markets                         | [LP]                  | [PT]            | Only callable until the market''s expiry                                                                                                                                                                                              |
+
+        | Pendle swap (swap multiple ERC20 tokens to 1 token)   | [token1, token2, ...] | [token]         | Support at most 3 tokens in                                                                                                                                                                                                          |
+
+
+        `tokensIn` and `tokensOut` are the input and output tokens for the action, should be seperate by comma with no spaces.
+
+
+        Example if your action requires 2 tokensIn, you can pass `tokensIn=0x123,0x456`
+
+
+        For code examples and migration from individual SDK endpoints, see the [Hosted SDK documentation](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#examples).
+
+
+        ## Computing cost
+
+
+        This API will consume 5 computing units if no aggregator is used, with no additional data.
+
+        Enabling aggregator will consume additional computing units, each aggregator cost differently, and could be check at: [Get supported aggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)
+
+
+        Refer to our document for guide to reduce CU usage with aggregators: [Reduce CU Usage](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units-v2-endpoints-only)
+
+
+        ---
+
+
+        **This is the v3 (POST) variant.** It accepts `inputs` and `outputs` as a JSON request body instead of query parameters — cleaner for multi-token inputs and easier to integrate in typed clients. **Prefer this over v2 (GET) for new integrations.**
+
+        '
+      operationId: SdkController_convertV3
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConvertV3Dto'
+      responses:
+        '200':
+          description: The detected action and data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiRouteConvertResponse'
+      summary: Universal convert function (recommended — POST body variant)
+      tags:
+      - SDK
+      x-computing-unit: 5+
+      x-retail-api-rank: 0
+  /v2/sdk/{chainId}/swap-pt-cross-chain:
+    get:
+      description: 'Swap a bridged PT on a spoke chain back to a regular token using the fixed-price PT AMM.
+
+
+        This is specifically for **cross-chain PT redemption flows** where PT has been bridged to a non-primary chain. The fixed-price AMM prices PT based on time-to-maturity, independent of pool liquidity.
+
+
+        Supports both:
+
+        - Exact PT input → token output
+
+        - Exact token output ← PT input (pass the required token amount; the system calculates PT needed)
+
+
+        Only valid on supported spoke chains.'
+      operationId: SdkController_swapPtCrossChainV2
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: receiver
+        required: false
+        in: query
+        description: Recipient address for transaction output
+        schema:
+          type: string
+      - name: slippage
+        required: true
+        in: query
+        description: Maximum slippage tolerance (0-1, where 0.01 equals 1%)
+        schema:
+          type: number
+      - name: enableAggregator
+        required: false
+        in: query
+        description: Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset
+        schema:
+          default: false
+          type: boolean
+      - name: aggregators
+        required: false
+        in: query
+        description: 'List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)'
+        schema:
+          example: kyberswap,okx
+          type: string
+      - name: pt
+        required: true
+        in: query
+        description: PT token address
+        schema:
+          type: string
+      - name: exactPtIn
+        required: true
+        in: query
+        description: Exact amount value PT in
+        schema:
+          type: string
+      - name: tokenOut
+        required: true
+        in: query
+        description: Output token address
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Swap PT cross-chain using fixed price AMM
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapWithFixedPricePtAmmResponse'
+      summary: Swap PT using fixed price AMM for cross-chain operations
+      tags:
+      - SDK
+      x-computing-unit: '5'
+      x-retail-api-rank: 4
+  /v1/sdk/{chainId}/cross-chain-pt-metadata/{pt}:
+    get:
+      description: 'Returns metadata for a PT that has been bridged to a spoke chain, including maturity, underlying asset details, and fixed-price AMM parameters.
+
+
+        Use this to verify that a bridged PT is supported on the current chain and to fetch its pricing parameters before calling [Swap PT cross-chain](#tag/sdk/get/v2/{chainId}/swap-pt-cross-chain).'
+      operationId: SdkController_getPtCrossChainMetadata
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: pt
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Metadata of a bridged PT on selected spoke chain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PtCrossChainMetadataResponse'
+      summary: PT cross-chain metadata
+      tags:
+      - SDK
+      x-retail-api-rank: 6969
+components:
+  schemas:
+    ContractParamInfo:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
+    SupportedAggregatorsResponse:
+      type: object
+      properties:
+        aggregators:
+          description: List of supported aggregators with their computing units
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedAggregator'
+      required:
+      - aggregators
+    TransactionDto:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Transaction data
+        to:
+          type: string
+          description: Transaction receiver
+        from:
+          type: string
+          description: Transaction sender
+        value:
+          type: string
+          description: Transaction value
+      required:
+      - data
+      - to
+      - from
+      - value
+    MultiRouteConvertResponse:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - swap
+          - add-liquidity
+          - remove-liquidity
+          - exit-market
+          - transfer-liquidity
+          - roll-over-pt
+          - add-liquidity-dual
+          - remove-liquidity-dual
+          - mint-py
+          - redeem-py
+          - mint-sy
+          - redeem-sy
+          - pendle-swap
+          - convert-lp-to-pt
+          description: The action that was performed
+        inputs:
+          description: Input token amounts for the action
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        requiredApprovals:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConvertResponse'
+        rewards:
+          description: Reward token amounts from redeem action
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+      required:
+      - action
+      - inputs
+      - routes
+    MarketTokensResponse:
+      type: object
+      properties:
+        tokensMintSy:
+          description: tokens can be use for tokenMintSy
+          type: array
+          items:
+            type: string
+        tokensRedeemSy:
+          description: tokens can be use for tokenRedeemSy
+          type: array
+          items:
+            type: string
+        tokensIn:
+          description: input tokens of swap or zap function
+          type: array
+          items:
+            type: string
+        tokensOut:
+          description: output tokens of swap or zap function
+          type: array
+          items:
+            type: string
+      required:
+      - tokensMintSy
+      - tokensRedeemSy
+      - tokensIn
+      - tokensOut
+    SwapWithFixedPricePtAmmData:
+      type: object
+      properties:
+        netTokenOut:
+          type: string
+          description: Net token output amount
+      required:
+      - netTokenOut
+    PtCrossChainMetadataResponse:
+      type: object
+      properties:
+        pairedTokensOut:
+          description: Array of token addresses that the PT can be swapped to
+          type: array
+          items:
+            type: string
+        ammAddress:
+          type: string
+          description: The address of the AMM
+      required:
+      - pairedTokensOut
+    TokenAmountResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        amount:
+          type: string
+      required:
+      - token
+      - amount
+    ConvertData:
+      type: object
+      properties:
+        aggregatorType:
+          type: string
+        priceImpact:
+          type: number
+        impliedApy:
+          $ref: '#/components/schemas/ImpliedApy'
+        priceImpactBreakDown:
+          $ref: '#/components/schemas/PriceImpactBreakDownData'
+        effectiveApy:
+          type: number
+        paramsBreakdown:
+          description: Parameter breakdown for transfer liquidity
+          allOf:
+          - $ref: '#/components/schemas/ParamsBreakdown'
+        fee:
+          description: Fee in USD
+          allOf:
+          - $ref: '#/components/schemas/FeeUsd'
+      required:
+      - aggregatorType
+      - priceImpact
+      - priceImpactBreakDown
+    OKXCustomParamsDto:
+      type: object
+      properties:
+        fromTokenReferrerWalletAddress:
+          type: string
+        toTokenReferrerWalletAddress:
+          type: string
+        feePercent:
+          type: number
+        positiveSlippagePercent:
+          type: number
+    ConvertResponse:
+      type: object
+      properties:
+        contractParamInfo:
+          description: Contract params info
+          allOf:
+          - $ref: '#/components/schemas/ContractParamInfo'
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        outputs:
+          description: Output token amounts from the action
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        data:
+          $ref: '#/components/schemas/ConvertData'
+      required:
+      - contractParamInfo
+      - tx
+      - outputs
+      - data
+    FeeUsd:
+      type: object
+      properties:
+        usd:
+          type: number
+      required:
+      - usd
+    ParamsBreakdown:
+      type: object
+      properties:
+        selfCall1:
+          $ref: '#/components/schemas/ContractParamInfo'
+        selfCall2:
+          $ref: '#/components/schemas/ContractParamInfo'
+        reflectCall:
+          $ref: '#/components/schemas/ContractParamInfo'
+      required:
+      - selfCall1
+      - reflectCall
+    GetSpotSwappingPriceResponse:
+      type: object
+      properties:
+        underlyingToken:
+          type: string
+          description: underlying token address that will be used for swapping
+        underlyingTokenToPtRate:
+          type: object
+          description: number of PT by swapping 1 underlying token. If the swap can not be done, this value will be null
+          nullable: true
+        ptToUnderlyingTokenRate:
+          type: object
+          description: number of underlying token by swapping 1 PT. If the swap can not be done, this value will be null
+          nullable: true
+        underlyingTokenToYtRate:
+          type: object
+          description: number of YT by swapping 1 underlying token. If the swap can not be done, this value will be null
+          nullable: true
+        ytToUnderlyingTokenRate:
+          type: object
+          description: number of underlying token by swapping 1 YT. If the swap can not be done, this value will be null
+          nullable: true
+        impliedApy:
+          type: number
+          description: implied apy of the given market
+      required:
+      - underlyingToken
+      - underlyingTokenToPtRate
+      - ptToUnderlyingTokenRate
+      - underlyingTokenToYtRate
+      - ytToUnderlyingTokenRate
+      - impliedApy
+    ConvertV3Dto:
+      type: object
+      properties:
+        receiver:
+          type: string
+          description: Recipient address for transaction output
+        slippage:
+          type: number
+          description: Maximum slippage tolerance (0-1, where 0.01 equals 1%)
+        enableAggregator:
+          type: boolean
+          default: false
+          description: Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset
+        aggregators:
+          description: 'List of aggregator names to use for the swap. If not provided, default aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)'
+          type: array
+          items:
+            type: string
+        inputs:
+          description: List of input tokens and their amounts
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountDto'
+        outputs:
+          description: Output token addresses
+          type: array
+          items:
+            type: string
+        redeemRewards:
+          type: boolean
+          description: Redeem rewards
+          default: false
+        needScale:
+          type: boolean
+          description: Aggregators needScale value, only set to true when amounts are updated onchain. When enabled, please make sure to buffer the amountIn by about 2%
+          default: false
+        additionalData:
+          type: string
+          description: 'Available fields: `impliedApy`, `effectiveApy`. Comma separated list of fields to return. For example: `field1,field2`. More fields will consume more computing units.'
+        useLimitOrder:
+          type: boolean
+          description: To use limit orders when converting, default to true
+          default: true
+        okxSwapParams:
+          $ref: '#/components/schemas/OKXCustomParamsDto'
+      required:
+      - slippage
+      - inputs
+      - outputs
+    ImpliedApy:
+      type: object
+      properties:
+        before:
+          type: number
+        after:
+          type: number
+      required:
+      - before
+      - after
+    SdkResponse:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        tokenApprovals:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
+      - tx
+    RedeemInterestsAndRewardsResponse:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        tokenApprovals:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
+      - tx
+    SupportedAggregator:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the aggregator, e.g., kyberswap, okx, odos, paraswap
+          example: kyberswap
+        computingUnit:
+          type: number
+          description: Computing unit required for the aggregator
+          example: 5
+      required:
+      - name
+      - computingUnit
+    PriceImpactBreakDownData:
+      type: object
+      properties:
+        internalPriceImpact:
+          type: number
+        externalPriceImpact:
+          type: number
+      required:
+      - internalPriceImpact
+      - externalPriceImpact
+    TokenAmountDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address
+        amount:
+          type: string
+          description: Token amount in wei
+      required:
+      - token
+      - amount
+    SwapWithFixedPricePtAmmResponse:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        tokenApprovals:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        data:
+          $ref: '#/components/schemas/SwapWithFixedPricePtAmmData'
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
+      - tx
+      - data

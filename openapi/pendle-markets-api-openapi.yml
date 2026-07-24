@@ -1,0 +1,686 @@
+openapi: 3.0.0
+info:
+  title: Pendle V2 API Docs Assets Markets API
+  description: "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n"
+  version: '1.0'
+  contact: {}
+servers:
+- url: http://127.0.0.1:9000
+tags:
+- name: Markets
+paths:
+  /v1/markets/all:
+    get:
+      description: 'Returns the complete list of whitelisted Pendle markets across all supported chains with their metadata and current data.
+
+
+        Filter by `chainId`, `isActive`, or `ids` (comma-separated market IDs in `chainId-address` format).
+
+
+        This is the recommended starting point for discovering and monitoring Pendle markets across all chains. For chain-scoped data with additional fields, use [Get markets](#tag/markets/get/v1/{chainId}/markets) instead.'
+      operationId: MarketsCrossChainController_getAllMarkets
+      parameters:
+      - name: isActive
+        required: false
+        in: query
+        description: Filter to active or inactive markets
+        schema:
+          type: boolean
+      - name: chainId
+        required: false
+        in: query
+        description: Filter to markets on a specific blockchain network
+        schema:
+          type: number
+      - name: ids
+        required: false
+        in: query
+        description: Market ids to fetch metadata for (comma-separated), leave blank to fetch all markets. Up to 20 ids allowed.
+        schema:
+          example: 1-0x7b246b8dbc2a640bf2d8221890cee8327fc23917,1-0x44474d98d1484c26e8d296a43a721998731cf775
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMarketsCrossChainResponse'
+      summary: Get all markets (cross-chain)
+      tags:
+      - Markets
+      x-computing-unit: '1'
+      x-retail-api-rank: 1
+  /v1/markets/points-market:
+    get:
+      description: 'Returns all active markets that have a points reward programme — markets where trading or providing liquidity earns points from the underlying protocol.
+
+
+        The response includes the points configuration for each market (point name, reward rate, etc.) and the associated market ID. To fetch full market metadata for these markets, call [Get all markets](#tag/markets/get/v1/markets/all) and filter by the returned IDs.'
+      operationId: MarketsCrossChainController_getPointsMarkets
+      parameters:
+      - name: isActive
+        required: false
+        in: query
+        description: Filter to active or inactive markets
+        deprecated: true
+        schema:
+          type: boolean
+      - name: chainId
+        required: false
+        in: query
+        description: Filter to markets on a specific blockchain network
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPointsMarketsResponse'
+      summary: Get points markets
+      tags:
+      - Markets
+      x-computing-unit: '1'
+      x-retail-api-rank: 2
+  /v2/{chainId}/markets/{address}/data:
+    get:
+      description: 'Returns the latest or historical data snapshot for a given market.
+
+
+        Pass a `timestamp` query param (Unix seconds) to retrieve the market state at a specific point in time. Omit it for the current snapshot.
+
+
+        For time-series data (charts/analytics), prefer the [historical-data](#tag/markets/get/v2/{chainId}/markets/{address}/historical-data) endpoint.'
+      operationId: MarketsController_marketData_v2
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: address
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: timestamp
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: Returns market latest detailed data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketDataResponse'
+      summary: Get latest/historical market data by address
+      tags:
+      - Markets
+      x-retail-api-rank: 6969
+  /v2/{chainId}/markets/{address}/historical-data:
+    get:
+      description: "\nReturns the time-series data for a given market. Useful to draw charts or do data analysis.\n\nThis endpoint supports field selection via the `fields` query parameter. \n\nTable below shows the available fields and their descriptions.\n\n| Field | Description |\n|-------|-------------|\n| timestamp | Timestamp in ISO format|\n| baseApy | APY including yield, swap fee and Pendle rewards without boosting|\n| impliedApy | Implied APY of market|\n| lastEpochVotes | Last epoch votes|\n| lpPrice | LP price in USD|\n| lpRewardApy | APY from LP reward tokens|\n| maxApy | APY when maximum boost is applied|\n| pendleApy | APY from Pendle rewards|\n| ptPrice | PT price in USD|\n| swapFeeApy | Swap fee APY for LP holders, without boosting|\n| syPrice | SY price in USD|\n| totalPt | Total PT in the market|\n| totalSupply | Total supply of the LP token|\n| totalSy | Total SY in the market|\n| totalTvl | Market total TVL (including floating PT that are not in the AMM) in USD|\n| tradingVolume | 24h trading volume in USD|\n| tvl | Market liquidity (TVL in the pool) in USD|\n| underlyingApy | APY of the underlying asset|\n| underlyingInterestApy | Annual percentage yield from the underlying asset interest|\n| underlyingRewardApy | Annual percentage yield from the underlying asset rewards|\n| voterApr | APY for voters (vePENDLE holders) from voting on this pool|\n| ytFloatingApy | Floating APY for YT holders (underlyingApy - impliedApy)|\n| ytPrice | YT price in USD|\n\n\nReturns at most 1440 data points.\n\nThe cost for the endpoint is based on how many data points are returned. The calculation is: `ceil(number of data points / 300)`.\n\nAt 1440 data points (which is 2 months of data with an hourly interval, or 4 years with a daily interval), the cost will be 5 computing units.\n\n"
+      operationId: MarketsController_marketHistoricalData_v2
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: address
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: time_frame
+        required: false
+        in: query
+        schema:
+          default: hour
+          enum:
+          - hour
+          - day
+          - week
+          type: string
+      - name: timestamp_start
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: timestamp_end
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: fields
+        required: false
+        in: query
+        description: "Comma-separated list of fields to include in the response. Use `all` to include all fields. Available fields could be found in the table above. \n\nAlthough you could use `all` to include all fields, it is not recommended because the bigger the payload is, the slower the response will be."
+        schema:
+          default: underlyingApy,impliedApy,maxApy,baseApy,tvl
+          example: timestamp,maxApy,baseApy,underlyingApy,impliedApy,tvl,totalTvl,underlyingInterestApy,underlyingRewardApy,ytFloatingApy,swapFeeApy,voterApr,pendleApy,lpRewardApy,totalPt,totalSy,totalSupply,ptPrice,ytPrice,syPrice,lpPrice,lastEpochVotes,tradingVolume
+          type: string
+      - name: includeFeeBreakdown
+        required: false
+        in: query
+        description: "Whether you want to fetch fee breakdown data. Default is false. If enable, the response will include 3 fields: explicitSwapFee, implicitSwapFee, limitOrderFee and computing unit cost will be doubled. \n\nFee breakdown is only available for daily and weekly timeframes."
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Historical data for the market
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketHistoricalDataResponse'
+      summary: Get market time-series data by address
+      tags:
+      - Markets
+      x-computing-unit: 1+
+      x-retail-api-rank: 3
+components:
+  schemas:
+    EstimatedDailyPoolRewardResponse:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/AssetBasicResponse'
+        amount:
+          type: number
+      required:
+      - asset
+      - amount
+    MarketDataResponse:
+      type: object
+      properties:
+        timestamp:
+          format: date-time
+          type: string
+          description: Timestamp of the market data snapshot
+        liquidity:
+          description: Market liquidity, this is the liquidity of PT and SY in the AMM
+          allOf:
+          - $ref: '#/components/schemas/ValuationResponse'
+        tradingVolume:
+          description: Market 24h trading volume
+          allOf:
+          - $ref: '#/components/schemas/ValuationResponse'
+        totalTvl:
+          nullable: true
+          description: Market total TVL (including floating PT that are not in the AMM)
+          allOf:
+          - $ref: '#/components/schemas/ValuationResponse'
+        underlyingInterestApy:
+          type: number
+          description: Annual percentage yield from the underlying asset interest
+        underlyingRewardApy:
+          type: number
+          description: Annual percentage yield from the underlying asset rewards
+        underlyingApy:
+          type: number
+          description: APY of the underlying asset
+        impliedApy:
+          type: number
+          description: Implied APY of market
+        ytFloatingApy:
+          type: number
+          description: Floating APY for YT holders (underlyingApy - impliedApy)
+        swapFeeApy:
+          type: number
+          description: Swap fee APY for LP holders, without boosting
+        voterApy:
+          type: number
+          description: APY for voters (vePENDLE holders) from voting on this pool
+        ptDiscount:
+          type: number
+          description: PT discount relative to underlying asset
+        pendleApy:
+          type: number
+          description: APY from Pendle rewards
+        arbApy:
+          type: number
+          description: APY from arbitrage opportunities
+        lpRewardApy:
+          type: number
+          description: APY from LP reward tokens
+        aggregatedApy:
+          type: number
+          description: APY including yield, swap fee and Pendle rewards without boosting
+        maxBoostedApy:
+          type: number
+          description: APY when maximum boost is applied
+        estimatedDailyPoolRewards:
+          description: Estimated daily pool rewards broken down by asset
+          type: array
+          items:
+            $ref: '#/components/schemas/EstimatedDailyPoolRewardResponse'
+        totalPt:
+          type: number
+          description: Total PT in the market
+        totalSy:
+          type: number
+          description: Total SY in the market
+        totalLp:
+          type: number
+          description: Total supply of the LP token
+        totalActiveSupply:
+          type: number
+          description: Total active supply of the LP token, used for calculate boosting
+        assetPriceUsd:
+          type: number
+          description: Price of the accounting asset in USD
+      required:
+      - timestamp
+      - liquidity
+      - tradingVolume
+      - underlyingInterestApy
+      - underlyingRewardApy
+      - underlyingApy
+      - impliedApy
+      - ytFloatingApy
+      - swapFeeApy
+      - voterApy
+      - ptDiscount
+      - pendleApy
+      - lpRewardApy
+      - aggregatedApy
+      - maxBoostedApy
+      - estimatedDailyPoolRewards
+      - totalPt
+      - totalSy
+      - totalLp
+      - totalActiveSupply
+      - assetPriceUsd
+    PointMetadataEntity:
+      type: object
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          description: Either "multiplier" or "points-per-asset"
+          enum:
+          - multiplier
+          - points-per-asset
+        pendleAsset:
+          type: string
+          description: Either "basic" or "lp"
+          enum:
+          - basic
+          - lp
+        externalDashboardURL:
+          type: string
+        value:
+          type: number
+        perDollarLp:
+          type: boolean
+      required:
+      - key
+      - type
+      - pendleAsset
+      - externalDashboardURL
+      - value
+      - perDollarLp
+    MarketCrossChainData:
+      type: object
+      properties:
+        name:
+          type: string
+          description: market name
+          example: crvUSD
+        address:
+          type: string
+          description: market address
+          example: '0x386f90eb964a477498b528a39d9405e73ed4032b'
+        expiry:
+          type: string
+          description: market expiry date
+          example: '2024-03-28T00:00:00.000Z'
+        pt:
+          type: string
+          description: market pt id
+          example: 1-0xb87511364014c088e30f872efc4a00d7efb843ac
+        yt:
+          type: string
+          description: market yt id
+          example: 1-0xed97f94dd94255637a054098604e0201c442a3fd
+        sy:
+          type: string
+          description: market sy id
+          example: 1-0xe05082b184a34668cd8a904d85fa815802bbb04c
+        underlyingAsset:
+          type: string
+          description: market underlying asset id
+          example: 1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32
+        details:
+          description: Market details including liquidity, APY, fee rate, and yield range
+          allOf:
+          - $ref: '#/components/schemas/MarketDetailsV2Entity'
+        isNew:
+          type: boolean
+          description: Whether the market is new
+        isPrime:
+          type: boolean
+          description: Whether the market is prime
+        timestamp:
+          format: date-time
+          type: string
+          description: Market deployed timestamp
+        lpWrapper:
+          type: string
+          description: LP wrapper address
+        categoryIds:
+          description: Market category IDs
+          example:
+          - btc
+          - stables
+          type: array
+          items:
+            type: string
+        isVolatile:
+          type: boolean
+          description: Whether the market is volatile
+        chainId:
+          type: number
+          description: chain id
+          example: 1
+      required:
+      - name
+      - address
+      - expiry
+      - pt
+      - yt
+      - sy
+      - underlyingAsset
+      - details
+      - isNew
+      - isPrime
+      - timestamp
+      - chainId
+    AssetBasicResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        chainId:
+          type: number
+        address:
+          type: string
+        symbol:
+          type: string
+        decimals:
+          type: number
+        expiry:
+          format: date-time
+          type: string
+          nullable: true
+        accentColor:
+          type: string
+          nullable: true
+        price:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/ValuationResponse'
+        priceUpdatedAt:
+          format: date-time
+          type: string
+          nullable: true
+        name:
+          type: string
+      required:
+      - id
+      - chainId
+      - address
+      - symbol
+      - decimals
+      - name
+    MarketDetailsV2Entity:
+      type: object
+      properties:
+        liquidity:
+          type: number
+          description: market liquidity in USD, this is the liquidity of PT and SY in the AMM
+          example: 1234567.89
+        totalTvl:
+          type: number
+          description: market total TVL (including floating PT that are not in the AMM) in USD
+          example: 1234567.89
+        tradingVolume:
+          type: number
+          description: market 24h trading volume in USD
+          example: 1234567.89
+        underlyingApy:
+          type: number
+          description: APY of the underlying asset
+          example: 0.01
+        swapFeeApy:
+          type: number
+          description: swap fee APY for LP holders, without boosting
+          example: 0.01
+        pendleApy:
+          type: number
+          description: APY from Pendle rewards
+          example: 0.456
+        impliedApy:
+          type: number
+          description: implied APY of market
+          example: 0.123
+        feeRate:
+          type: number
+          description: market fee rate
+          example: 0.003
+        yieldRange:
+          description: Historical implied APY range for this market
+          allOf:
+          - $ref: '#/components/schemas/YieldRangeResponse'
+        aggregatedApy:
+          type: number
+          description: APY including yield, swap fee and Pendle rewards without boosting
+          example: 0.123
+        maxBoostedApy:
+          type: number
+          description: APY when maximum boost is applies
+          example: 0.123
+        totalPt:
+          type: number
+          description: total PT in the market
+          example: 1234567.89
+        totalSy:
+          type: number
+          description: total SY in the market
+          example: 1234567.89
+        totalSupply:
+          type: number
+          description: total supply of the LP token
+          example: 1234567.89
+        totalActiveSupply:
+          type: number
+          description: total active supply of the LP token, used for calculate boosting
+          example: 1234567.89
+      required:
+      - liquidity
+      - totalTvl
+      - tradingVolume
+      - underlyingApy
+      - swapFeeApy
+      - pendleApy
+      - impliedApy
+      - feeRate
+      - yieldRange
+      - aggregatedApy
+      - maxBoostedApy
+      - totalPt
+      - totalSy
+      - totalSupply
+      - totalActiveSupply
+    ValuationResponse:
+      type: object
+      properties:
+        usd:
+          type: number
+          nullable: true
+          description: Value in USD
+        acc:
+          type: number
+          nullable: true
+          description: Value in the market's accounting asset (e.g. USDC for a USDC-denominated market)
+    GetMarketsCrossChainResponse:
+      type: object
+      properties:
+        markets:
+          description: List of all whitelisted Pendle markets across all supported chains
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketCrossChainData'
+      required:
+      - markets
+    YieldRangeResponse:
+      type: object
+      properties:
+        min:
+          type: number
+          description: Minimum historical implied APY for this market
+        max:
+          type: number
+          description: Maximum historical implied APY for this market
+      required:
+      - min
+      - max
+    GetPointsMarketsResponse:
+      type: object
+      properties:
+        markets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketPointsEntity'
+      required:
+      - markets
+    MarketHistoricalDataPoint:
+      type: object
+      properties:
+        timestamp:
+          format: date-time
+          type: string
+          description: Timestamp in ISO format
+        maxApy:
+          type: number
+          description: APY when maximum boost is applied
+        baseApy:
+          type: number
+          description: APY including yield, swap fee and Pendle rewards without boosting
+        underlyingApy:
+          type: number
+          description: APY of the underlying asset
+        impliedApy:
+          type: number
+          description: Implied APY of market
+        tvl:
+          type: number
+          description: Market liquidity (TVL in the pool) in USD
+        totalTvl:
+          type: number
+          description: Market total TVL (including floating PT that are not in the AMM) in USD
+        underlyingInterestApy:
+          type: number
+          description: Annual percentage yield from the underlying asset interest
+        underlyingRewardApy:
+          type: number
+          description: Annual percentage yield from the underlying asset rewards
+        ytFloatingApy:
+          type: number
+          description: Floating APY for YT holders (underlyingApy - impliedApy)
+        swapFeeApy:
+          type: number
+          description: Swap fee APY for LP holders, without boosting
+        voterApr:
+          type: number
+          description: APY for voters (vePENDLE holders) from voting on this pool
+        pendleApy:
+          type: number
+          description: APY from Pendle rewards
+        lpRewardApy:
+          type: number
+          description: APY from LP reward tokens
+        totalPt:
+          type: number
+          description: Total PT in the market
+        totalSy:
+          type: number
+          description: Total SY in the market
+        totalSupply:
+          type: number
+          description: Total supply of the LP token
+        ptPrice:
+          type: number
+          description: PT price in USD
+        ytPrice:
+          type: number
+          description: YT price in USD
+        syPrice:
+          type: number
+          description: SY price in USD
+        lpPrice:
+          type: number
+          description: LP price in USD
+        lastEpochVotes:
+          type: number
+          description: Last epoch votes
+        tradingVolume:
+          type: number
+          description: 24h trading volume in USD
+        explicitSwapFee:
+          type: number
+          description: Explicit swap fee in USD (only available for daily and weekly timeframes)
+        implicitSwapFee:
+          type: number
+          description: Implicit swap fee in USD (only available for daily and weekly timeframes)
+        limitOrderFee:
+          type: number
+          description: Limit order fee in USD (only available for daily and weekly timeframes)
+      required:
+      - timestamp
+    MarketPointsEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Market id
+        points:
+          description: Points configs
+          type: array
+          items:
+            $ref: '#/components/schemas/PointMetadataEntity'
+      required:
+      - id
+      - points
+    MarketHistoricalDataResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of data points available
+        timestamp_start:
+          format: date-time
+          type: string
+          description: Start timestamp of the data range
+        timestamp_end:
+          format: date-time
+          type: string
+          description: End timestamp of the data range
+        results:
+          description: Array of historical data points
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketHistoricalDataPoint'
+      required:
+      - total
+      - timestamp_start
+      - timestamp_end
+      - results
