@@ -2,7 +2,19 @@ aid: pendle
 url: https://raw.githubusercontent.com/api-evangelist/pendle/refs/heads/main/apis.yml
 name: Pendle
 kind: company
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pendle.png
 tags:
   - Web3
   - DeFi
@@ -24,87 +36,166 @@ description: >-
   API calls into ready-to-broadcast transaction payloads for swaps, minting, redeeming, and
   liquidity operations.
 apis:
-  - aid: pendle:core-api
-    name: Pendle V2 Core API
-    tags:
-      - DeFi
-      - Yield Tokenization
-      - Markets
-      - Principal Tokens
-      - Yield Tokens
-      - Liquidity Pools
-      - Implied APY
-      - Cross-Chain
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://api-v2.pendle.finance/core
-    humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
-    description: >-
-      REST API for the Pendle V2 protocol. Exposes 33 endpoints across markets, assets, pricing,
-      limit orders, sPENDLE/vePENDLE governance, transactions, dashboard positions, and statistics.
-      Cross-chain endpoints return data across all supported networks in a single request; chain-
-      scoped endpoints accept a chainId path parameter for per-network queries. Authenticated via
-      Bearer API key; free tier provides 100 CU/minute and 200,000 CU/week.
-    properties:
-      - type: Documentation
-        url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
-      - type: Pricing
-        url: https://api-v2.pendle.finance/dashboard
-    x-features:
-      - 33 endpoints across 8 tag categories
-      - Cross-chain market and asset queries
-      - Principal Token and Yield Token price history (OHLCV)
-      - Limit order creation, matching, and cancellation
-      - vePENDLE governance statistics and market fees
-      - User positions and merkle reward claims
-      - Pendle emission schedule
-      - GET /v1/chains to enumerate supported chain IDs
-    x-use-cases:
-      - DeFi yield dashboards and analytics
-      - Fixed-rate strategy research tools
-      - Portfolio trackers for PT and YT positions
-      - Automated trading bots using limit order endpoints
-      - Cross-chain yield comparison tools
-  - aid: pendle:hosted-sdk
-    name: Pendle Hosted SDK
-    tags:
-      - DeFi
-      - Yield Tokenization
-      - SDK
-      - Transaction Builder
-      - Swaps
-      - Liquidity
-      - Cross-Chain
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://api-v2.pendle.finance/core
-    humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
-    description: >-
-      Server-side SDK exposed as a REST endpoint that generates ready-to-broadcast Ethereum
-      transaction payloads. A single POST /v3/sdk/{chainId}/convert call handles 13 operations:
-      token swaps, adding/removing single and dual liquidity, minting and redeeming PT and YT,
-      minting and redeeming SY, zero-principal-investment liquidity, liquidity transfer between
-      markets, and PT rollover across expiries. Supports KyberSwap, Odos, OKX, and ParaSwap
-      aggregators for optimal routing.
-    properties:
-      - type: Documentation
-        url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
-      - type: Pricing
-        url: https://api-v2.pendle.finance/dashboard
-    x-features:
-      - 13 supported operations via single convert endpoint
-      - Returns complete tx object ready to broadcast
-      - Multi-route response sorted by output value
-      - KyberSwap, Odos, OKX, ParaSwap aggregator support
-      - Custom aggregator API keys reduce CU cost to zero
-      - Cross-chain PT swap via fixed-price AMM
-    x-use-cases:
-      - Wallet integrations for Pendle trading
-      - Automated yield-rollover bots
-      - DeFi aggregator routing through Pendle markets
-      - Protocol composability without local SDK dependency
+- aid: pendle:pendle-assets-api
+  name: Pendle Assets API
+  description: The Assets API from Pendle — 3 operation(s) for assets.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-assets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-chains-api
+  name: Pendle Chains API
+  description: The Chains API from Pendle — 1 operation(s) for chains.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Chains
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-chains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-dashboard-api
+  name: Pendle Dashboard API
+  description: The Dashboard API from Pendle — 2 operation(s) for dashboard.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-dashboard-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-limit-orders-api
+  name: Pendle Limit Orders API
+  description: The Limit Orders API from Pendle — 7 operation(s) for limit orders.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Limit Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-limit-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-markets-api
+  name: Pendle Markets API
+  description: The Markets API from Pendle — 4 operation(s) for markets.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Markets
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-markets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-pendle-emission-api
+  name: Pendle Pendle Emission API
+  description: The Pendle Emission API from Pendle — 1 operation(s) for pendle emission.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Pendle Emission
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-pendle-emission-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-sdk-api
+  name: Pendle SDK API
+  description: The SDK API from Pendle — 10 operation(s) for sdk.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - SDK
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-sdk-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-statistics-api
+  name: Pendle Statistics API
+  description: The Statistics API from Pendle — 1 operation(s) for statistics.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-transactions-api
+  name: Pendle Transactions API
+  description: The Transactions API from Pendle — 2 operation(s) for transactions.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
+- aid: pendle:pendle-ve-pendle-api
+  name: Pendle Ve Pendle API
+  description: The Ve Pendle API from Pendle — 2 operation(s) for ve pendle.
+  humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  baseURL: https://api-v2.pendle.finance/core
+  tags:
+  - Ve Pendle
+  properties:
+  - type: OpenAPI
+    url: openapi/pendle-ve-pendle-api-openapi.yml
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
+  - type: Pricing
+    url: https://api-v2.pendle.finance/dashboard
+  - type: Documentation
+    url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
 common:
   - type: AgenticAccess
     url: agentic-access/pendle-agentic-access.yml
