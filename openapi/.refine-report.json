@@ -1,0 +1,32 @@
+{
+  "provider": "pendle",
+  "sources": [
+    "pendle-assets-api-openapi.yml",
+    "pendle-chains-api-openapi.yml",
+    "pendle-dashboard-api-openapi.yml",
+    "pendle-limit-orders-api-openapi.yml",
+    "pendle-markets-api-openapi.yml",
+    "pendle-pendle-emission-api-openapi.yml",
+    "pendle-sdk-api-openapi.yml",
+    "pendle-statistics-api-openapi.yml",
+    "pendle-transactions-api-openapi.yml",
+    "pendle-ve-pendle-api-openapi.yml"
+  ],
+  "outputs": [
+    "pendle-assets-api-openapi.yml",
+    "pendle-chains-api-openapi.yml",
+    "pendle-dashboard-api-openapi.yml",
+    "pendle-limit-orders-api-openapi.yml",
+    "pendle-markets-api-openapi.yml",
+    "pendle-pendle-emission-api-openapi.yml",
+    "pendle-sdk-api-openapi.yml",
+    "pendle-statistics-api-openapi.yml",
+    "pendle-transactions-api-openapi.yml",
+    "pendle-ve-pendle-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
