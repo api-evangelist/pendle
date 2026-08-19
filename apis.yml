@@ -26,7 +26,7 @@ tags:
   - Liquidity Pools
 created: '2026-06-14'
 modified: '2026-06-14'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 description: >-
   Pendle is a permissionless yield tokenization protocol that splits yield-bearing assets into
   Principal Tokens (PT) and Yield Tokens (YT), enabling fixed-yield strategies and yield trading
