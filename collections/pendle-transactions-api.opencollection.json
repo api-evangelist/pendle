@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Transactions API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get market transactions by address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v5/:chainId/transactions/:address",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type to filter by. Valid values: `TRADES`, `LIQUIDITY`."
+              },
+              {
+                "name": "minValue",
+                "value": "",
+                "type": "query",
+                "description": "Minimum transaction value filter in USD"
+              },
+              {
+                "name": "txOrigin",
+                "value": "",
+                "type": "query",
+                "description": "Address of the transaction executor"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Specific transaction action to filter by. Valid values: `LONG_YIELD`, `SHORT_YIELD`, `ADD_LIQUIDITY`, `REMOVE_LIQUIDITY`."
+              },
+              {
+                "name": "resumeToken",
+                "value": "",
+                "type": "query",
+                "description": "Resume token for pagination. Use this to continue a previous query."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 1000."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Use `resumeToken` instead."
+              }
+            ]
+          },
+          "docs": "Return transactions with: user action (long or short yield, add or remove liquidity), valuation, implied apy.\n\n**Pagination**: This endpoint supports cursor-based pagination using `resumeToken`. The response includes a `resumeToken` field that can be used in the next request to fetch the next page of results. This is more efficient than using `skip` for large datasets."
+        },
+        {
+          "info": {
+            "name": "Get user transaction history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/pnl/transactions",
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip. The parameter is capped at 1000."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 1000."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID"
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Market address"
+              }
+            ]
+          },
+          "docs": "Returns the on-chain transaction history for a user address across all Pendle operations.\n\nResults are paginated. Use the `resumeToken` from the response to fetch the next page.\n\nData may lag chain tip by a few minutes due to indexing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

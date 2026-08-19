@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Markets API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Markets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all markets (cross-chain)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/markets/all",
+            "params": [
+              {
+                "name": "isActive",
+                "value": "",
+                "type": "query",
+                "description": "Filter to active or inactive markets"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to markets on a specific blockchain network"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Market ids to fetch metadata for (comma-separated), leave blank to fetch all markets. Up to 20 ids allowed."
+              }
+            ]
+          },
+          "docs": "Returns the complete list of whitelisted Pendle markets across all supported chains with their metadata and current data.\n\nFilter by `chainId`, `isActive`, or `ids` (comma-separated market IDs in `chainId-address` format).\n\nThis is the recommended starting point for discovering and monitoring Pendle markets across all chains. For chain-scoped data with additional fields, use [Get markets](#tag/markets/get/v1/{chainId}/markets) instead."
+        },
+        {
+          "info": {
+            "name": "Get points markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/markets/points-market",
+            "params": [
+              {
+                "name": "isActive",
+                "value": "",
+                "type": "query",
+                "description": "Filter to active or inactive markets"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to markets on a specific blockchain network"
+              }
+            ]
+          },
+          "docs": "Returns all active markets that have a points reward programme — markets where trading or providing liquidity earns points from the underlying protocol.\n\nThe response includes the points configuration for each market (point name, reward rate, etc.) and the associated market ID. To fetch full market metadata for these markets, call [Get all markets](#tag/markets/get/v1/markets/all) and filter by the returned IDs."
+        },
+        {
+          "info": {
+            "name": "Get latest/historical market data by address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/:chainId/markets/:address/data",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "timestamp",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the latest or historical data snapshot for a given market.\n\nPass a `timestamp` query param (Unix seconds) to retrieve the market state at a specific point in time. Omit it for the current snapshot.\n\nFor time-series data (charts/analytics), prefer the [historical-data](#tag/markets/get/v2/{chainId}/markets/{address}/historical-data) endpoint."
+        },
+        {
+          "info": {
+            "name": "Get market time-series data by address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/:chainId/markets/:address/historical-data",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "time_frame",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timestamp_start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timestamp_end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response. Use `all` to include all fields. Available fields could be found in the table above. \n\nAlthough you could use `all` to include all fields, it is not recommended because the bigger the payload is, the slower the response will be."
+              },
+              {
+                "name": "includeFeeBreakdown",
+                "value": "",
+                "type": "query",
+                "description": "Whether you want to fetch fee breakdown data. Default is false. If enable, the response will include 3 fields: explicitSwapFee, implicitSwapFee, limitOrderFee and computing unit cost will be doubled. \n\nFee breakdown is only available for daily and weekly timeframes."
+              }
+            ]
+          },
+          "docs": "\nReturns the time-series data for a given market. Useful to draw charts or do data analysis.\n\nThis endpoint supports field selection via the `fields` query parameter. \n\nTable below shows the available fields and their descriptions.\n\n| Field | Description |\n|-------|-------------|\n| timestamp | Timestamp in ISO format|\n| baseApy | APY including yield, swap fee and Pendle rewards without boosting|\n| impliedApy | Implied APY of market|\n| lastEpochVotes | Last epoch votes|\n| lpPrice | LP price in US"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

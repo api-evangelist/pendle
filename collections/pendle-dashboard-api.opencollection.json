@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Dashboard API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dashboard",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user positions by address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/dashboard/positions/database/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filterUsd",
+                "value": "",
+                "type": "query",
+                "description": "Minimum USD value threshold to filter positions"
+              }
+            ]
+          },
+          "docs": "Returns a complete snapshot of a user's Pendle positions across all supported chains, including PT, YT, LP, and SY holdings.\n\nFor each position the response includes token amounts, USD valuations, and claimable interest/reward amounts.\n\n**Caching**: claimable reward amounts are cached for up to 24 hours. For real-time claimable data, read directly from the reward contracts via RPC.\n\nUse the `chainId` query parameter to filter results to a specific chain."
+        },
+        {
+          "info": {
+            "name": "Get all merkle claimed rewards for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/dashboard/merkle-claimed-rewards/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Ethereum address of the user"
+              }
+            ]
+          },
+          "docs": "Returns the historical record of all merkle rewards that a user has already claimed.\n\nUseful for displaying claim history in a dashboard or verifying that a specific reward distribution has been collected."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

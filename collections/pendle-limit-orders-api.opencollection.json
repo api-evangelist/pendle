@@ -1,0 +1,319 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Limit Orders API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Limit Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all limit orders for analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/limit-orders",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain id to filter by, leave blank to fetch all chains."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 1000."
+              },
+              {
+                "name": "maker",
+                "value": "",
+                "type": "query",
+                "description": "Maker address to filter orders by"
+              },
+              {
+                "name": "yt",
+                "value": "",
+                "type": "query",
+                "description": "Market address to filter orders by"
+              },
+              {
+                "name": "timestamp_start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timestamp_end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resumeToken",
+                "value": "",
+                "type": "query",
+                "description": "Resume token for pagination"
+              }
+            ]
+          },
+          "docs": "This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully filled. \n\nThe results could be very large, so each time we returns at most 1000 orders, you can use the resumeToken to fetch the next page. \n\nTo get limit order for filling, use the [Get limit orders to match by YT address​](#tag/limit-orders/get/v1/limit-orders/takers/limit-orders) endpoint!"
+        },
+        {
+          "info": {
+            "name": "Get all archived limit orders for analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/limit-orders/archived",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain id to filter by, leave blank to fetch all chains."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 1000."
+              },
+              {
+                "name": "maker",
+                "value": "",
+                "type": "query",
+                "description": "Maker address to filter orders by"
+              },
+              {
+                "name": "yt",
+                "value": "",
+                "type": "query",
+                "description": "Market address to filter orders by"
+              },
+              {
+                "name": "timestamp_start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timestamp_end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resumeToken",
+                "value": "",
+                "type": "query",
+                "description": "Resume token for pagination"
+              }
+            ]
+          },
+          "docs": "This have the same interface and usecase as the endpoint above, but it returns the archived orders\n\nWhen an order is not fillable anymore, we **might** archive it to save storage space, to fetch it, use this endpoint.\n\nSo to fetch full limit orders in history, using this and the endpoint above. Not all orders are archived, it depends on some conditions."
+        },
+        {
+          "info": {
+            "name": "Get user limit orders in market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/limit-orders/makers/limit-orders",
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip. The parameter is capped at 1000."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 100."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "ChainId"
+              },
+              {
+                "name": "maker",
+                "value": "",
+                "type": "query",
+                "description": "Maker's address"
+              },
+              {
+                "name": "yt",
+                "value": "",
+                "type": "query",
+                "description": "Order's YT address"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+              },
+              {
+                "name": "isActive",
+                "value": "",
+                "type": "query",
+                "description": "isActive=true to get all maker's active orders, isActive=false otherwise and do not set isActive if you want to fetch all maker's orders"
+              }
+            ]
+          },
+          "docs": "Returns the active and historical limit orders placed by a specific user in a market. Supports richer filtering than the analytics endpoint (e.g. by YT, status, market).\n\nA user can have at most 50 open orders per market, so pagination is typically unnecessary here.\n\nFor full cross-user analytics with cursor-based pagination, use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead."
+        },
+        {
+          "info": {
+            "name": "Create limit order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9000/v1/limit-orders/makers/limit-orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a signed limit order to the Pendle order book. Once created, the order is visible to takers and will be filled against incoming swaps at or better than the specified implied APY.\n\nBefore calling this, generate the order payload via [Generate limit order data](#tag/limit-orders/post/v1/limit-orders/makers/generate-limit-order-data), sign it with your wallet, and include the signature in the request body.\n\nCommon rejection reasons: the YT or market is not whitelisted for limit orders, the o"
+        },
+        {
+          "info": {
+            "name": "Generate limit order data for signing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9000/v1/limit-orders/makers/generate-limit-order-data",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker's private key, then submit the order via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders).\n\nThe generated order specifies the YT address, direction (long or short yield), size, and implied APY target. The order remains valid until it is either fully filled, cancelled, or expired."
+        },
+        {
+          "info": {
+            "name": "Generate list of limit orders (scaled) for signing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9000/v1/limit-orders/makers/generate-scaled-order-data",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a batch of limit orders spread across a price (implied APY) range for signing. Scaled orders distribute your total size across multiple price levels, providing better market depth than a single large order.\n\nSign each generated order individually, then submit them via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders). Useful for market-making strategies."
+        },
+        {
+          "info": {
+            "name": "Get limit orders to match by YT address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/limit-orders/takers/limit-orders",
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip. The parameter is capped at 1000."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 100."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "ChainId"
+              },
+              {
+                "name": "yt",
+                "value": "",
+                "type": "query",
+                "description": "Order's YT address"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the best-matching active limit orders for a given YT address, sorted by implied APY for efficient taker fill selection.\n\nThe response includes full order structs and maker signatures ready to pass directly to the Pendle limit order contract for on-chain settlement. Only active orders (unfilled, uncancelled, unexpired) are returned.\n\nFor analytics and full order history (including filled/cancelled), use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead."
+        },
+        {
+          "info": {
+            "name": "Get order book v2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/limit-orders/book/:chainId",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. The parameter is capped at 200."
+              },
+              {
+                "name": "precisionDecimal",
+                "value": "",
+                "type": "query",
+                "description": "Min: 0, Max: 3, returned impliedApy will have precision upto 10^{-precisionDecimal}%"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "query",
+                "description": "Market address"
+              },
+              {
+                "name": "includeAmm",
+                "value": "",
+                "type": "query",
+                "description": "Include AMM orders in the order book"
+              }
+            ]
+          },
+          "docs": "Returns the consolidated order book for a market, aggregating both limit orders and AMM liquidity depth into a unified view.\n\nThe book is split into two sides:\n- **longYieldEntries**: available liquidity for buying YT (long yield positions), ordered by ascending implied APY\n- **shortYieldEntries**: available liquidity for selling YT (short yield positions), ordered by descending implied APY\n\nEach entry shows the implied APY price level, combined limit order size, and AMM depth at that level."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

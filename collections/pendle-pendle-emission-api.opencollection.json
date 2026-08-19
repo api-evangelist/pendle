@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Pendle Emission API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pendle Emission",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Pendle Emission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/pendle-emission"
+          },
+          "docs": "Returns the latest confirmed PENDLE emission across all eligible markets. Each market includes a breakdown of emission by TVL, fee, discretionary, and co-bribing components."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

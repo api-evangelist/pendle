@@ -1,0 +1,433 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets SDK API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SDK",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get supported tokens for market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/markets/:market/tokens",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the two sets of tokens relevant for a given market:\n\n- **SY input tokens**: tokens accepted by the SY wrapper for minting/redeeming (e.g. USDC for a USDC-based market).\n- **Zap tokens**: tokens that can be used as input when buying PT/YT or providing liquidity, routed via aggregators.\n\nCall this before building a Convert or Swap request to know which input tokens are valid for a given market."
+        },
+        {
+          "info": {
+            "name": "Get supported aggregators for a chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/supported-aggregators",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the list of DEX aggregators available on this chain for routing token swaps, along with the additional computing unit cost each one adds to SDK requests.\n\nUse this to decide which aggregators to include in Convert/Swap calls via the `aggregators` query param.\n\nYou can reduce any aggregator's CU cost to 0 by providing your own API key in the corresponding request header. See [Reducing Aggregator Costs](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-co"
+        },
+        {
+          "info": {
+            "name": "Get real-time PT/YT swap price of a market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/markets/:market/swapping-prices",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "market",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Return price by swapping  1 unit underlying token to PT/ YT, and 1 unit of PT/YT to the underlying token.\n\nOne unit is defined as 10**decimal. The result is updated every block.\n\nImplied APY of the market is also included."
+        },
+        {
+          "info": {
+            "name": "Cancel one single limit order by order hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/limit-order/cancel-single",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userAddress",
+                "value": "",
+                "type": "query",
+                "description": "User Address"
+              },
+              {
+                "name": "salt",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of salt"
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of expiry"
+              },
+              {
+                "name": "nonce",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of nonce"
+              },
+              {
+                "name": "orderType",
+                "value": "",
+                "type": "query",
+                "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Token used by user to make order"
+              },
+              {
+                "name": "YT",
+                "value": "",
+                "type": "query",
+                "description": "YT address"
+              },
+              {
+                "name": "maker",
+                "value": "",
+                "type": "query",
+                "description": "Maker address"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Receiver address"
+              },
+              {
+                "name": "makingAmount",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of making amount"
+              },
+              {
+                "name": "lnImpliedRate",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of lnImpliedRate (natural logarithm of the implied rate)"
+              },
+              {
+                "name": "failSafeRate",
+                "value": "",
+                "type": "query",
+                "description": "BigInt string of failSafeRate"
+              },
+              {
+                "name": "permit",
+                "value": "",
+                "type": "query",
+                "description": "Bytes string for permit"
+              }
+            ]
+          },
+          "docs": "Generate the transaction payload to cancel a specific limit order on-chain.\n\nPass the full signed order struct (from the original order creation) to identify which order to cancel. The order becomes invalid once the cancellation transaction is confirmed."
+        },
+        {
+          "info": {
+            "name": "Cancel all limit orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/limit-order/cancel-all",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userAddress",
+                "value": "",
+                "type": "query",
+                "description": "User Address"
+              }
+            ]
+          },
+          "docs": "Generate the transaction payload to cancel all active limit orders for a user in a single on-chain call.\n\nThis works by incrementing the user's nonce on-chain, which invalidates all previously signed orders at once. More efficient than cancelling orders one by one when clearing all open positions."
+        },
+        {
+          "info": {
+            "name": "Redeem rewards and interests from positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/redeem-interests-and-rewards",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the output of the action"
+              },
+              {
+                "name": "sys",
+                "value": "",
+                "type": "query",
+                "description": "Use comma separated values to search by multiple addresses"
+              },
+              {
+                "name": "yts",
+                "value": "",
+                "type": "query",
+                "description": "Use comma separated values to search by multiple addresses"
+              },
+              {
+                "name": "markets",
+                "value": "",
+                "type": "query",
+                "description": "Use comma separated values to search by multiple addresses"
+              }
+            ]
+          },
+          "docs": "Generate a transaction payload to claim all accrued interest and incentive rewards across multiple positions in a single call.\n\nSpecify which positions to claim from by passing arrays of:\n- `sys`: SY token addresses (to claim SY interest)\n- `yts`: YT token addresses (to claim YT interest and rewards)\n- `markets`: LP market addresses (to claim LP rewards)\n\nUseful for portfolio management bots or dashboards that batch-claim on behalf of users."
+        },
+        {
+          "info": {
+            "name": "Universal convert function",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/sdk/:chainId/convert",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Recipient address for transaction output"
+              },
+              {
+                "name": "slippage",
+                "value": "",
+                "type": "query",
+                "description": "Maximum slippage tolerance (0-1, where 0.01 equals 1%)"
+              },
+              {
+                "name": "enableAggregator",
+                "value": "",
+                "type": "query",
+                "description": "Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset"
+              },
+              {
+                "name": "aggregators",
+                "value": "",
+                "type": "query",
+                "description": "List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)"
+              },
+              {
+                "name": "tokensIn",
+                "value": "",
+                "type": "query",
+                "description": "Input token addresses, seperate by comma with no spaces"
+              },
+              {
+                "name": "amountsIn",
+                "value": "",
+                "type": "query",
+                "description": "Input token amounts in wei, seperate by comma with no spaces"
+              },
+              {
+                "name": "tokensOut",
+                "value": "",
+                "type": "query",
+                "description": "Output token addresses, seperate by comma with no spaces"
+              },
+              {
+                "name": "redeemRewards",
+                "value": "",
+                "type": "query",
+                "description": "Redeem rewards"
+              },
+              {
+                "name": "needScale",
+                "value": "",
+                "type": "query",
+                "description": "Aggregators needScale value, only set to true when amounts are updated onchain. When enabled, please make sure to buffer the amountIn by about 2%"
+              },
+              {
+                "name": "additionalData",
+                "value": "",
+                "type": "query",
+                "description": "Available fields: `impliedApy`, `effectiveApy`. Comma separated list of fields to return. For example: `field1,field2`. More fields will consume more computing units."
+              },
+              {
+                "name": "useLimitOrder",
+                "value": "",
+                "type": "query",
+                "description": "To use limit orders when converting, default to true"
+              }
+            ]
+          },
+          "docs": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.\n\nThe action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.\n\n| Action                                                | tokensIn              | tokensOut       | Note          "
+        },
+        {
+          "info": {
+            "name": "Universal convert function (recommended — POST body variant)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9000/v3/sdk/:chainId/convert",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.\n\nThe action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.\n\n| Action                                                | tokensIn              | tokensOut       | Note          "
+        },
+        {
+          "info": {
+            "name": "Swap PT using fixed price AMM for cross-chain operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/sdk/:chainId/swap-pt-cross-chain",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Recipient address for transaction output"
+              },
+              {
+                "name": "slippage",
+                "value": "",
+                "type": "query",
+                "description": "Maximum slippage tolerance (0-1, where 0.01 equals 1%)"
+              },
+              {
+                "name": "enableAggregator",
+                "value": "",
+                "type": "query",
+                "description": "Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset"
+              },
+              {
+                "name": "aggregators",
+                "value": "",
+                "type": "query",
+                "description": "List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)"
+              },
+              {
+                "name": "pt",
+                "value": "",
+                "type": "query",
+                "description": "PT token address"
+              },
+              {
+                "name": "exactPtIn",
+                "value": "",
+                "type": "query",
+                "description": "Exact amount value PT in"
+              },
+              {
+                "name": "tokenOut",
+                "value": "",
+                "type": "query",
+                "description": "Output token address"
+              }
+            ]
+          },
+          "docs": "Swap a bridged PT on a spoke chain back to a regular token using the fixed-price PT AMM.\n\nThis is specifically for **cross-chain PT redemption flows** where PT has been bridged to a non-primary chain. The fixed-price AMM prices PT based on time-to-maturity, independent of pool liquidity.\n\nSupports both:\n- Exact PT input → token output\n- Exact token output ← PT input (pass the required token amount; the system calculates PT needed)\n\nOnly valid on supported spoke chains."
+        },
+        {
+          "info": {
+            "name": "PT cross-chain metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/sdk/:chainId/cross-chain-pt-metadata/:pt",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pt",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns metadata for a PT that has been bridged to a spoke chain, including maturity, underlying asset details, and fixed-price AMM parameters.\n\nUse this to verify that a bridged PT is supported on the current chain and to fetch its pricing parameters before calling [Swap PT cross-chain](#tag/sdk/get/v2/{chainId}/swap-pt-cross-chain)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

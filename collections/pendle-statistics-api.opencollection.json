@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Statistics API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get distinct users for a specific token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/statistics/get-distinct-user-from-token",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Token address to query. Can be any Pendle token (PT, YT, SY, LP). Address will be normalized to lowercase."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Optional chain ID to filter results. If provided, returns only users who interacted with the token on the specified chain. If omitted, returns users across all chains where the token exists."
+              }
+            ]
+          },
+          "docs": "Returns a list of unique wallet addresses that have interacted with a specific token across Pendle markets. \n\nUse the optional `chainId` parameter to filter results to a specific chain, or omit it to get users across all chains. \n\nCommon use cases include:\n- Token holder analysis\n- User adoption metrics\n- Market participation statistics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

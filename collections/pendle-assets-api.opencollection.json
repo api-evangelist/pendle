@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get asset prices (cross-chain)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/prices/assets",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Token ids to data for (comma-separated), leave blank to fetch all tokens. Up to 20 ids allowed."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain id to filter by, leave blank to fetch all chains."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. Leave blank to fetch all results."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Asset types to filter by (comma-separated). Valid values: `PENDLE_LP`, `SY`, `PT`, `YT`. Leave blank to fetch all assets types."
+              }
+            ]
+          },
+          "docs": "Returns USD prices for Pendle-supported tokens across all chains. Covers all token types in the Pendle app, including non-Pendle tokens (USDC, WETH, etc.) when they appear as underlying assets.\n\nPrices update approximately every minute.\n\nFilter by `chainId`, asset `id`, or `type` to narrow results.\n\nFor real-time PT/YT pre-trade prices that reflect current pool depth, use [Get swapping prices](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices) instead."
+        },
+        {
+          "info": {
+            "name": "Get PT / YT / LP historical price by address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v4/:chainId/prices/:address/ohlcv",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "time_frame",
+                "value": "",
+                "type": "query",
+                "description": "Time interval for OHLCV data aggregation. Valid values: `hour`, `day`, `week`."
+              },
+              {
+                "name": "timestamp_start",
+                "value": "",
+                "type": "query",
+                "description": "ISO Date string of the start time you want to query"
+              },
+              {
+                "name": "timestamp_end",
+                "value": "",
+                "type": "query",
+                "description": "ISO Date string of the end time you want to query"
+              }
+            ]
+          },
+          "docs": "\nHistorical price data for PT / YT tokens / LP tokens. We do not support historical prices for **SY and non-Pendle tokens**.\n\nThe data is OHLCV data, returned in CSV format with open, high, low, close prices, and volume.\n\nIn the case of LP, volume data will be 0. To get the correct volume, use our [Get market time-series data by address](#tag/markets/get/v2/{chainId}/markets/{address}/historical-data) endpoint.\n\n\nReturns at most 1440 data points.\n\nThe cost for the endpoint is based on how many d"
+        },
+        {
+          "info": {
+            "name": "Get all assets (cross-chain)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/assets/all",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Token ids to data for (comma-separated), leave blank to fetch all tokens. Up to 20 ids allowed."
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain id to filter by, leave blank to fetch all chains."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return. Leave blank to fetch all results."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Asset types to filter by (comma-separated). Valid values: `PENDLE_LP`, `SY`, `PT`, `YT`. Leave blank to fetch all assets types."
+              }
+            ]
+          },
+          "docs": "Returns the flat list of all PT, YT, LP, and SY tokens supported in the Pendle app, across all chains.\n\nEach entry includes: name, symbol, contract address, decimals, expiry timestamp (for PT/YT), and icon URL.\n\nFilter by `chainId`, asset `id`, or `type` (pt, yt, lp, sy).\n\nPrices are not included — use [Get asset prices](#tag/assets/get/v1/prices/assets) to retrieve them separately.\n\nFor chain-specific asset lists with richer metadata and prices bundled, use the chain-scoped [Get all assets](#ta"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

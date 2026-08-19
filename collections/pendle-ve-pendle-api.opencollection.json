@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pendle V2 API Docs Assets Ve Pendle API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ve Pendle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get vePendle statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v2/ve-pendle/data"
+          },
+          "docs": "**Deprecated**: vePENDLE has been replaced by sPENDLE. This endpoint returns vePENDLE governance data and will not reflect the new sPENDLE staking system.\n\nReturns aggregate vePENDLE governance statistics, updated every 5 minutes.\n\nThe response includes:\n- **Revenue**: cumulative and monthly protocol revenue from swap fees\n- **PENDLE supply**: current circulating and total supply\n- **Voting epoch data**: per-pool vote counts, swap fees, and voter APR for both the current and previous epoch\n- **P"
+        },
+        {
+          "info": {
+            "name": "Get market fees chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://127.0.0.1:9000/v1/ve-pendle/market-fees-chart",
+            "params": [
+              {
+                "name": "timestamp_start",
+                "value": "",
+                "type": "query",
+                "description": "Should be rounded up to time frame (in UTC)"
+              },
+              {
+                "name": "timestamp_end",
+                "value": "",
+                "type": "query",
+                "description": "Should be rounded up to time frame (in UTC)"
+              }
+            ]
+          },
+          "docs": "**Deprecated**: vePENDLE has been replaced by sPENDLE. The epoch-based fee distribution model no longer applies.\n\nReturns weekly trading fee revenue across all Pendle markets, grouped by voting epoch (epochs start on Thursdays).\n\nUseful for tracking protocol revenue trends and understanding which markets generate the most fee income.\n\nFilter by date range using `timestamp_start` and `timestamp_end` (Unix seconds)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "5f7d7b17-5944-4ccb-ae06-74e369192d0c",
+      "name": "Ve Pendle",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6226ee15-a706-4a67-828c-000b0453e598",
+          "name": "Get vePendle statistics",
+          "request": {
+            "name": "Get vePendle statistics",
+            "description": {
+              "content": "**Deprecated**: vePENDLE has been replaced by sPENDLE. This endpoint returns vePENDLE governance data and will not reflect the new sPENDLE staking system.\n\nReturns aggregate vePENDLE governance statistics, updated every 5 minutes.\n\nThe response includes:\n- **Revenue**: cumulative and monthly protocol revenue from swap fees\n- **PENDLE supply**: current circulating and total supply\n- **Voting epoch data**: per-pool vote counts, swap fees, and voter APR for both the current and previous epoch\n- **Pool caps**: the vePENDLE vote weight cap per pool for this epoch and the projected cap for the next epoch\n\nEpochs run weekly starting on Thursdays. Vote allocations and APRs reset at the start of each new epoch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "ve-pendle",
+                "data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97f7d2f3-d1de-4018-b7fe-809a02190382",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "ve-pendle",
+                    "data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"avgLockDuration\": 4718.74524684299,\n  \"totalPendleLocked\": 6918.732620533585,\n  \"vePendleSupply\": 6200.991737987506,\n  \"totalProjectedVotes\": 6014.152369195696,\n  \"totalCurrentVotes\": 3407.788959716703,\n  \"pools\": [\n    {\n      \"id\": \"string\",\n      \"symbol\": \"string\",\n      \"expiry\": \"string\",\n      \"currentVoterApr\": 2689.873019485357,\n      \"lastEpochVoterApr\": 9912.13181185113,\n      \"currentSwapFee\": 5698.434561108694,\n      \"lastEpochSwapFee\": 6183.75958963419,\n      \"projectedVoterApr\": 5212.8175622387125,\n      \"projectedVotes\": {\n        \"votes\": 8502.264506366913,\n        \"percentage\": 6784.096302763232\n      },\n      \"currentVotes\": {\n        \"votes\": 5586.849330702354,\n        \"percentage\": 4736.37364028243\n      },\n      \"expectedCap\": \"string\",\n      \"currentCap\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"symbol\": \"string\",\n      \"expiry\": \"string\",\n      \"currentVoterApr\": 115.46828877836646,\n      \"lastEpochVoterApr\": 4149.982520213404,\n      \"currentSwapFee\": 7322.048795748721,\n      \"lastEpochSwapFee\": 3867.7415278293847,\n      \"projectedVoterApr\": 910.0128903988192,\n      \"projectedVotes\": {\n        \"votes\": 3626.967104936444,\n        \"percentage\": 4071.8209836902843\n      },\n      \"currentVotes\": {\n        \"votes\": 5042.76147614634,\n        \"percentage\": 4056.4923594492384\n      },\n      \"expectedCap\": \"string\",\n      \"currentCap\": \"string\"\n    }\n  ],\n  \"tokenSupply\": {\n    \"timestamp\": \"1986-03-31T17:01:52.335Z\",\n    \"totalPendleCirculating\": 7528.588734308025,\n    \"totalPendleLocked\": 4664.797395471092,\n    \"totalPendleSupply\": 8342.805044865765\n  },\n  \"monthlyRevenue\": {\n    \"revenues\": [\n      2374.5556789899347,\n      8769.7097345698\n    ],\n    \"epochStartDates\": [\n      \"string\",\n      \"string\"\n    ],\n    \"accumulatedRevenue\": 7260.065242968464\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "302d1dc9-c328-4da0-a732-bf99de2a955d",
+          "name": "Get market fees chart",
+          "request": {
+            "name": "Get market fees chart",
+            "description": {
+              "content": "**Deprecated**: vePENDLE has been replaced by sPENDLE. The epoch-based fee distribution model no longer applies.\n\nReturns weekly trading fee revenue across all Pendle markets, grouped by voting epoch (epochs start on Thursdays).\n\nUseful for tracking protocol revenue trends and understanding which markets generate the most fee income.\n\nFilter by date range using `timestamp_start` and `timestamp_end` (Unix seconds).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "ve-pendle",
+                "market-fees-chart"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "timestamp_start",
+                  "value": "<dateTime>",
+                  "description": "Should be rounded up to time frame (in UTC)"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_end",
+                  "value": "<dateTime>",
+                  "description": "Should be rounded up to time frame (in UTC)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ae721d8-592b-47b5-8e0f-d3a288a0de3d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "ve-pendle",
+                    "market-fees-chart"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "timestamp_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "timestamp_end",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"market\": {\n        \"id\": \"string\"\n      },\n      \"values\": [\n        {\n          \"time\": \"1999-08-16T09:12:07.815Z\",\n          \"totalFees\": 7261.295345920066\n        },\n        {\n          \"time\": \"1975-10-23T13:01:41.756Z\",\n          \"totalFees\": 7744.961762061502\n        }\n      ]\n    },\n    {\n      \"market\": {\n        \"id\": \"string\"\n      },\n      \"values\": [\n        {\n          \"time\": \"1998-09-19T15:09:21.917Z\",\n          \"totalFees\": 4729.149877331264\n        },\n        {\n          \"time\": \"1996-09-24T06:09:30.179Z\",\n          \"totalFees\": 2986.410490842434\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "10151fba-c71c-447d-89fc-89885f575b13",
+    "name": "Pendle V2 API Docs Assets Ve Pendle API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "item": [
+    {
+      "id": "32eb7f25-1192-46d2-b2d9-1c6047774b72",
+      "name": "Markets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "641b3653-d129-4c49-a661-f5b5bfe7e6d3",
+          "name": "Get all markets (cross-chain)",
+          "request": {
+            "name": "Get all markets (cross-chain)",
+            "description": {
+              "content": "Returns the complete list of whitelisted Pendle markets across all supported chains with their metadata and current data.\n\nFilter by `chainId`, `isActive`, or `ids` (comma-separated market IDs in `chainId-address` format).\n\nThis is the recommended starting point for discovering and monitoring Pendle markets across all chains. For chain-scoped data with additional fields, use [Get markets](#tag/markets/get/v1/{chainId}/markets) instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "markets",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "isActive",
+                  "value": "<boolean>",
+                  "description": "Filter to active or inactive markets"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Filter to markets on a specific blockchain network"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Market ids to fetch metadata for (comma-separated), leave blank to fetch all markets. Up to 20 ids allowed."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57f07554-10c5-4b91-9e41-4292fadb0b79",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isActive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "1-0x7b246b8dbc2a640bf2d8221890cee8327fc23917,1-0x44474d98d1484c26e8d296a43a721998731cf775"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"markets\": [\n    {\n      \"name\": \"crvUSD\",\n      \"address\": \"0x386f90eb964a477498b528a39d9405e73ed4032b\",\n      \"expiry\": \"2024-03-28T00:00:00.000Z\",\n      \"pt\": \"1-0xb87511364014c088e30f872efc4a00d7efb843ac\",\n      \"yt\": \"1-0xed97f94dd94255637a054098604e0201c442a3fd\",\n      \"sy\": \"1-0xe05082b184a34668cd8a904d85fa815802bbb04c\",\n      \"underlyingAsset\": \"1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32\",\n      \"details\": {\n        \"liquidity\": 1234567.89,\n        \"totalTvl\": 1234567.89,\n        \"tradingVolume\": 1234567.89,\n        \"underlyingApy\": 0.01,\n        \"swapFeeApy\": 0.01,\n        \"pendleApy\": 0.456,\n        \"impliedApy\": 0.123,\n        \"feeRate\": 0.003,\n        \"yieldRange\": {\n          \"min\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"aggregatedApy\": 0.123,\n        \"maxBoostedApy\": 0.123,\n        \"totalPt\": 1234567.89,\n        \"totalSy\": 1234567.89,\n        \"totalSupply\": 1234567.89,\n        \"totalActiveSupply\": 1234567.89\n      },\n      \"isNew\": false,\n      \"isPrime\": true,\n      \"timestamp\": \"1977-06-23T16:52:23.412Z\",\n      \"chainId\": 1,\n      \"lpWrapper\": \"string\",\n      \"categoryIds\": [\n        \"btc\",\n        \"stables\"\n      ],\n      \"isVolatile\": false\n    },\n    {\n      \"name\": \"crvUSD\",\n      \"address\": \"0x386f90eb964a477498b528a39d9405e73ed4032b\",\n      \"expiry\": \"2024-03-28T00:00:00.000Z\",\n      \"pt\": \"1-0xb87511364014c088e30f872efc4a00d7efb843ac\",\n      \"yt\": \"1-0xed97f94dd94255637a054098604e0201c442a3fd\",\n      \"sy\": \"1-0xe05082b184a34668cd8a904d85fa815802bbb04c\",\n      \"underlyingAsset\": \"1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32\",\n      \"details\": {\n        \"liquidity\": 1234567.89,\n        \"totalTvl\": 1234567.89,\n        \"tradingVolume\": 1234567.89,\n        \"underlyingApy\": 0.01,\n        \"swapFeeApy\": 0.01,\n        \"pendleApy\": 0.456,\n        \"impliedApy\": 0.123,\n        \"feeRate\": 0.003,\n        \"yieldRange\": {\n          \"min\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"aggregatedApy\": 0.123,\n        \"maxBoostedApy\": 0.123,\n        \"totalPt\": 1234567.89,\n        \"totalSy\": 1234567.89,\n        \"totalSupply\": 1234567.89,\n        \"totalActiveSupply\": 1234567.89\n      },\n      \"isNew\": false,\n      \"isPrime\": false,\n      \"timestamp\": \"1962-06-20T09:10:52.250Z\",\n      \"chainId\": 1,\n      \"lpWrapper\": \"string\",\n      \"categoryIds\": [\n        \"btc\",\n        \"stables\"\n      ],\n      \"isVolatile\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48500afe-a269-4b5a-bf1b-cdfab0c49f8b",
+          "name": "Get points markets",
+          "request": {
+            "name": "Get points markets",
+            "description": {
+              "content": "Returns all active markets that have a points reward programme — markets where trading or providing liquidity earns points from the underlying protocol.\n\nThe response includes the points configuration for each market (point name, reward rate, etc.) and the associated market ID. To fetch full market metadata for these markets, call [Get all markets](#tag/markets/get/v1/markets/all) and filter by the returned IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "markets",
+                "points-market"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "isActive",
+                  "value": "<boolean>",
+                  "description": "Filter to active or inactive markets"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Filter to markets on a specific blockchain network"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "156f201a-96f8-4909-a6c2-217da40501fc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    "points-market"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isActive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"markets\": [\n    {\n      \"id\": \"string\",\n      \"points\": [\n        {\n          \"key\": \"string\",\n          \"type\": \"points-per-asset\",\n          \"pendleAsset\": \"lp\",\n          \"externalDashboardURL\": \"string\",\n          \"value\": 429.6356609005858,\n          \"perDollarLp\": true\n        },\n        {\n          \"key\": \"string\",\n          \"type\": \"points-per-asset\",\n          \"pendleAsset\": \"basic\",\n          \"externalDashboardURL\": \"string\",\n          \"value\": 3457.3885832304663,\n          \"perDollarLp\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"points\": [\n        {\n          \"key\": \"string\",\n          \"type\": \"points-per-asset\",\n          \"pendleAsset\": \"basic\",\n          \"externalDashboardURL\": \"string\",\n          \"value\": 907.0868890336536,\n          \"perDollarLp\": true\n        },\n        {\n          \"key\": \"string\",\n          \"type\": \"points-per-asset\",\n          \"pendleAsset\": \"basic\",\n          \"externalDashboardURL\": \"string\",\n          \"value\": 5781.989384722126,\n          \"perDollarLp\": false\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15557695-bee1-479c-be61-0eee0bb36d2d",
+          "name": "Get latest/historical market data by address",
+          "request": {
+            "name": "Get latest/historical market data by address",
+            "description": {
+              "content": "Returns the latest or historical data snapshot for a given market.\n\nPass a `timestamp` query param (Unix seconds) to retrieve the market state at a specific point in time. Omit it for the current snapshot.\n\nFor time-series data (charts/analytics), prefer the [historical-data](#tag/markets/get/v2/{chainId}/markets/{address}/historical-data) endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":chainId",
+                "markets",
+                ":address",
+                "data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "timestamp",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d88ef277-5e38-4c3d-9164-6ded0d0af7aa",
+              "name": "Returns market latest detailed data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":chainId",
+                    "markets",
+                    ":address",
+                    "data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "timestamp",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": \"1986-07-06T20:30:24.105Z\",\n  \"liquidity\": {\n    \"usd\": 8270.746111055472,\n    \"acc\": 9667.302881385593\n  },\n  \"tradingVolume\": {\n    \"usd\": 474.7497476629581,\n    \"acc\": 4561.974674004387\n  },\n  \"underlyingInterestApy\": 9329.282332504854,\n  \"underlyingRewardApy\": 7751.709295962152,\n  \"underlyingApy\": 6109.01436140432,\n  \"impliedApy\": 3835.0555648084714,\n  \"ytFloatingApy\": 3296.7299422406472,\n  \"swapFeeApy\": 3577.6359582930263,\n  \"voterApy\": 1394.247622477649,\n  \"ptDiscount\": 2741.4396092647908,\n  \"pendleApy\": 1494.3178022089276,\n  \"lpRewardApy\": 2657.030674156028,\n  \"aggregatedApy\": 7968.704697379898,\n  \"maxBoostedApy\": 8337.573094256513,\n  \"estimatedDailyPoolRewards\": [\n    {\n      \"asset\": {\n        \"id\": \"string\",\n        \"chainId\": 786.2777078902672,\n        \"address\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 2920.875555729329,\n        \"name\": \"string\",\n        \"expiry\": \"1992-06-14T19:55:39.402Z\",\n        \"accentColor\": \"string\",\n        \"price\": {\n          \"usd\": 5794.014545766124,\n          \"acc\": 4806.277355824686\n        },\n        \"priceUpdatedAt\": \"2009-05-04T11:54:41.419Z\"\n      },\n      \"amount\": 5568.678452094121\n    },\n    {\n      \"asset\": {\n        \"id\": \"string\",\n        \"chainId\": 8012.337484753895,\n        \"address\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 9905.01470267409,\n        \"name\": \"string\",\n        \"expiry\": \"1949-09-01T17:47:54.552Z\",\n        \"accentColor\": \"string\",\n        \"price\": {\n          \"usd\": 6501.6940240535105,\n          \"acc\": 316.9568801898481\n        },\n        \"priceUpdatedAt\": \"1977-07-30T05:23:50.611Z\"\n      },\n      \"amount\": 6862.905504533983\n    }\n  ],\n  \"totalPt\": 558.1258166944625,\n  \"totalSy\": 9456.718816261162,\n  \"totalLp\": 666.3662774905877,\n  \"totalActiveSupply\": 8377.904952173414,\n  \"assetPriceUsd\": 9914.207224254485,\n  \"totalTvl\": {\n    \"usd\": 5128.338988481641,\n    \"acc\": 1492.1127578842397\n  },\n  \"arbApy\": 9338.05787625194\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bf6023a-dd88-4462-9bd9-c9d4a0b09459",
+          "name": "Get market time-series data by address",
+          "request": {
+            "name": "Get market time-series data by address",
+            "description": {
+              "content": "\nReturns the time-series data for a given market. Useful to draw charts or do data analysis.\n\nThis endpoint supports field selection via the `fields` query parameter. \n\nTable below shows the available fields and their descriptions.\n\n| Field | Description |\n|-------|-------------|\n| timestamp | Timestamp in ISO format|\n| baseApy | APY including yield, swap fee and Pendle rewards without boosting|\n| impliedApy | Implied APY of market|\n| lastEpochVotes | Last epoch votes|\n| lpPrice | LP price in USD|\n| lpRewardApy | APY from LP reward tokens|\n| maxApy | APY when maximum boost is applied|\n| pendleApy | APY from Pendle rewards|\n| ptPrice | PT price in USD|\n| swapFeeApy | Swap fee APY for LP holders, without boosting|\n| syPrice | SY price in USD|\n| totalPt | Total PT in the market|\n| totalSupply | Total supply of the LP token|\n| totalSy | Total SY in the market|\n| totalTvl | Market total TVL (including floating PT that are not in the AMM) in USD|\n| tradingVolume | 24h trading volume in USD|\n| tvl | Market liquidity (TVL in the pool) in USD|\n| underlyingApy | APY of the underlying asset|\n| underlyingInterestApy | Annual percentage yield from the underlying asset interest|\n| underlyingRewardApy | Annual percentage yield from the underlying asset rewards|\n| voterApr | APY for voters (vePENDLE holders) from voting on this pool|\n| ytFloatingApy | Floating APY for YT holders (underlyingApy - impliedApy)|\n| ytPrice | YT price in USD|\n\n\nReturns at most 1440 data points.\n\nThe cost for the endpoint is based on how many data points are returned. The calculation is: `ceil(number of data points / 300)`.\n\nAt 1440 data points (which is 2 months of data with an hourly interval, or 4 years with a daily interval), the cost will be 5 computing units.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                ":chainId",
+                "markets",
+                ":address",
+                "historical-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "time_frame",
+                  "value": "hour"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "underlyingApy,impliedApy,maxApy,baseApy,tvl",
+                  "description": "Comma-separated list of fields to include in the response. Use `all` to include all fields. Available fields could be found in the table above. \n\nAlthough you could use `all` to include all fields, it is not recommended because the bigger the payload is, the slower the response will be."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeFeeBreakdown",
+                  "value": "<boolean>",
+                  "description": "Whether you want to fetch fee breakdown data. Default is false. If enable, the response will include 3 fields: explicitSwapFee, implicitSwapFee, limitOrderFee and computing unit cost will be doubled. \n\nFee breakdown is only available for daily and weekly timeframes."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e26b669-d4e1-470c-997d-eb5d09cde652",
+              "name": "Historical data for the market",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    ":chainId",
+                    "markets",
+                    ":address",
+                    "historical-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "time_frame",
+                      "value": "hour"
+                    },
+                    {
+                      "key": "timestamp_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "timestamp_end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "timestamp,maxApy,baseApy,underlyingApy,impliedApy,tvl,totalTvl,underlyingInterestApy,underlyingRewardApy,ytFloatingApy,swapFeeApy,voterApr,pendleApy,lpRewardApy,totalPt,totalSy,totalSupply,ptPrice,ytPrice,syPrice,lpPrice,lastEpochVotes,tradingVolume"
+                    },
+                    {
+                      "key": "includeFeeBreakdown",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 8684.634274198768,\n  \"timestamp_start\": \"2002-06-12T19:54:47.508Z\",\n  \"timestamp_end\": \"1971-02-10T06:06:59.738Z\",\n  \"results\": [\n    {\n      \"timestamp\": \"1985-05-13T00:53:34.811Z\",\n      \"maxApy\": 3604.347181529168,\n      \"baseApy\": 5529.876887811293,\n      \"underlyingApy\": 7542.304477447046,\n      \"impliedApy\": 748.0213349878118,\n      \"tvl\": 4671.6536176944055,\n      \"totalTvl\": 2286.201064783726,\n      \"underlyingInterestApy\": 585.5821449800492,\n      \"underlyingRewardApy\": 952.7089122461751,\n      \"ytFloatingApy\": 4185.877319675169,\n      \"swapFeeApy\": 5857.319876031945,\n      \"voterApr\": 9015.820988404656,\n      \"pendleApy\": 2671.2603841812597,\n      \"lpRewardApy\": 8588.751757826067,\n      \"totalPt\": 8382.49265864167,\n      \"totalSy\": 3466.180559439881,\n      \"totalSupply\": 1966.9803166126464,\n      \"ptPrice\": 3347.9978459322856,\n      \"ytPrice\": 1901.5531247736494,\n      \"syPrice\": 9308.794575670483,\n      \"lpPrice\": 8232.038636062482,\n      \"lastEpochVotes\": 885.0019480794691,\n      \"tradingVolume\": 981.6950405844283,\n      \"explicitSwapFee\": 4036.4452074816427,\n      \"implicitSwapFee\": 388.13340146039434,\n      \"limitOrderFee\": 8252.930616760472\n    },\n    {\n      \"timestamp\": \"2015-07-28T05:02:07.548Z\",\n      \"maxApy\": 1839.1189751218174,\n      \"baseApy\": 753.980068128105,\n      \"underlyingApy\": 456.3920132931487,\n      \"impliedApy\": 7262.034489408384,\n      \"tvl\": 3605.331309776888,\n      \"totalTvl\": 2232.4999250113274,\n      \"underlyingInterestApy\": 5145.967978495656,\n      \"underlyingRewardApy\": 6735.6784567531495,\n      \"ytFloatingApy\": 2131.611624092078,\n      \"swapFeeApy\": 1161.1643361454271,\n      \"voterApr\": 982.2250801772792,\n      \"pendleApy\": 9872.994277012593,\n      \"lpRewardApy\": 1187.9425326897885,\n      \"totalPt\": 2038.3166865465962,\n      \"totalSy\": 553.1813739603487,\n      \"totalSupply\": 5766.54083082092,\n      \"ptPrice\": 446.9451826324944,\n      \"ytPrice\": 8404.91115727563,\n      \"syPrice\": 7193.063319063677,\n      \"lpPrice\": 5659.64045122069,\n      \"lastEpochVotes\": 6691.596436162601,\n      \"tradingVolume\": 7009.211717241467,\n      \"explicitSwapFee\": 304.4580084440762,\n      \"implicitSwapFee\": 1598.049337487627,\n      \"limitOrderFee\": 5127.39201279515\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a1e41db9-62a3-4658-b49c-f7ee8024841e",
+    "name": "Pendle V2 API Docs Assets Markets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n",
+      "type": "text/plain"
+    }
+  }
+}

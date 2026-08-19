@@ -1,0 +1,1242 @@
+{
+  "item": [
+    {
+      "id": "5a6addb8-199d-44d6-9d68-687d68a75687",
+      "name": "Limit Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "839e8ec5-b0db-4276-8e80-9e583242017c",
+          "name": "Get all limit orders for analytics",
+          "request": {
+            "name": "Get all limit orders for analytics",
+            "description": {
+              "content": "This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully filled. \n\nThe results could be very large, so each time we returns at most 1000 orders, you can use the resumeToken to fetch the next page. \n\nTo get limit order for filling, use the [Get limit orders to match by YT address​](#tag/limit-orders/get/v1/limit-orders/takers/limit-orders) endpoint!",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "limit-orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Chain id to filter by, leave blank to fetch all chains."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of results to return. The parameter is capped at 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "maker",
+                  "value": "<string>",
+                  "description": "Maker address to filter orders by"
+                },
+                {
+                  "disabled": false,
+                  "key": "yt",
+                  "value": "<string>",
+                  "description": "Market address to filter orders by"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resumeToken",
+                  "value": "<string>",
+                  "description": "Resume token for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "882b6d36-1ae9-4621-89bc-9fe9529a3203",
+              "name": "Returns limit orders with resume token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "maker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "yt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "timestamp_end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "resumeToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 7149.92007944341,\n  \"limit\": 3551.414698286013,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 595.0903222451087,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 0,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": true,\n      \"isCanceled\": true,\n      \"createdAt\": \"1988-03-25T01:45:00.806Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": true,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"EXPIRED\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 2558.7638575670912,\n        \"ysRate\": 6997.850209910635,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 756.9873783355263\n      },\n      \"fullyExecutedTimestamp\": \"1993-07-07T22:17:57.145Z\",\n      \"canceledTimestamp\": \"1956-12-31T08:34:24.309Z\",\n      \"latestEventTimestamp\": \"2025-04-01T05:36:02.955Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 4373.224825461479,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 3,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": true,\n      \"isCanceled\": true,\n      \"createdAt\": \"1959-09-19T07:05:48.256Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": true,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"CANCELLED\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 2184.2016979075283,\n        \"ysRate\": 7199.331148577942,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 4667.647946405123\n      },\n      \"fullyExecutedTimestamp\": \"2018-11-09T18:21:46.612Z\",\n      \"canceledTimestamp\": \"1974-04-01T15:00:53.788Z\",\n      \"latestEventTimestamp\": \"2023-12-22T21:43:17.225Z\"\n    }\n  ],\n  \"resumeToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62e4caad-0509-4735-a694-2a416ef6d541",
+          "name": "Get all archived limit orders for analytics",
+          "request": {
+            "name": "Get all archived limit orders for analytics",
+            "description": {
+              "content": "This have the same interface and usecase as the endpoint above, but it returns the archived orders\n\nWhen an order is not fillable anymore, we **might** archive it to save storage space, to fetch it, use this endpoint.\n\nSo to fetch full limit orders in history, using this and the endpoint above. Not all orders are archived, it depends on some conditions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "limit-orders",
+                "archived"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Chain id to filter by, leave blank to fetch all chains."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of results to return. The parameter is capped at 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "maker",
+                  "value": "<string>",
+                  "description": "Maker address to filter orders by"
+                },
+                {
+                  "disabled": false,
+                  "key": "yt",
+                  "value": "<string>",
+                  "description": "Market address to filter orders by"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_end",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resumeToken",
+                  "value": "<string>",
+                  "description": "Resume token for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98d21afa-61a7-4ba7-b25d-d81f160096ad",
+              "name": "Returns archived limit orders with resume token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "limit-orders",
+                    "archived"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "maker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "yt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "timestamp_end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "resumeToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 3087.5826817084007,\n  \"limit\": 8526.619750213527,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 2930.3013908737994,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 3,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": true,\n      \"isCanceled\": true,\n      \"createdAt\": \"1950-01-28T10:09:33.483Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": true,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"EXPIRED\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 8869.028042199323,\n        \"ysRate\": 4810.558866036143,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 7763.487507256538\n      },\n      \"fullyExecutedTimestamp\": \"1949-08-01T12:30:20.647Z\",\n      \"canceledTimestamp\": \"1987-06-14T20:11:21.758Z\",\n      \"latestEventTimestamp\": \"1996-11-24T09:32:42.497Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 6031.203039230386,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 2,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": true,\n      \"isCanceled\": true,\n      \"createdAt\": \"1950-11-07T21:12:42.113Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": false,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"FILLABLE\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 3846.93687209255,\n        \"ysRate\": 4471.3752918442315,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 5097.316640638708\n      },\n      \"fullyExecutedTimestamp\": \"1948-06-16T04:36:15.121Z\",\n      \"canceledTimestamp\": \"1986-02-04T15:19:00.287Z\",\n      \"latestEventTimestamp\": \"2014-02-02T00:45:31.332Z\"\n    }\n  ],\n  \"resumeToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dcbe7d2-b87d-4858-961c-1a586aec5c73",
+          "name": "Get user limit orders in market",
+          "request": {
+            "name": "Get user limit orders in market",
+            "description": {
+              "content": "Returns the active and historical limit orders placed by a specific user in a market. Supports richer filtering than the analytics endpoint (e.g. by YT, status, market).\n\nA user can have at most 50 open orders per market, so pagination is typically unnecessary here.\n\nFor full cross-user analytics with cursor-based pagination, use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "limit-orders",
+                "makers",
+                "limit-orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of results to skip. The parameter is capped at 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results to return. The parameter is capped at 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) ChainId"
+                },
+                {
+                  "disabled": false,
+                  "key": "maker",
+                  "value": "<string>",
+                  "description": "(Required) Maker's address"
+                },
+                {
+                  "disabled": false,
+                  "key": "yt",
+                  "value": "<string>",
+                  "description": "Order's YT address"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<number>",
+                  "description": "LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+                },
+                {
+                  "disabled": false,
+                  "key": "isActive",
+                  "value": "<boolean>",
+                  "description": "isActive=true to get all maker's active orders, isActive=false otherwise and do not set isActive if you want to fetch all maker's orders"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a426ba1-5baf-4823-bf4b-28fa741878b4",
+              "name": "Returns limit orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "maker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "yt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 6049.391286378714,\n  \"limit\": 9761.32252300194,\n  \"skip\": 5219.037862011527,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 2483.4011109290423,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 0,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": true,\n      \"isCanceled\": false,\n      \"createdAt\": \"1951-07-03T09:24:00.187Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": false,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"PARTIAL_FILLABLE\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 6705.37478946891,\n        \"ysRate\": 4659.334613121241,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 2003.4316082142411\n      },\n      \"fullyExecutedTimestamp\": \"2002-10-13T21:18:25.117Z\",\n      \"canceledTimestamp\": \"2009-11-21T00:02:53.707Z\",\n      \"latestEventTimestamp\": \"1962-11-07T09:47:19.858Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"signature\": \"string\",\n      \"chainId\": 6838.797371539911,\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"type\": 2,\n      \"token\": \"string\",\n      \"yt\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"currentMakingAmount\": \"string\",\n      \"lnImpliedRate\": \"string\",\n      \"failSafeRate\": \"string\",\n      \"permit\": \"string\",\n      \"orderFilledStatus\": {\n        \"netInputFromMaker\": \"string\",\n        \"netOutputToMaker\": \"string\",\n        \"feeAmount\": \"string\",\n        \"notionalVolume\": \"string\"\n      },\n      \"isActive\": false,\n      \"isCanceled\": true,\n      \"createdAt\": \"1971-07-28T18:19:27.355Z\",\n      \"sy\": \"string\",\n      \"pt\": \"string\",\n      \"makerBalance\": \"string\",\n      \"failedMintSy\": false,\n      \"failedMintSyReason\": \"string\",\n      \"orderBookBalance\": \"string\",\n      \"makingToken\": \"string\",\n      \"takingToken\": \"string\",\n      \"status\": \"PARTIAL_FILLABLE\",\n      \"orderState\": {\n        \"orderType\": \"string\",\n        \"exchangeRate\": \"string\",\n        \"psAmountToTaker\": \"string\",\n        \"psAmountFromTaker\": \"string\",\n        \"ysAmountToTaker\": \"string\",\n        \"ysAmountFromTaker\": \"string\",\n        \"fee\": \"string\",\n        \"psRate\": 9634.96261074613,\n        \"ysRate\": 11.67500110502373,\n        \"netToMakerIfFullyFilled\": \"string\",\n        \"netFromMakerIfFullyFilled\": \"string\",\n        \"notionalVolume\": \"string\",\n        \"matchableAmount\": \"string\",\n        \"notionalVolumeUSD\": 5075.706014257215\n      },\n      \"fullyExecutedTimestamp\": \"1946-08-24T10:44:50.195Z\",\n      \"canceledTimestamp\": \"1969-06-03T23:49:59.991Z\",\n      \"latestEventTimestamp\": \"1988-01-27T23:54:30.552Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21b7d28f-00ac-4bd0-9877-642906b65126",
+          "name": "Create limit order",
+          "request": {
+            "name": "Create limit order",
+            "description": {
+              "content": "Submit a signed limit order to the Pendle order book. Once created, the order is visible to takers and will be filled against incoming swaps at or better than the specified implied APY.\n\nBefore calling this, generate the order payload via [Generate limit order data](#tag/limit-orders/post/v1/limit-orders/makers/generate-limit-order-data), sign it with your wallet, and include the signature in the request body.\n\nCommon rejection reasons: the YT or market is not whitelisted for limit orders, the order has already expired, or the signature is invalid.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "limit-orders",
+                "makers",
+                "limit-orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chainId\": \"<number>\",\n  \"signature\": \"<string>\",\n  \"salt\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"type\": \"<number>\",\n  \"token\": \"<string>\",\n  \"yt\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lnImpliedRate\": \"<string>\",\n  \"failSafeRate\": \"<string>\",\n  \"permit\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0cf8ac0-0940-4778-a24d-10f2db431ca4",
+              "name": "Returns created limit order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"signature\": \"<string>\",\n  \"salt\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"type\": \"<number>\",\n  \"token\": \"<string>\",\n  \"yt\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lnImpliedRate\": \"<string>\",\n  \"failSafeRate\": \"<string>\",\n  \"permit\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"signature\": \"string\",\n  \"chainId\": 3554.6204461769025,\n  \"salt\": \"string\",\n  \"expiry\": \"string\",\n  \"nonce\": \"string\",\n  \"type\": 0,\n  \"token\": \"string\",\n  \"yt\": \"string\",\n  \"maker\": \"string\",\n  \"receiver\": \"string\",\n  \"makingAmount\": \"string\",\n  \"currentMakingAmount\": \"string\",\n  \"lnImpliedRate\": \"string\",\n  \"failSafeRate\": \"string\",\n  \"permit\": \"string\",\n  \"orderFilledStatus\": {\n    \"netInputFromMaker\": \"string\",\n    \"netOutputToMaker\": \"string\",\n    \"feeAmount\": \"string\",\n    \"notionalVolume\": \"string\"\n  },\n  \"isActive\": true,\n  \"isCanceled\": false,\n  \"createdAt\": \"1961-09-01T09:39:18.681Z\",\n  \"sy\": \"string\",\n  \"pt\": \"string\",\n  \"makerBalance\": \"string\",\n  \"failedMintSy\": true,\n  \"failedMintSyReason\": \"string\",\n  \"orderBookBalance\": \"string\",\n  \"makingToken\": \"string\",\n  \"takingToken\": \"string\",\n  \"status\": \"CANCELLED\",\n  \"orderState\": {\n    \"orderType\": \"string\",\n    \"exchangeRate\": \"string\",\n    \"psAmountToTaker\": \"string\",\n    \"psAmountFromTaker\": \"string\",\n    \"ysAmountToTaker\": \"string\",\n    \"ysAmountFromTaker\": \"string\",\n    \"fee\": \"string\",\n    \"psRate\": 3918.152083578841,\n    \"ysRate\": 405.01534697360285,\n    \"netToMakerIfFullyFilled\": \"string\",\n    \"netFromMakerIfFullyFilled\": \"string\",\n    \"notionalVolume\": \"string\",\n    \"matchableAmount\": \"string\",\n    \"notionalVolumeUSD\": 2249.4145763861693\n  },\n  \"fullyExecutedTimestamp\": \"1984-10-17T18:41:57.268Z\",\n  \"canceledTimestamp\": \"1996-02-23T08:40:05.839Z\",\n  \"latestEventTimestamp\": \"1961-12-30T11:10:57.341Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f5c927e-1cf0-41d6-9920-7a90e192a1ee",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"signature\": \"<string>\",\n  \"salt\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"type\": \"<number>\",\n  \"token\": \"<string>\",\n  \"yt\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lnImpliedRate\": \"<string>\",\n  \"failSafeRate\": \"<string>\",\n  \"permit\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"statusCode\": 751.6286634024772,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0541e57-72cc-4572-9d5a-a368805b7295",
+              "name": "Validation failed - unsupported token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"signature\": \"<string>\",\n  \"salt\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"type\": \"<number>\",\n  \"token\": \"<string>\",\n  \"yt\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lnImpliedRate\": \"<string>\",\n  \"failSafeRate\": \"<string>\",\n  \"permit\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"statusCode\": 751.6286634024772,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5067ada8-0c4b-4cb9-a267-3377e6921f68",
+          "name": "Generate limit order data for signing",
+          "request": {
+            "name": "Generate limit order data for signing",
+            "description": {
+              "content": "Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker's private key, then submit the order via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders).\n\nThe generated order specifies the YT address, direction (long or short yield), size, and implied APY target. The order remains valid until it is either fully filled, cancelled, or expired.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "limit-orders",
+                "makers",
+                "generate-limit-order-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chainId\": \"<number>\",\n  \"YT\": \"<string>\",\n  \"orderType\": \"<number>\",\n  \"token\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"impliedApy\": \"<number>\",\n  \"expiry\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ab1e309-0238-4b0c-a7e3-0312d205e3df",
+              "name": "Return generated limit order data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "generate-limit-order-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"YT\": \"<string>\",\n  \"orderType\": \"<number>\",\n  \"token\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"impliedApy\": \"<number>\",\n  \"expiry\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chainId\": 5237.954849331374,\n  \"YT\": \"string\",\n  \"salt\": \"string\",\n  \"expiry\": \"string\",\n  \"nonce\": \"string\",\n  \"token\": \"string\",\n  \"orderType\": 2,\n  \"failSafeRate\": \"string\",\n  \"maker\": \"string\",\n  \"receiver\": \"string\",\n  \"makingAmount\": \"string\",\n  \"permit\": \"string\",\n  \"lnImpliedRate\": 6312\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b4fe4b6-6987-4a66-80ad-f665a7f262d3",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "generate-limit-order-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"YT\": \"<string>\",\n  \"orderType\": \"<number>\",\n  \"token\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"impliedApy\": \"<number>\",\n  \"expiry\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"statusCode\": 751.6286634024772,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d394ad26-2688-4340-8d51-8939f4f733de",
+          "name": "Generate list of limit orders (scaled) for signing",
+          "request": {
+            "name": "Generate list of limit orders (scaled) for signing",
+            "description": {
+              "content": "Generate a batch of limit orders spread across a price (implied APY) range for signing. Scaled orders distribute your total size across multiple price levels, providing better market depth than a single large order.\n\nSign each generated order individually, then submit them via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders). Useful for market-making strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "limit-orders",
+                "makers",
+                "generate-scaled-order-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chainId\": \"<number>\",\n  \"YT\": \"<string>\",\n  \"orderType\": \"<number>\",\n  \"token\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lowerImpliedApy\": \"<number>\",\n  \"upperImpliedApy\": \"<number>\",\n  \"orderCount\": \"<number>\",\n  \"sizeDistribution\": \"<string>\",\n  \"expiry\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dabed1da-aedd-42ec-bbf0-8670135ba580",
+              "name": "Return generated limit order data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "makers",
+                    "generate-scaled-order-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": \"<number>\",\n  \"YT\": \"<string>\",\n  \"orderType\": \"<number>\",\n  \"token\": \"<string>\",\n  \"maker\": \"<string>\",\n  \"makingAmount\": \"<string>\",\n  \"lowerImpliedApy\": \"<number>\",\n  \"upperImpliedApy\": \"<number>\",\n  \"orderCount\": \"<number>\",\n  \"sizeDistribution\": \"<string>\",\n  \"expiry\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"chainId\": 9279.102718342047,\n      \"YT\": \"string\",\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"token\": \"string\",\n      \"orderType\": 3,\n      \"failSafeRate\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"permit\": \"string\",\n      \"lnImpliedRate\": 2741\n    },\n    {\n      \"chainId\": 1449.5434572987497,\n      \"YT\": \"string\",\n      \"salt\": \"string\",\n      \"expiry\": \"string\",\n      \"nonce\": \"string\",\n      \"token\": \"string\",\n      \"orderType\": 3,\n      \"failSafeRate\": \"string\",\n      \"maker\": \"string\",\n      \"receiver\": \"string\",\n      \"makingAmount\": \"string\",\n      \"permit\": \"string\",\n      \"lnImpliedRate\": 9592\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "298d836c-7934-4212-a3e8-f834e73db690",
+          "name": "Get limit orders to match by YT address",
+          "request": {
+            "name": "Get limit orders to match by YT address",
+            "description": {
+              "content": "Returns the best-matching active limit orders for a given YT address, sorted by implied APY for efficient taker fill selection.\n\nThe response includes full order structs and maker signatures ready to pass directly to the Pendle limit order contract for on-chain settlement. Only active orders (unfilled, uncancelled, unexpired) are returned.\n\nFor analytics and full order history (including filled/cancelled), use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "limit-orders",
+                "takers",
+                "limit-orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of results to skip. The parameter is capped at 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results to return. The parameter is capped at 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) ChainId"
+                },
+                {
+                  "disabled": false,
+                  "key": "yt",
+                  "value": "<string>",
+                  "description": "(Required) Order's YT address"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<number>",
+                  "description": "(Required) LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1a52498-4624-4a15-b801-7cde165dd54d",
+              "name": "Limit orders data for takers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "takers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "yt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 8833.224900428744,\n  \"limit\": 6485.261469988695,\n  \"skip\": 1023.3066509253241,\n  \"results\": [\n    {\n      \"order\": {\n        \"id\": \"string\",\n        \"signature\": \"string\",\n        \"chainId\": 6650.0890506073765,\n        \"salt\": \"string\",\n        \"expiry\": \"string\",\n        \"nonce\": \"string\",\n        \"type\": 3,\n        \"token\": \"string\",\n        \"yt\": \"string\",\n        \"maker\": \"string\",\n        \"receiver\": \"string\",\n        \"makingAmount\": \"string\",\n        \"currentMakingAmount\": \"string\",\n        \"lnImpliedRate\": \"string\",\n        \"failSafeRate\": \"string\",\n        \"permit\": \"string\",\n        \"orderFilledStatus\": {\n          \"netInputFromMaker\": \"string\",\n          \"netOutputToMaker\": \"string\",\n          \"feeAmount\": \"string\",\n          \"notionalVolume\": \"string\"\n        },\n        \"isActive\": true,\n        \"isCanceled\": true,\n        \"createdAt\": \"1969-08-22T00:50:56.894Z\",\n        \"sy\": \"string\",\n        \"pt\": \"string\",\n        \"makerBalance\": \"string\",\n        \"failedMintSy\": false,\n        \"failedMintSyReason\": \"string\",\n        \"orderBookBalance\": \"string\",\n        \"makingToken\": \"string\",\n        \"takingToken\": \"string\",\n        \"status\": \"CANCELLED\",\n        \"orderState\": {\n          \"orderType\": \"string\",\n          \"exchangeRate\": \"string\",\n          \"psAmountToTaker\": \"string\",\n          \"psAmountFromTaker\": \"string\",\n          \"ysAmountToTaker\": \"string\",\n          \"ysAmountFromTaker\": \"string\",\n          \"fee\": \"string\",\n          \"psRate\": 158.71205779837695,\n          \"ysRate\": 9779.319259767295,\n          \"netToMakerIfFullyFilled\": \"string\",\n          \"netFromMakerIfFullyFilled\": \"string\",\n          \"notionalVolume\": \"string\",\n          \"matchableAmount\": \"string\",\n          \"notionalVolumeUSD\": 2424.03299422118\n        },\n        \"fullyExecutedTimestamp\": \"2008-06-18T14:17:26.395Z\",\n        \"canceledTimestamp\": \"2017-04-28T17:14:31.403Z\",\n        \"latestEventTimestamp\": \"1990-12-01T07:12:20.250Z\"\n      },\n      \"makingAmount\": \"string\",\n      \"netFromTaker\": \"string\",\n      \"netToTaker\": \"string\"\n    },\n    {\n      \"order\": {\n        \"id\": \"string\",\n        \"signature\": \"string\",\n        \"chainId\": 1545.9262941231423,\n        \"salt\": \"string\",\n        \"expiry\": \"string\",\n        \"nonce\": \"string\",\n        \"type\": 3,\n        \"token\": \"string\",\n        \"yt\": \"string\",\n        \"maker\": \"string\",\n        \"receiver\": \"string\",\n        \"makingAmount\": \"string\",\n        \"currentMakingAmount\": \"string\",\n        \"lnImpliedRate\": \"string\",\n        \"failSafeRate\": \"string\",\n        \"permit\": \"string\",\n        \"orderFilledStatus\": {\n          \"netInputFromMaker\": \"string\",\n          \"netOutputToMaker\": \"string\",\n          \"feeAmount\": \"string\",\n          \"notionalVolume\": \"string\"\n        },\n        \"isActive\": false,\n        \"isCanceled\": true,\n        \"createdAt\": \"1994-02-11T08:19:31.252Z\",\n        \"sy\": \"string\",\n        \"pt\": \"string\",\n        \"makerBalance\": \"string\",\n        \"failedMintSy\": true,\n        \"failedMintSyReason\": \"string\",\n        \"orderBookBalance\": \"string\",\n        \"makingToken\": \"string\",\n        \"takingToken\": \"string\",\n        \"status\": \"FULLY_FILLED\",\n        \"orderState\": {\n          \"orderType\": \"string\",\n          \"exchangeRate\": \"string\",\n          \"psAmountToTaker\": \"string\",\n          \"psAmountFromTaker\": \"string\",\n          \"ysAmountToTaker\": \"string\",\n          \"ysAmountFromTaker\": \"string\",\n          \"fee\": \"string\",\n          \"psRate\": 5324.027432025889,\n          \"ysRate\": 1615.707022857229,\n          \"netToMakerIfFullyFilled\": \"string\",\n          \"netFromMakerIfFullyFilled\": \"string\",\n          \"notionalVolume\": \"string\",\n          \"matchableAmount\": \"string\",\n          \"notionalVolumeUSD\": 293.6482028091192\n        },\n        \"fullyExecutedTimestamp\": \"2019-08-02T02:41:00.773Z\",\n        \"canceledTimestamp\": \"1962-10-03T12:00:14.506Z\",\n        \"latestEventTimestamp\": \"1954-03-25T16:42:58.443Z\"\n      },\n      \"makingAmount\": \"string\",\n      \"netFromTaker\": \"string\",\n      \"netToTaker\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d3689f8-dffe-4e61-bb2b-d9043cf40ab1",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "limit-orders",
+                    "takers",
+                    "limit-orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "yt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"statusCode\": 751.6286634024772,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2aae8a6-d7f1-459a-8f0f-03aab89bc16d",
+          "name": "Get order book v2",
+          "request": {
+            "name": "Get order book v2",
+            "description": {
+              "content": "Returns the consolidated order book for a market, aggregating both limit orders and AMM liquidity depth into a unified view.\n\nThe book is split into two sides:\n- **longYieldEntries**: available liquidity for buying YT (long yield positions), ordered by ascending implied APY\n- **shortYieldEntries**: available liquidity for selling YT (short yield positions), ordered by descending implied APY\n\nEach entry shows the implied APY price level, combined limit order size, and AMM depth at that level.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "limit-orders",
+                "book",
+                ":chainId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results to return. The parameter is capped at 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "precisionDecimal",
+                  "value": "<number>",
+                  "description": "(Required) Min: 0, Max: 3, returned impliedApy will have precision upto 10^{-precisionDecimal}%"
+                },
+                {
+                  "disabled": false,
+                  "key": "market",
+                  "value": "<string>",
+                  "description": "(Required) Market address"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAmm",
+                  "value": "<boolean>",
+                  "description": "Include AMM orders in the order book"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88cef1f6-1cc4-4e4c-a608-748f59b78586",
+              "name": "Returns order book",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "limit-orders",
+                    "book",
+                    ":chainId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "precisionDecimal",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "market",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeAmm",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"longYieldEntries\": [\n    {\n      \"impliedApy\": 2659.157023537889,\n      \"limitOrderSize\": 6576,\n      \"ammSize\": 7933\n    },\n    {\n      \"impliedApy\": 3332.4244076361333,\n      \"limitOrderSize\": 7653,\n      \"ammSize\": 9725\n    }\n  ],\n  \"shortYieldEntries\": [\n    {\n      \"impliedApy\": 8639.715446778033,\n      \"limitOrderSize\": 2838,\n      \"ammSize\": 6118\n    },\n    {\n      \"impliedApy\": 5173.834439479526,\n      \"limitOrderSize\": 4887,\n      \"ammSize\": 5712\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6652fd27-f148-413e-8737-e588105671d2",
+    "name": "Pendle V2 API Docs Assets Limit Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n",
+      "type": "text/plain"
+    }
+  }
+}

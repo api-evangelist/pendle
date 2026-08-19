@@ -1,0 +1,1396 @@
+{
+  "item": [
+    {
+      "id": "1f094623-b580-407e-995a-9e7b91076d2a",
+      "name": "SDK",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3c67a091-0c69-47bb-92c5-664fe7449f0d",
+          "name": "Get supported tokens for market",
+          "request": {
+            "name": "Get supported tokens for market",
+            "description": {
+              "content": "Returns the two sets of tokens relevant for a given market:\n\n- **SY input tokens**: tokens accepted by the SY wrapper for minting/redeeming (e.g. USDC for a USDC-based market).\n- **Zap tokens**: tokens that can be used as input when buying PT/YT or providing liquidity, routed via aggregators.\n\nCall this before building a Convert or Swap request to know which input tokens are valid for a given market.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "markets",
+                ":market",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "market",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7582de7-0706-40d1-ad2c-fbf5d3030532",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "markets",
+                    ":market",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "market",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokensMintSy\": [\n    \"string\",\n    \"string\"\n  ],\n  \"tokensRedeemSy\": [\n    \"string\",\n    \"string\"\n  ],\n  \"tokensIn\": [\n    \"string\",\n    \"string\"\n  ],\n  \"tokensOut\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3550da4b-1e5f-4a14-8ae1-f650bf89040b",
+          "name": "Get supported aggregators for a chain",
+          "request": {
+            "name": "Get supported aggregators for a chain",
+            "description": {
+              "content": "Returns the list of DEX aggregators available on this chain for routing token swaps, along with the additional computing unit cost each one adds to SDK requests.\n\nUse this to decide which aggregators to include in Convert/Swap calls via the `aggregators` query param.\n\nYou can reduce any aggregator's CU cost to 0 by providing your own API key in the corresponding request header. See [Reducing Aggregator Costs](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units) for details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "supported-aggregators"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ccefced-a510-4f71-bbd8-8b4c6c35f15a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "supported-aggregators"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"aggregators\": [\n    {\n      \"name\": \"kyberswap\",\n      \"computingUnit\": 5\n    },\n    {\n      \"name\": \"kyberswap\",\n      \"computingUnit\": 5\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0121c6b-92e2-4c39-80b0-3f8a8ac1adcb",
+          "name": "Get real-time PT/YT swap price of a market",
+          "request": {
+            "name": "Get real-time PT/YT swap price of a market",
+            "description": {
+              "content": "Return price by swapping  1 unit underlying token to PT/ YT, and 1 unit of PT/YT to the underlying token.\n\nOne unit is defined as 10**decimal. The result is updated every block.\n\nImplied APY of the market is also included.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "markets",
+                ":market",
+                "swapping-prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "market",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7cc31153-0d68-4445-85d9-86a69bba8b6f",
+              "name": "Return the swap output. Data is returned with corresponding asset decimals. Null indicates that it's not possible to swap the quantity, either because the market has insufficient liquidity or the market has matured.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "markets",
+                    ":market",
+                    "swapping-prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "market",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"underlyingToken\": \"string\",\n  \"underlyingTokenToPtRate\": {},\n  \"ptToUnderlyingTokenRate\": {},\n  \"underlyingTokenToYtRate\": {},\n  \"ytToUnderlyingTokenRate\": {},\n  \"impliedApy\": 6213.632978371845\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e6b5511-b265-4309-84d8-676a106e7592",
+          "name": "Cancel one single limit order by order hash",
+          "request": {
+            "name": "Cancel one single limit order by order hash",
+            "description": {
+              "content": "Generate the transaction payload to cancel a specific limit order on-chain.\n\nPass the full signed order struct (from the original order creation) to identify which order to cancel. The order becomes invalid once the cancellation transaction is confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "limit-order",
+                "cancel-single"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "userAddress",
+                  "value": "<string>",
+                  "description": "(Required) User Address"
+                },
+                {
+                  "disabled": false,
+                  "key": "salt",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of salt"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiry",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of expiry"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of nonce"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderType",
+                  "value": "<number>",
+                  "description": "(Required) LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }"
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Token used by user to make order"
+                },
+                {
+                  "disabled": false,
+                  "key": "YT",
+                  "value": "<string>",
+                  "description": "(Required) YT address"
+                },
+                {
+                  "disabled": false,
+                  "key": "maker",
+                  "value": "<string>",
+                  "description": "(Required) Maker address"
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "(Required) Receiver address"
+                },
+                {
+                  "disabled": false,
+                  "key": "makingAmount",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of making amount"
+                },
+                {
+                  "disabled": false,
+                  "key": "lnImpliedRate",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of lnImpliedRate (natural logarithm of the implied rate)"
+                },
+                {
+                  "disabled": false,
+                  "key": "failSafeRate",
+                  "value": "<string>",
+                  "description": "(Required) BigInt string of failSafeRate"
+                },
+                {
+                  "disabled": false,
+                  "key": "permit",
+                  "value": "<string>",
+                  "description": "(Required) Bytes string for permit"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "153e3fb7-d6c5-485d-a57e-fc8df7d9eeaf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "limit-order",
+                    "cancel-single"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "salt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expiry",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderType",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "YT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "maker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "makingAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lnImpliedRate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "failSafeRate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "permit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"method\": \"string\",\n  \"contractCallParamsName\": [\n    \"string\",\n    \"string\"\n  ],\n  \"contractCallParams\": [\n    [],\n    []\n  ],\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"tokenApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "731d4da3-8f1a-44bb-a752-aecbc3dc07c1",
+          "name": "Cancel all limit orders",
+          "request": {
+            "name": "Cancel all limit orders",
+            "description": {
+              "content": "Generate the transaction payload to cancel all active limit orders for a user in a single on-chain call.\n\nThis works by incrementing the user's nonce on-chain, which invalidates all previously signed orders at once. More efficient than cancelling orders one by one when clearing all open positions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "limit-order",
+                "cancel-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "userAddress",
+                  "value": "<string>",
+                  "description": "(Required) User Address"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8930e7ad-212a-48fb-9ed8-b604c21ba9ed",
+              "name": "Cancel all limit orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "limit-order",
+                    "cancel-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userAddress",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"method\": \"string\",\n  \"contractCallParamsName\": [\n    \"string\",\n    \"string\"\n  ],\n  \"contractCallParams\": [\n    [],\n    []\n  ],\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"tokenApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f804cf7-74dc-49a3-9313-2161187fdeb6",
+          "name": "Redeem rewards and interests from positions",
+          "request": {
+            "name": "Redeem rewards and interests from positions",
+            "description": {
+              "content": "Generate a transaction payload to claim all accrued interest and incentive rewards across multiple positions in a single call.\n\nSpecify which positions to claim from by passing arrays of:\n- `sys`: SY token addresses (to claim SY interest)\n- `yts`: YT token addresses (to claim YT interest and rewards)\n- `markets`: LP market addresses (to claim LP rewards)\n\nUseful for portfolio management bots or dashboards that batch-claim on behalf of users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "redeem-interests-and-rewards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "(Required) The address to receive the output of the action"
+                },
+                {
+                  "disabled": false,
+                  "key": "sys",
+                  "value": "<string>",
+                  "description": "Use comma separated values to search by multiple addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "yts",
+                  "value": "<string>",
+                  "description": "Use comma separated values to search by multiple addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "markets",
+                  "value": "<string>",
+                  "description": "Use comma separated values to search by multiple addresses"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3345cfb1-9548-4d6f-9ffd-7b4fdce62156",
+              "name": "Redeem rewards and interests from positions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "redeem-interests-and-rewards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "receiver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sys",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "yts",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "markets",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"method\": \"string\",\n  \"contractCallParamsName\": [\n    \"string\",\n    \"string\"\n  ],\n  \"contractCallParams\": [\n    [],\n    []\n  ],\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"tokenApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9648668-67ff-42fe-a41b-5d59d1e98df1",
+          "name": "Universal convert function",
+          "request": {
+            "name": "Universal convert function",
+            "description": {
+              "content": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.\n\nThe action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.\n\n| Action                                                | tokensIn              | tokensOut       | Note                                                                                                                                                                                                                                 |\n|-------------------------------------------------------|-----------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| Swap from PT to token (sell PT)                       | [PT]                  | [token]         | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Swap from token to PT (buy PT)                        | [token]               | [PT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap from YT to token (sell YT)                       | [YT]                  | [token]         | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap from token to YT (buy YT)                        | [token]               | [YT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap between PT and YT                                | [PT] or [YT]          | [YT] or [PT]    | Only callable until the market's expiry                                                                                                                                                                                              |\n| Add liquidity dual (using both token and PT)          | [token, PT]           | [LP]            | Only callable until the market's expiry.                                                                                                                                                                                             |\n| Add liquidity single (using token or PT)              | [token] or [PT]       | [LP]            | Only callable until the market's expiry.                                                                                                                                                                                             |\n| Add liquidity single ZPI (using token or PT, keep YT) | [token] or [PT]       | [LP, YT]        | Zero-price impact provision is supported where no price impact will incur, and users will receive LP and YT (less LP compared to normal mode). Only callable until the market's expiry.                                              |\n| Remove liquidity dual (get back both token and PT)    | [LP]                  | [token, PT]     | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Remove liquidity single (get back either token or PT) | [LP]                  | [token] or [PT] | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Mint PT & YT                                          | [token]               | [PT, YT]        | Only callable until YT's expiry                                                                                                                                                                                                      |\n| Redeem PT & YT                                        | [PT, YT]              | [token]         | If called before YT's expiry, both PT & YT of equal amounts are needed and will be burned. Else, only PT is needed and will be burned.                                                                                               |\n| Transfer liquidity between markets                    | [LP, PT, YT]          | [LP]            | tokensIn doesn't need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market.                      |\n| Transfer liquidity ZPI                                | [LP, PT, YT]          | [LP, YT]        | tokensIn doesn't need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market with no price impact. |\n| Mint SY                                               | [token]               | [SY]            |                                                                                                                                                                                                                                      |\n| Redeem SY                                             | [SY]                  | [token]         |                                                                                                                                                                                                                                      |\n| Swap PT between markets (Roll over pts)               | [PT]                  | [PT]            | PT is redeemed for the underlying asset and used to buy the new PT.                                                                                                                                                                  |\n| Exit market                                           | [LP, PT, YT]          | [token]         | tokensIn doesn't need to include all 3 tokens; any number of tokens will work.                                                                                                                                                       |\n| Swap LP to PT between markets                         | [LP]                  | [PT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Pendle swap (swap multiple ERC20 tokens to 1 token)   | [token1, token2, ...] | [token]         | Support at most 3 tokens in                                                                                                                                                                                                          |\n\n`tokensIn` and `tokensOut` are the input and output tokens for the action, should be seperate by comma with no spaces.\n\nExample if your action requires 2 tokensIn, you can pass `tokensIn=0x123,0x456`\n\nFor code examples and migration from individual SDK endpoints, see the [Hosted SDK documentation](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#examples).\n\n## Computing cost\n\nThis API will consume 5 computing units if no aggregator is used, with no additional data.\nEnabling aggregator will consume additional computing units, each aggregator cost differently, and could be check at: [Get supported aggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)\n\nRefer to our document for guide to reduce CU usage with aggregators: [Reduce CU Usage](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units-v2-endpoints-only)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "sdk",
+                ":chainId",
+                "convert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "Recipient address for transaction output"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippage",
+                  "value": "<number>",
+                  "description": "(Required) Maximum slippage tolerance (0-1, where 0.01 equals 1%)"
+                },
+                {
+                  "disabled": false,
+                  "key": "enableAggregator",
+                  "value": "false",
+                  "description": "Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset"
+                },
+                {
+                  "disabled": false,
+                  "key": "aggregators",
+                  "value": "<string>",
+                  "description": "List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokensIn",
+                  "value": "<string>",
+                  "description": "(Required) Input token addresses, seperate by comma with no spaces"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountsIn",
+                  "value": "<string>",
+                  "description": "(Required) Input token amounts in wei, seperate by comma with no spaces"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokensOut",
+                  "value": "<string>",
+                  "description": "(Required) Output token addresses, seperate by comma with no spaces"
+                },
+                {
+                  "disabled": false,
+                  "key": "redeemRewards",
+                  "value": "false",
+                  "description": "Redeem rewards"
+                },
+                {
+                  "disabled": false,
+                  "key": "needScale",
+                  "value": "false",
+                  "description": "Aggregators needScale value, only set to true when amounts are updated onchain. When enabled, please make sure to buffer the amountIn by about 2%"
+                },
+                {
+                  "disabled": false,
+                  "key": "additionalData",
+                  "value": "<string>",
+                  "description": "Available fields: `impliedApy`, `effectiveApy`. Comma separated list of fields to return. For example: `field1,field2`. More fields will consume more computing units."
+                },
+                {
+                  "disabled": false,
+                  "key": "useLimitOrder",
+                  "value": "true",
+                  "description": "To use limit orders when converting, default to true"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef8c5b96-ca0f-4e78-9f3a-88dbbb92823a",
+              "name": "The detected action and data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "sdk",
+                    ":chainId",
+                    "convert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "receiver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "enableAggregator",
+                      "value": "false"
+                    },
+                    {
+                      "key": "aggregators",
+                      "value": "kyberswap,okx"
+                    },
+                    {
+                      "key": "tokensIn",
+                      "value": "0x123,0x456"
+                    },
+                    {
+                      "key": "amountsIn",
+                      "value": "1000000000000000000,2000000000000000000"
+                    },
+                    {
+                      "key": "tokensOut",
+                      "value": "0x123,0x456"
+                    },
+                    {
+                      "key": "redeemRewards",
+                      "value": "false"
+                    },
+                    {
+                      "key": "needScale",
+                      "value": "false"
+                    },
+                    {
+                      "key": "additionalData",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "useLimitOrder",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"action\": \"add-liquidity-dual\",\n  \"inputs\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ],\n  \"routes\": [\n    {\n      \"contractParamInfo\": {\n        \"method\": \"string\",\n        \"contractCallParamsName\": [\n          \"string\",\n          \"string\"\n        ],\n        \"contractCallParams\": [\n          [],\n          []\n        ]\n      },\n      \"tx\": {\n        \"data\": \"string\",\n        \"to\": \"string\",\n        \"from\": \"string\",\n        \"value\": \"string\"\n      },\n      \"outputs\": [\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        },\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        }\n      ],\n      \"data\": {\n        \"aggregatorType\": \"string\",\n        \"priceImpact\": 6372.754217607256,\n        \"priceImpactBreakDown\": {\n          \"internalPriceImpact\": 8998.533328779296,\n          \"externalPriceImpact\": 4348.999919950659\n        },\n        \"impliedApy\": {\n          \"before\": 6659.038335952723,\n          \"after\": 4022.4407886884806\n        },\n        \"effectiveApy\": 8511.581379749867,\n        \"paramsBreakdown\": {\n          \"selfCall1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reflectCall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selfCall2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"fee\": {\n          \"usd\": 3655.805189363752\n        }\n      }\n    },\n    {\n      \"contractParamInfo\": {\n        \"method\": \"string\",\n        \"contractCallParamsName\": [\n          \"string\",\n          \"string\"\n        ],\n        \"contractCallParams\": [\n          [],\n          []\n        ]\n      },\n      \"tx\": {\n        \"data\": \"string\",\n        \"to\": \"string\",\n        \"from\": \"string\",\n        \"value\": \"string\"\n      },\n      \"outputs\": [\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        },\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        }\n      ],\n      \"data\": {\n        \"aggregatorType\": \"string\",\n        \"priceImpact\": 1047.6860580528469,\n        \"priceImpactBreakDown\": {\n          \"internalPriceImpact\": 3705.2556000936265,\n          \"externalPriceImpact\": 5351.0072061371875\n        },\n        \"impliedApy\": {\n          \"before\": 6472.630736066221,\n          \"after\": 500.0028042110305\n        },\n        \"effectiveApy\": 8841.01054485863,\n        \"paramsBreakdown\": {\n          \"selfCall1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reflectCall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selfCall2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"fee\": {\n          \"usd\": 2633.2899017307145\n        }\n      }\n    }\n  ],\n  \"requiredApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ],\n  \"rewards\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d15fac6-f6d5-48b5-a839-7141c45cd1e2",
+          "name": "Universal convert function (recommended — POST body variant)",
+          "request": {
+            "name": "Universal convert function (recommended — POST body variant)",
+            "description": {
+              "content": "\nThe **Convert API** is the recommended endpoint for all Pendle transaction building. It supersedes the individual swap, add/remove liquidity, mint, redeem, transfer, and exit endpoints — handling 21 distinct operations through a unified interface.\n\nThe action is automatically detected from your `tokensIn` and `tokensOut` addresses. See the table below for all supported operations.\n\n| Action                                                | tokensIn              | tokensOut       | Note                                                                                                                                                                                                                                 |\n|-------------------------------------------------------|-----------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| Swap from PT to token (sell PT)                       | [PT]                  | [token]         | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Swap from token to PT (buy PT)                        | [token]               | [PT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap from YT to token (sell YT)                       | [YT]                  | [token]         | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap from token to YT (buy YT)                        | [token]               | [YT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Swap between PT and YT                                | [PT] or [YT]          | [YT] or [PT]    | Only callable until the market's expiry                                                                                                                                                                                              |\n| Add liquidity dual (using both token and PT)          | [token, PT]           | [LP]            | Only callable until the market's expiry.                                                                                                                                                                                             |\n| Add liquidity single (using token or PT)              | [token] or [PT]       | [LP]            | Only callable until the market's expiry.                                                                                                                                                                                             |\n| Add liquidity single ZPI (using token or PT, keep YT) | [token] or [PT]       | [LP, YT]        | Zero-price impact provision is supported where no price impact will incur, and users will receive LP and YT (less LP compared to normal mode). Only callable until the market's expiry.                                              |\n| Remove liquidity dual (get back both token and PT)    | [LP]                  | [token, PT]     | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Remove liquidity single (get back either token or PT) | [LP]                  | [token] or [PT] | Callable regardless of the market's expiry                                                                                                                                                                                           |\n| Mint PT & YT                                          | [token]               | [PT, YT]        | Only callable until YT's expiry                                                                                                                                                                                                      |\n| Redeem PT & YT                                        | [PT, YT]              | [token]         | If called before YT's expiry, both PT & YT of equal amounts are needed and will be burned. Else, only PT is needed and will be burned.                                                                                               |\n| Transfer liquidity between markets                    | [LP, PT, YT]          | [LP]            | tokensIn doesn't need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market.                      |\n| Transfer liquidity ZPI                                | [LP, PT, YT]          | [LP, YT]        | tokensIn doesn't need to include all 3 tokens; any number of tokens will work. All provided inputs (LP, PT & YT) will be sold/redeemed to the underlying asset before being zapped into the destination market with no price impact. |\n| Mint SY                                               | [token]               | [SY]            |                                                                                                                                                                                                                                      |\n| Redeem SY                                             | [SY]                  | [token]         |                                                                                                                                                                                                                                      |\n| Swap PT between markets (Roll over pts)               | [PT]                  | [PT]            | PT is redeemed for the underlying asset and used to buy the new PT.                                                                                                                                                                  |\n| Exit market                                           | [LP, PT, YT]          | [token]         | tokensIn doesn't need to include all 3 tokens; any number of tokens will work.                                                                                                                                                       |\n| Swap LP to PT between markets                         | [LP]                  | [PT]            | Only callable until the market's expiry                                                                                                                                                                                              |\n| Pendle swap (swap multiple ERC20 tokens to 1 token)   | [token1, token2, ...] | [token]         | Support at most 3 tokens in                                                                                                                                                                                                          |\n\n`tokensIn` and `tokensOut` are the input and output tokens for the action, should be seperate by comma with no spaces.\n\nExample if your action requires 2 tokensIn, you can pass `tokensIn=0x123,0x456`\n\nFor code examples and migration from individual SDK endpoints, see the [Hosted SDK documentation](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#examples).\n\n## Computing cost\n\nThis API will consume 5 computing units if no aggregator is used, with no additional data.\nEnabling aggregator will consume additional computing units, each aggregator cost differently, and could be check at: [Get supported aggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)\n\nRefer to our document for guide to reduce CU usage with aggregators: [Reduce CU Usage](https://docs.pendle.finance/pendle-v2/Developers/Backend/HostedSdk#reduce-aggregator-computing-units-v2-endpoints-only)\n\n---\n\n**This is the v3 (POST) variant.** It accepts `inputs` and `outputs` as a JSON request body instead of query parameters — cleaner for multi-token inputs and easier to integrate in typed clients. **Prefer this over v2 (GET) for new integrations.**\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "sdk",
+                ":chainId",
+                "convert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slippage\": \"<number>\",\n  \"inputs\": [\n    {\n      \"token\": \"<string>\",\n      \"amount\": \"<string>\"\n    },\n    {\n      \"token\": \"<string>\",\n      \"amount\": \"<string>\"\n    }\n  ],\n  \"outputs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"receiver\": \"<string>\",\n  \"enableAggregator\": false,\n  \"aggregators\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redeemRewards\": false,\n  \"needScale\": false,\n  \"additionalData\": \"<string>\",\n  \"useLimitOrder\": true,\n  \"okxSwapParams\": {\n    \"fromTokenReferrerWalletAddress\": \"<string>\",\n    \"toTokenReferrerWalletAddress\": \"<string>\",\n    \"feePercent\": \"<number>\",\n    \"positiveSlippagePercent\": \"<number>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c292799-3579-4953-9949-e83956210c4b",
+              "name": "The detected action and data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "sdk",
+                    ":chainId",
+                    "convert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slippage\": \"<number>\",\n  \"inputs\": [\n    {\n      \"token\": \"<string>\",\n      \"amount\": \"<string>\"\n    },\n    {\n      \"token\": \"<string>\",\n      \"amount\": \"<string>\"\n    }\n  ],\n  \"outputs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"receiver\": \"<string>\",\n  \"enableAggregator\": false,\n  \"aggregators\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redeemRewards\": false,\n  \"needScale\": false,\n  \"additionalData\": \"<string>\",\n  \"useLimitOrder\": true,\n  \"okxSwapParams\": {\n    \"fromTokenReferrerWalletAddress\": \"<string>\",\n    \"toTokenReferrerWalletAddress\": \"<string>\",\n    \"feePercent\": \"<number>\",\n    \"positiveSlippagePercent\": \"<number>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"action\": \"pendle-swap\",\n  \"inputs\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ],\n  \"routes\": [\n    {\n      \"contractParamInfo\": {\n        \"method\": \"string\",\n        \"contractCallParamsName\": [\n          \"string\",\n          \"string\"\n        ],\n        \"contractCallParams\": [\n          [],\n          []\n        ]\n      },\n      \"tx\": {\n        \"data\": \"string\",\n        \"to\": \"string\",\n        \"from\": \"string\",\n        \"value\": \"string\"\n      },\n      \"outputs\": [\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        },\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        }\n      ],\n      \"data\": {\n        \"aggregatorType\": \"string\",\n        \"priceImpact\": 1360.1404208012225,\n        \"priceImpactBreakDown\": {\n          \"internalPriceImpact\": 4539.273481465517,\n          \"externalPriceImpact\": 5861.715070904573\n        },\n        \"impliedApy\": {\n          \"before\": 4837.185304595531,\n          \"after\": 8953.918175977198\n        },\n        \"effectiveApy\": 9203.342929989123,\n        \"paramsBreakdown\": {\n          \"selfCall1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reflectCall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selfCall2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"fee\": {\n          \"usd\": 942.618292119668\n        }\n      }\n    },\n    {\n      \"contractParamInfo\": {\n        \"method\": \"string\",\n        \"contractCallParamsName\": [\n          \"string\",\n          \"string\"\n        ],\n        \"contractCallParams\": [\n          [],\n          []\n        ]\n      },\n      \"tx\": {\n        \"data\": \"string\",\n        \"to\": \"string\",\n        \"from\": \"string\",\n        \"value\": \"string\"\n      },\n      \"outputs\": [\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        },\n        {\n          \"token\": \"string\",\n          \"amount\": \"string\"\n        }\n      ],\n      \"data\": {\n        \"aggregatorType\": \"string\",\n        \"priceImpact\": 8786.915281449537,\n        \"priceImpactBreakDown\": {\n          \"internalPriceImpact\": 8602.05435302127,\n          \"externalPriceImpact\": 1076.0615204394187\n        },\n        \"impliedApy\": {\n          \"before\": 5835.407363725009,\n          \"after\": 448.41457040991406\n        },\n        \"effectiveApy\": 6620.8557730781695,\n        \"paramsBreakdown\": {\n          \"selfCall1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reflectCall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selfCall2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"fee\": {\n          \"usd\": 9902.83181226598\n        }\n      }\n    }\n  ],\n  \"requiredApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ],\n  \"rewards\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3425d172-8514-435d-bea5-bdc80bb8356f",
+          "name": "Swap PT using fixed price AMM for cross-chain operations",
+          "request": {
+            "name": "Swap PT using fixed price AMM for cross-chain operations",
+            "description": {
+              "content": "Swap a bridged PT on a spoke chain back to a regular token using the fixed-price PT AMM.\n\nThis is specifically for **cross-chain PT redemption flows** where PT has been bridged to a non-primary chain. The fixed-price AMM prices PT based on time-to-maturity, independent of pool liquidity.\n\nSupports both:\n- Exact PT input → token output\n- Exact token output ← PT input (pass the required token amount; the system calculates PT needed)\n\nOnly valid on supported spoke chains.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "sdk",
+                ":chainId",
+                "swap-pt-cross-chain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "Recipient address for transaction output"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippage",
+                  "value": "<number>",
+                  "description": "(Required) Maximum slippage tolerance (0-1, where 0.01 equals 1%)"
+                },
+                {
+                  "disabled": false,
+                  "key": "enableAggregator",
+                  "value": "false",
+                  "description": "Enable swap aggregator to swap between tokens that cannot be natively converted from/to the underlying asset"
+                },
+                {
+                  "disabled": false,
+                  "key": "aggregators",
+                  "value": "<string>",
+                  "description": "List of aggregator names to use for the swap. If not provided, all aggregators will be used.List of supported aggregator can be found at: [getSupportedAggregators](#tag/sdk/get/v1/sdk/{chainId}/supported-aggregators)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pt",
+                  "value": "<string>",
+                  "description": "(Required) PT token address"
+                },
+                {
+                  "disabled": false,
+                  "key": "exactPtIn",
+                  "value": "<string>",
+                  "description": "(Required) Exact amount value PT in"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenOut",
+                  "value": "<string>",
+                  "description": "(Required) Output token address"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3dae8ead-0b3d-47a8-a199-a62ecbf59243",
+              "name": "Swap PT cross-chain using fixed price AMM",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "sdk",
+                    ":chainId",
+                    "swap-pt-cross-chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "receiver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "enableAggregator",
+                      "value": "false"
+                    },
+                    {
+                      "key": "aggregators",
+                      "value": "kyberswap,okx"
+                    },
+                    {
+                      "key": "pt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exactPtIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenOut",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"method\": \"string\",\n  \"contractCallParamsName\": [\n    \"string\",\n    \"string\"\n  ],\n  \"contractCallParams\": [\n    [],\n    []\n  ],\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"data\": {\n    \"netTokenOut\": \"string\"\n  },\n  \"tokenApprovals\": [\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    },\n    {\n      \"token\": \"string\",\n      \"amount\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cf1b272-9e17-4754-b936-bf7ffd4bb940",
+          "name": "PT cross-chain metadata",
+          "request": {
+            "name": "PT cross-chain metadata",
+            "description": {
+              "content": "Returns metadata for a PT that has been bridged to a spoke chain, including maturity, underlying asset details, and fixed-price AMM parameters.\n\nUse this to verify that a bridged PT is supported on the current chain and to fetch its pricing parameters before calling [Swap PT cross-chain](#tag/sdk/get/v2/{chainId}/swap-pt-cross-chain).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "sdk",
+                ":chainId",
+                "cross-chain-pt-metadata",
+                ":pt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pt",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "009f495c-2ea3-4c69-a492-65001211f0f6",
+              "name": "Metadata of a bridged PT on selected spoke chain",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "sdk",
+                    ":chainId",
+                    "cross-chain-pt-metadata",
+                    ":pt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pt",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pairedTokensOut\": [\n    \"string\",\n    \"string\"\n  ],\n  \"ammAddress\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "babcdadb-3472-4ec0-b8b7-3e837f92c86d",
+    "name": "Pendle V2 API Docs Assets SDK API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n",
+      "type": "text/plain"
+    }
+  }
+}
