@@ -170,6 +170,8 @@ apis:
   humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
   baseURL: https://api-v2.pendle.finance/core
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
