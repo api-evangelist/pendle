@@ -211,6 +211,8 @@ apis:
   - type: Documentation
     url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
 common:
+  - type: Website
+    url: https://www.pendle.finance/
   - type: AgenticAccess
     url: agentic-access/pendle-agentic-access.yml
   - type: VulnerabilityDisclosure
