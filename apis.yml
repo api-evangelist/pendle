@@ -28,25 +28,23 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pendle.png
 tags:
-  - Web3
-  - DeFi
-  - Yield Tokenization
-  - Crypto
-  - Principal Tokens
-  - Yield Tokens
-  - AMM
-  - Liquidity Pools
+- Web3
+- DeFi
+- Yield Tokenization
+- Crypto
+- Principal Tokens
+- Yield Tokens
+- AMM
+- Liquidity Pools
 created: '2026-06-14'
-modified: '2026-06-14'
+modified: '2026-09-16'
 specificationVersion: '0.23'
-description: >-
-  Pendle is a permissionless yield tokenization protocol that splits yield-bearing assets into
-  Principal Tokens (PT) and Yield Tokens (YT), enabling fixed-yield strategies and yield trading
-  on-chain. The Pendle V2 REST API provides endpoints for querying markets, assets, prices, limit
-  orders, liquidity pool data, implied APY, and user positions across Ethereum, Arbitrum, BSC,
-  Base, Mantle, Optimism, Sonic, Berachain, and other supported chains. A Hosted SDK converts
-  API calls into ready-to-broadcast transaction payloads for swaps, minting, redeeming, and
-  liquidity operations.
+description: Pendle is a permissionless yield tokenization protocol that splits yield-bearing assets into
+  Principal Tokens (PT) and Yield Tokens (YT), enabling fixed-yield strategies and yield trading on-chain.
+  The Pendle V2 REST API provides endpoints for querying markets, assets, prices, limit orders, liquidity
+  pool data, implied APY, and user positions across Ethereum, Arbitrum, BSC, Base, Mantle, Optimism, Sonic,
+  Berachain, and other supported chains. A Hosted SDK converts API calls into ready-to-broadcast transaction
+  payloads for swaps, minting, redeeming, and liquidity operations.
 apis:
 - aid: pendle:pendle-assets-api
   name: Pendle Assets API
@@ -129,7 +127,7 @@ apis:
   - type: Documentation
     url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
 - aid: pendle:pendle-pendle-emission-api
-  name: Pendle Pendle Emission API
+  name: Pendle Emission API
   description: The Pendle Emission API from Pendle — 1 operation(s) for pendle emission.
   humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
   baseURL: https://api-v2.pendle.finance/core
@@ -211,38 +209,38 @@ apis:
   - type: Documentation
     url: https://docs.pendle.finance/pendle-v2-dev/Backend/HostedSdk
 common:
-  - type: Website
-    url: https://www.pendle.finance/
-  - type: AgenticAccess
-    url: agentic-access/pendle-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/pendle-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/pendle-domain-security.yml
-  - type: Portal
-    url: https://www.pendle.finance
-  - type: Documentation
-    url: https://docs.pendle.finance
-  - type: APIReference
-    url: https://api-v2.pendle.finance/core/docs
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
-  - type: GitHub
-    url: https://github.com/pendle-finance
-  - type: Pricing
-    url: https://api-v2.pendle.finance/dashboard
-  - type: X
-    url: https://x.com/pendle_fi
-  - type: Discord
-    url: https://discord.gg/pendle
-  - type: Plans
-    url: plans/pendle-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/pendle-rate-limits.yml
-  - type: FinOps
-    url: finops/pendle-finops.yml
-  - url: https://medium.com/feed/@pendle
-    type: Blog
+- type: Website
+  url: https://www.pendle.finance/
+- type: AgenticAccess
+  url: agentic-access/pendle-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/pendle-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/pendle-domain-security.yml
+- type: Portal
+  url: https://www.pendle.finance
+- type: Documentation
+  url: https://docs.pendle.finance
+- type: APIReference
+  url: https://api-v2.pendle.finance/core/docs
+- type: OpenAPI
+  url: https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json
+- type: GitHub
+  url: https://github.com/pendle-finance
+- type: Pricing
+  url: https://api-v2.pendle.finance/dashboard
+- type: X
+  url: https://x.com/pendle_fi
+- type: Discord
+  url: https://discord.gg/pendle
+- type: Plans
+  url: plans/pendle-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/pendle-rate-limits.yml
+- type: FinOps
+  url: finops/pendle-finops.yml
+- url: https://medium.com/feed/@pendle
+  type: Blog
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
