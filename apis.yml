@@ -84,6 +84,8 @@ apis:
   humanURL: https://docs.pendle.finance/pendle-v2-dev/Backend/ApiOverview
   baseURL: https://api-v2.pendle.finance/core
   tags:
+  - Dashboards
+  tags_raw:
   - Dashboard
   properties:
   - type: OpenAPI
