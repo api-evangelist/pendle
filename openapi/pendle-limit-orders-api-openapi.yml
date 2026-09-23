@@ -1,7 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Pendle V2 API Docs Assets Limit Orders API
-  description: "\n## Terms used in the documentation/API\n\nBelow are some terms used in the documentation/API:\n\n- Pendle Assets/Tokens: PT, YT, LP, SY\n- Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.\n- Asset ID/Token Id: Is the combination of chain id and token address, e.g. 1-0x5fe30ac5cb1abb0e44cdffb2916c254aeb368650\n- Computing unit: Cost of an API call, this is use to rate limit the API calls. More on it at [our document](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview#rate-limiting)\n- APY/APR/ROI Format: All APY, APR, and ROI values are returned as decimals. For example, 0.5 means 50%, 0.05 means 5%, 1.2 means 120%\n- Percentage Change Format: All percentage change values (e.g., 24h changes) are returned as decimals. For example, 0.05 means 5% change\n- Logarithmic Values: Some fields like `lnImpliedRate` are natural logarithms. To get the actual rate, use e^(value)\n\n## Recommended way to fetch data\n\nWe have a lot of markets, if you call an API for each market, it will be very slow and you will likely get rate limited. Therefore, in some APIs we support fetch all data at once (example the get all markets data, get all assets data/prices), you could use that to fetch all data at once. They also support filter by asset id, type, so if you don't want to fetch, you can filter it down to the specific ones you want.\n\nFor detailed documentation, visit:\n\n[https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview](https://docs.pendle.finance/pendle-v2/Developers/Backend/ApiOverview)\n\n## Support\n\n- We have a telegram for developers to ask about the API at [https://t.me/peepo_the_engineer_bot](https://t.me/peepo_the_engineer_bot)\n- We have an announcement channel for API updates at [https://t.me/pendledevelopers](https://t.me/pendledevelopers), follow it to get the latest updates on the API.\n\n## FAQ\n\n- How to fetch prices for assets?\n  * Use [Get asset prices by IDs](#tag/assets/get/v1/prices/assets)\n\n- What if i want real time prices?\n  * Price in our systems are calculate every 15 seconds. However, if you want real time prices, use [Swapping price](#tag/sdk/get/v1/sdk/{chainId}/markets/{market}/swapping-prices), it return price for PT/YT when swapping with underlying token and vice versa, we don't have real time prices for other assets.\n\n- Can i use the SDK to get price, instead of using the `swapping-price` endpoint?\n  * **Don't use the SDK to get price**, we don't recommend it. SDK endpoints are designed for you to get the calldata for **sending transaction**, not for getting the price. Also, SDK endpoints are very costly and will get rate limited easily if you use it to get price of many tokens. \n\n- How to get token names, expiries, etc?\n  * Use [Get asset metadata by IDs](#tag/assets/get/v1/assets/all)\n\n- Do you have historical data, breakdown to minutes?\n  * No we don't, all historical data is aggregated to hourly/daily/weekly data.\n"
+  title: Pendle V2 API Docs Limit Orders API
+  description: '## Terms used in the documentation/API
+
+
+    Below are some terms used in the documentation/API:
+
+
+    - Pendle Assets/Tokens: PT, YT, LP, SY
+
+    - Non-Pendle Assets: other tokens that are not Pendle assets, such as USDC, USDT, DAI, etc.'
   version: '1.0'
   contact: {}
 servers:
@@ -11,7 +19,13 @@ tags:
 paths:
   /v2/limit-orders:
     get:
-      description: "This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully filled. \n\nThe results could be very large, so each time we returns at most 1000 orders, you can use the resumeToken to fetch the next page. \n\nTo get limit order for filling, use the [Get limit orders to match by YT address​](#tag/limit-orders/get/v1/limit-orders/takers/limit-orders) endpoint!"
+      description: 'This endpoint is for analytics purpose, if you want to analyze the limit orders data, this endpoint return all the orders that have been made, including the ones that have been cancelled or fully filled.
+
+
+        The results could be very large, so each time we returns at most 1000 orders, you can use the resumeToken to fetch the next page.
+
+
+        To get limit order for filling, use the Get limit orders to match by YT address​ endpoint!'
       operationId: LimitOrdersController_getAllLimitOrders
       parameters:
       - name: chainId
@@ -143,7 +157,7 @@ paths:
         A user can have at most 50 open orders per market, so pagination is typically unnecessary here.
 
 
-        For full cross-user analytics with cursor-based pagination, use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead.'
+        For full cross-user analytics with cursor-based pagination, use Get all limit orders instead.'
       operationId: LimitOrdersController_getMakerLimitOrder
       parameters:
       - name: skip
@@ -211,7 +225,7 @@ paths:
       description: 'Submit a signed limit order to the Pendle order book. Once created, the order is visible to takers and will be filled against incoming swaps at or better than the specified implied APY.
 
 
-        Before calling this, generate the order payload via [Generate limit order data](#tag/limit-orders/post/v1/limit-orders/makers/generate-limit-order-data), sign it with your wallet, and include the signature in the request body.
+        Before calling this, generate the order payload via Generate limit order data, sign it with your wallet, and include the signature in the request body.
 
 
         Common rejection reasons: the YT or market is not whitelisted for limit orders, the order has already expired, or the signature is invalid.'
@@ -249,7 +263,7 @@ paths:
       x-retail-api-rank: 1
   /v1/limit-orders/makers/generate-limit-order-data:
     post:
-      description: 'Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker''s private key, then submit the order via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders).
+      description: 'Generate the EIP-712 typed data payload for a limit order. Sign the returned data with the maker''s private key, then submit the order via Create limit order.
 
 
         The generated order specifies the YT address, direction (long or short yield), size, and implied APY target. The order remains valid until it is either fully filled, cancelled, or expired.'
@@ -284,7 +298,7 @@ paths:
       description: 'Generate a batch of limit orders spread across a price (implied APY) range for signing. Scaled orders distribute your total size across multiple price levels, providing better market depth than a single large order.
 
 
-        Sign each generated order individually, then submit them via [Create limit order](#tag/limit-orders/post/v1/limit-orders/makers/limit-orders). Useful for market-making strategies.'
+        Sign each generated order individually, then submit them via Create limit order. Useful for market-making strategies.'
       operationId: LimitOrdersController_generateScaledLimitOrderData
       parameters: []
       requestBody:
@@ -313,7 +327,7 @@ paths:
         The response includes full order structs and maker signatures ready to pass directly to the Pendle limit order contract for on-chain settlement. Only active orders (unfilled, uncancelled, unexpired) are returned.
 
 
-        For analytics and full order history (including filled/cancelled), use [Get all limit orders](#tag/limit-orders/get/v2/limit-orders) instead.'
+        For analytics and full order history (including filled/cancelled), use Get all limit orders instead.'
       operationId: LimitOrdersController_getTakerLimitOrders
       parameters:
       - name: skip
@@ -445,102 +459,6 @@ paths:
       x-retail-api-rank: 3
 components:
   schemas:
-    HttpErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        statusCode:
-          type: number
-        error:
-          type: string
-      required:
-      - message
-      - statusCode
-      - error
-    OrderFilledStatusResponse:
-      type: object
-      properties:
-        netInputFromMaker:
-          type: string
-          description: BigInt string of netInputFromMaker, the unit is the same as making amount
-        netOutputToMaker:
-          type: string
-          description: BigInt string of netOutputToMaker, the unit is SY if the order is PT_FOR_TOKEN or YT_FOR_TOKEN, otherwise, the unit it PT or YT depends on type of order
-        feeAmount:
-          type: string
-          description: BigInt string of feeAmount, in SY
-        notionalVolume:
-          type: string
-          description: BigInt string of notionalVolume, in SY
-      required:
-      - netInputFromMaker
-      - netOutputToMaker
-      - feeAmount
-      - notionalVolume
-    LimitOrdersTakerResponse:
-      type: object
-      properties:
-        total:
-          type: number
-        limit:
-          type: number
-        skip:
-          type: number
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitOrderTakerResponse'
-      required:
-      - total
-      - limit
-      - skip
-      - results
-    LimitOrdersV2Response:
-      type: object
-      properties:
-        total:
-          type: number
-        limit:
-          type: number
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitOrderResponse'
-        resumeToken:
-          type: string
-      required:
-      - total
-      - limit
-      - results
-      - resumeToken
-    OrderBookV2EntryResponse:
-      type: object
-      properties:
-        impliedApy:
-          type: number
-          description: Order's implied apy, rounded to precision
-        limitOrderSize:
-          format: int64
-          type: integer
-          description: Bigint string of entry size, in PT/YT amounts to fill this entry
-        ammSize:
-          format: int64
-          type: integer
-          description: Bigint string of entry size, in AMM LP tokens (if applicable)
-      required:
-      - impliedApy
-      - limitOrderSize
-    GenerateScaledOrderResponse:
-      type: object
-      properties:
-        orders:
-          description: List of generated limit orders
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateLimitOrderDataResponse'
-      required:
-      - orders
     CreateLimitOrderDto:
       type: object
       properties:
@@ -606,7 +524,171 @@ components:
       - lnImpliedRate
       - failSafeRate
       - permit
-    GenerateLimitOrderDataDto:
+    OrderStateResponse:
+      type: object
+      properties:
+        orderType:
+          type: string
+        exchangeRate:
+          type: string
+        psAmountToTaker:
+          type: string
+        psAmountFromTaker:
+          type: string
+        ysAmountToTaker:
+          type: string
+        ysAmountFromTaker:
+          type: string
+        fee:
+          type: string
+        psRate:
+          type: number
+        ysRate:
+          type: number
+        netToMakerIfFullyFilled:
+          type: string
+          description: In SY if the order is PY for token
+        netFromMakerIfFullyFilled:
+          type: string
+          description: The difference with currentMakingAmount is that this is in SY if currentMakingAmount in tokenIn
+        notionalVolume:
+          type: string
+        matchableAmount:
+          type: string
+        notionalVolumeUSD:
+          type: number
+      required:
+      - orderType
+      - exchangeRate
+      - psAmountToTaker
+      - psAmountFromTaker
+      - ysAmountToTaker
+      - ysAmountFromTaker
+      - fee
+      - psRate
+      - ysRate
+      - netToMakerIfFullyFilled
+      - netFromMakerIfFullyFilled
+      - notionalVolume
+      - matchableAmount
+      - notionalVolumeUSD
+    GenerateLimitOrderDataResponse:
+      type: object
+      properties:
+        chainId:
+          type: number
+          description: Chain id
+        YT:
+          type: string
+          description: YT address
+        salt:
+          type: string
+          description: BigInt string of salt. Salt is a random generated number to distinguish between orders.Because of some technical reason, this number must be dividable by 12421
+        expiry:
+          type: string
+          description: Limit order expiry, in string
+        nonce:
+          type: string
+          description: Nonce of the limit order, this will help the maker to cancel all the limit order they created
+        token:
+          type: string
+          description: Input token if type is TOKEN_FOR_PT or TOKEN_FOR_YT, output token otherwise
+        orderType:
+          type: number
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          description: 'LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }'
+        failSafeRate:
+          type: string
+          description: BigInt string of failSafeRate
+        maker:
+          type: string
+          description: Maker's address
+        receiver:
+          type: string
+          description: Maker's address
+        makingAmount:
+          type: string
+          description: BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT
+        permit:
+          type: string
+          description: ''
+        lnImpliedRate:
+          format: int64
+          type: integer
+          description: ln(impliedRate) * 10**18, returned as bigint string
+      required:
+      - chainId
+      - YT
+      - salt
+      - expiry
+      - nonce
+      - token
+      - orderType
+      - failSafeRate
+      - maker
+      - receiver
+      - makingAmount
+      - permit
+      - lnImpliedRate
+    OrderBookV2EntryResponse:
+      type: object
+      properties:
+        impliedApy:
+          type: number
+          description: Order's implied apy, rounded to precision
+        limitOrderSize:
+          format: int64
+          type: integer
+          description: Bigint string of entry size, in PT/YT amounts to fill this entry
+        ammSize:
+          format: int64
+          type: integer
+          description: Bigint string of entry size, in AMM LP tokens (if applicable)
+      required:
+      - impliedApy
+      - limitOrderSize
+    LimitOrderTakerResponse:
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/LimitOrderResponse'
+        makingAmount:
+          type: string
+          description: Amount to be used to fill the order, the unit is the same as the unit of limit order' making amount
+        netFromTaker:
+          type: string
+          description: Amount from taker need to fully fill this order, the unit is SY if the market order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise, the unit it PT or YT depends on type of order
+        netToTaker:
+          type: string
+          description: Actual making amount to taker, the unit is SY if the market order is PT_FOR_TOKEN or YT_FOR_TOKEN, otherwise, the unit it PT or YT depends on type of order
+      required:
+      - order
+      - makingAmount
+      - netFromTaker
+      - netToTaker
+    LimitOrdersTakerResponse:
+      type: object
+      properties:
+        total:
+          type: number
+        limit:
+          type: number
+        skip:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitOrderTakerResponse'
+      required:
+      - total
+      - limit
+      - skip
+      - results
+    GenerateScaledOrderDataDto:
       type: object
       properties:
         chainId:
@@ -632,9 +714,22 @@ components:
         makingAmount:
           type: string
           description: BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT
-        impliedApy:
+        lowerImpliedApy:
           type: number
-          description: Implied APY of this limit order
+          description: Lower implied APY of this scaled order
+        upperImpliedApy:
+          type: number
+          description: Upper implied APY of this scaled order
+        orderCount:
+          type: number
+          description: Upper implied APY of this scaled order
+        sizeDistribution:
+          type: string
+          enum:
+          - flat
+          - ascending
+          - descending
+          description: Scaled Order Distribution Type {  }
         expiry:
           type: string
           description: Timestamp of order's expiry, in seconds
@@ -645,8 +740,86 @@ components:
       - token
       - maker
       - makingAmount
-      - impliedApy
+      - lowerImpliedApy
+      - upperImpliedApy
+      - orderCount
+      - sizeDistribution
       - expiry
+    HttpErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        statusCode:
+          type: number
+        error:
+          type: string
+      required:
+      - message
+      - statusCode
+      - error
+    OrderFilledStatusResponse:
+      type: object
+      properties:
+        netInputFromMaker:
+          type: string
+          description: BigInt string of netInputFromMaker, the unit is the same as making amount
+        netOutputToMaker:
+          type: string
+          description: BigInt string of netOutputToMaker, the unit is SY if the order is PT_FOR_TOKEN or YT_FOR_TOKEN, otherwise, the unit it PT or YT depends on type of order
+        feeAmount:
+          type: string
+          description: BigInt string of feeAmount, in SY
+        notionalVolume:
+          type: string
+          description: BigInt string of notionalVolume, in SY
+      required:
+      - netInputFromMaker
+      - netOutputToMaker
+      - feeAmount
+      - notionalVolume
+    OrderBookV2Response:
+      type: object
+      properties:
+        longYieldEntries:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderBookV2EntryResponse'
+        shortYieldEntries:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderBookV2EntryResponse'
+      required:
+      - longYieldEntries
+      - shortYieldEntries
+    GenerateScaledOrderResponse:
+      type: object
+      properties:
+        orders:
+          description: List of generated limit orders
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateLimitOrderDataResponse'
+      required:
+      - orders
+    LimitOrdersResponse:
+      type: object
+      properties:
+        total:
+          type: number
+        limit:
+          type: number
+        skip:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitOrderResponse'
+      required:
+      - total
+      - limit
+      - skip
+      - results
     LimitOrderResponse:
       type: object
       properties:
@@ -795,39 +968,25 @@ components:
       - makingToken
       - takingToken
       - status
-    OrderBookV2Response:
-      type: object
-      properties:
-        longYieldEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderBookV2EntryResponse'
-        shortYieldEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderBookV2EntryResponse'
-      required:
-      - longYieldEntries
-      - shortYieldEntries
-    LimitOrdersResponse:
+    LimitOrdersV2Response:
       type: object
       properties:
         total:
           type: number
         limit:
           type: number
-        skip:
-          type: number
         results:
           type: array
           items:
             $ref: '#/components/schemas/LimitOrderResponse'
+        resumeToken:
+          type: string
       required:
       - total
       - limit
-      - skip
       - results
-    GenerateScaledOrderDataDto:
+      - resumeToken
+    GenerateLimitOrderDataDto:
       type: object
       properties:
         chainId:
@@ -853,22 +1012,9 @@ components:
         makingAmount:
           type: string
           description: BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT
-        lowerImpliedApy:
+        impliedApy:
           type: number
-          description: Lower implied APY of this scaled order
-        upperImpliedApy:
-          type: number
-          description: Upper implied APY of this scaled order
-        orderCount:
-          type: number
-          description: Upper implied APY of this scaled order
-        sizeDistribution:
-          type: string
-          enum:
-          - flat
-          - ascending
-          - descending
-          description: Scaled Order Distribution Type {  }
+          description: Implied APY of this limit order
         expiry:
           type: string
           description: Timestamp of order's expiry, in seconds
@@ -879,137 +1025,5 @@ components:
       - token
       - maker
       - makingAmount
-      - lowerImpliedApy
-      - upperImpliedApy
-      - orderCount
-      - sizeDistribution
+      - impliedApy
       - expiry
-    LimitOrderTakerResponse:
-      type: object
-      properties:
-        order:
-          $ref: '#/components/schemas/LimitOrderResponse'
-        makingAmount:
-          type: string
-          description: Amount to be used to fill the order, the unit is the same as the unit of limit order' making amount
-        netFromTaker:
-          type: string
-          description: Amount from taker need to fully fill this order, the unit is SY if the market order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise, the unit it PT or YT depends on type of order
-        netToTaker:
-          type: string
-          description: Actual making amount to taker, the unit is SY if the market order is PT_FOR_TOKEN or YT_FOR_TOKEN, otherwise, the unit it PT or YT depends on type of order
-      required:
-      - order
-      - makingAmount
-      - netFromTaker
-      - netToTaker
-    GenerateLimitOrderDataResponse:
-      type: object
-      properties:
-        chainId:
-          type: number
-          description: Chain id
-        YT:
-          type: string
-          description: YT address
-        salt:
-          type: string
-          description: BigInt string of salt. Salt is a random generated number to distinguish between orders.Because of some technical reason, this number must be dividable by 12421
-        expiry:
-          type: string
-          description: Limit order expiry, in string
-        nonce:
-          type: string
-          description: Nonce of the limit order, this will help the maker to cancel all the limit order they created
-        token:
-          type: string
-          description: Input token if type is TOKEN_FOR_PT or TOKEN_FOR_YT, output token otherwise
-        orderType:
-          type: number
-          enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          description: 'LimitOrderType { 0 : TOKEN_FOR_PT, 1 : PT_FOR_TOKEN, 2 : TOKEN_FOR_YT, 3 : YT_FOR_TOKEN }'
-        failSafeRate:
-          type: string
-          description: BigInt string of failSafeRate
-        maker:
-          type: string
-          description: Maker's address
-        receiver:
-          type: string
-          description: Maker's address
-        makingAmount:
-          type: string
-          description: BigInt string of making amount, the amount of token if the order is TOKEN_FOR_PT or TOKEN_FOR_YT, otherwise the amount of PT or YT
-        permit:
-          type: string
-          description: ''
-        lnImpliedRate:
-          format: int64
-          type: integer
-          description: ln(impliedRate) * 10**18, returned as bigint string
-      required:
-      - chainId
-      - YT
-      - salt
-      - expiry
-      - nonce
-      - token
-      - orderType
-      - failSafeRate
-      - maker
-      - receiver
-      - makingAmount
-      - permit
-      - lnImpliedRate
-    OrderStateResponse:
-      type: object
-      properties:
-        orderType:
-          type: string
-        exchangeRate:
-          type: string
-        psAmountToTaker:
-          type: string
-        psAmountFromTaker:
-          type: string
-        ysAmountToTaker:
-          type: string
-        ysAmountFromTaker:
-          type: string
-        fee:
-          type: string
-        psRate:
-          type: number
-        ysRate:
-          type: number
-        netToMakerIfFullyFilled:
-          type: string
-          description: In SY if the order is PY for token
-        netFromMakerIfFullyFilled:
-          type: string
-          description: The difference with currentMakingAmount is that this is in SY if currentMakingAmount in tokenIn
-        notionalVolume:
-          type: string
-        matchableAmount:
-          type: string
-        notionalVolumeUSD:
-          type: number
-      required:
-      - orderType
-      - exchangeRate
-      - psAmountToTaker
-      - psAmountFromTaker
-      - ysAmountToTaker
-      - ysAmountFromTaker
-      - fee
-      - psRate
-      - ysRate
-      - netToMakerIfFullyFilled
-      - netFromMakerIfFullyFilled
-      - notionalVolume
-      - matchableAmount
-      - notionalVolumeUSD

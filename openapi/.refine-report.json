@@ -1,16 +1,7 @@
 {
   "provider": "pendle",
   "sources": [
-    "pendle-assets-api-openapi.yml",
-    "pendle-chains-api-openapi.yml",
-    "pendle-dashboard-api-openapi.yml",
-    "pendle-limit-orders-api-openapi.yml",
-    "pendle-markets-api-openapi.yml",
-    "pendle-pendle-emission-api-openapi.yml",
-    "pendle-sdk-api-openapi.yml",
-    "pendle-statistics-api-openapi.yml",
-    "pendle-transactions-api-openapi.yml",
-    "pendle-ve-pendle-api-openapi.yml"
+    "_original/openapi.json"
   ],
   "outputs": [
     "pendle-assets-api-openapi.yml",
@@ -27,6 +18,31 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "openapi.json: declared missing tag: Assets",
+    "openapi.json: declared missing tag: Chains",
+    "openapi.json: declared missing tag: Dashboard",
+    "openapi.json: declared missing tag: Limit Orders",
+    "openapi.json: declared missing tag: Markets",
+    "openapi.json: declared missing tag: Pendle Emission",
+    "openapi.json: declared missing tag: SDK",
+    "openapi.json: declared missing tag: Statistics",
+    "openapi.json: declared missing tag: Transactions",
+    "openapi.json: declared missing tag: Ve Pendle",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "pendle-assets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-chains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-dashboard-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-limit-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-pendle-emission-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-sdk-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pendle-ve-pendle-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
