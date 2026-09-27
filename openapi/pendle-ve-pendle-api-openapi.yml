@@ -95,6 +95,31 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
+    MarketTotalFeesData:
+      type: object
+      properties:
+        market:
+          description: market metadata
+          allOf:
+          - $ref: '#/components/schemas/MarketMetaData'
+        values:
+          description: total fee at each timestamp
+          type: array
+          items:
+            $ref: '#/components/schemas/TotalFeesWithTimestamp'
+      required:
+      - market
+      - values
+    AllMarketTotalFeesResponse:
+      type: object
+      properties:
+        results:
+          description: all market total fees response
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketTotalFeesData'
+      required:
+      - results
     TotalFeesWithTimestamp:
       type: object
       properties:
@@ -108,39 +133,6 @@ components:
       required:
       - time
       - totalFees
-    VoteV2Response:
-      type: object
-      properties:
-        votes:
-          type: number
-          description: Absolute number of votes
-        percentage:
-          type: number
-          description: Percentage of total votes
-      required:
-      - votes
-      - percentage
-    PendleTokenSupplyResponse:
-      type: object
-      properties:
-        timestamp:
-          format: date-time
-          type: string
-          description: Timestamp of the token supply data
-        totalPendleCirculating:
-          type: number
-          description: Total circulating supply of PENDLE tokens (not locked)
-        totalPendleLocked:
-          type: number
-          description: Total amount of PENDLE tokens locked in vePENDLE
-        totalPendleSupply:
-          type: number
-          description: Total supply of PENDLE tokens
-      required:
-      - timestamp
-      - totalPendleCirculating
-      - totalPendleLocked
-      - totalPendleSupply
     PoolV2Response:
       type: object
       properties:
@@ -186,59 +178,6 @@ components:
       - id
       - symbol
       - expiry
-    GetMonthlyRevenueResponse:
-      type: object
-      properties:
-        revenues:
-          description: The revenues of the month in USD within the time range
-          type: array
-          items:
-            type: number
-        epochStartDates:
-          description: The start dates of the month in Date within the time range
-          type: array
-          items:
-            type: string
-        accumulatedRevenue:
-          type: number
-          description: all time revenues in USD
-      required:
-      - revenues
-      - epochStartDates
-      - accumulatedRevenue
-    MarketTotalFeesData:
-      type: object
-      properties:
-        market:
-          description: market metadata
-          allOf:
-          - $ref: '#/components/schemas/MarketMetaData'
-        values:
-          description: total fee at each timestamp
-          type: array
-          items:
-            $ref: '#/components/schemas/TotalFeesWithTimestamp'
-      required:
-      - market
-      - values
-    AllMarketTotalFeesResponse:
-      type: object
-      properties:
-        results:
-          description: all market total fees response
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketTotalFeesData'
-      required:
-      - results
-    MarketMetaData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: market id
-      required:
-      - id
     VePendleExtendedDataResponse:
       type: object
       properties:
@@ -277,3 +216,64 @@ components:
       - totalProjectedVotes
       - totalCurrentVotes
       - pools
+    GetMonthlyRevenueResponse:
+      type: object
+      properties:
+        revenues:
+          description: The revenues of the month in USD within the time range
+          type: array
+          items:
+            type: number
+        epochStartDates:
+          description: The start dates of the month in Date within the time range
+          type: array
+          items:
+            type: string
+        accumulatedRevenue:
+          type: number
+          description: all time revenues in USD
+      required:
+      - revenues
+      - epochStartDates
+      - accumulatedRevenue
+    VoteV2Response:
+      type: object
+      properties:
+        votes:
+          type: number
+          description: Absolute number of votes
+        percentage:
+          type: number
+          description: Percentage of total votes
+      required:
+      - votes
+      - percentage
+    PendleTokenSupplyResponse:
+      type: object
+      properties:
+        timestamp:
+          format: date-time
+          type: string
+          description: Timestamp of the token supply data
+        totalPendleCirculating:
+          type: number
+          description: Total circulating supply of PENDLE tokens (not locked)
+        totalPendleLocked:
+          type: number
+          description: Total amount of PENDLE tokens locked in vePENDLE
+        totalPendleSupply:
+          type: number
+          description: Total supply of PENDLE tokens
+      required:
+      - timestamp
+      - totalPendleCirculating
+      - totalPendleLocked
+      - totalPendleSupply
+    MarketMetaData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: market id
+      required:
+      - id

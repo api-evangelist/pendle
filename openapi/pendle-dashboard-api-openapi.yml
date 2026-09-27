@@ -83,50 +83,58 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    MerkleUserCampaignResponse:
+    SyPosition:
       type: object
       properties:
-        user:
+        syId:
           type: string
-        token:
+          description: Unique identifier of the market
+          example: 1-0xabc
+        balance:
           type: string
-        merkleRoot:
-          type: string
-        chainId:
-          type: number
-        assetId:
-          type: string
-        amount:
-          type: string
-        toTimestamp:
-          format: date-time
-          type: string
-        fromTimestamp:
-          format: date-time
-          type: string
+          description: Sy token (SY) balance in wei
+          example: '1000000000000000000'
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
       required:
-      - user
-      - token
-      - merkleRoot
-      - chainId
-      - assetId
-      - amount
-      - toTimestamp
-      - fromTimestamp
-    CrossPtPosition:
+      - syId
+      - balance
+    Position:
       type: object
       properties:
-        spokePt:
-          type: string
-          description: Spoke PT
-          example: 0x123...
         balance:
           type: string
           description: Balance of the position
           example: '1000000000000000000'
+        activeBalance:
+          type: string
+          description: Active balance of the position (for LP only)
+          example: '1000000000000000000'
+        valuation:
+          type: number
+          description: Valuation of the position in USD
+          example: 10
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
       required:
-      - spokePt
       - balance
+      - valuation
+    MerkleClaimedRewardsResponse:
+      type: object
+      properties:
+        claimedRewards:
+          description: Array of claimed merkle campaigns
+          type: array
+          items:
+            $ref: '#/components/schemas/MerkleUserCampaignResponse'
+      required:
+      - claimedRewards
     UserPositionsResponse:
       type: object
       properties:
@@ -179,43 +187,60 @@ components:
       - closedPositions
       - syPositions
       - updatedAt
-    ClaimTokenAmount:
+    CrossPtPosition:
       type: object
       properties:
-        token:
+        spokePt:
           type: string
-          description: Token id
-          example: 1-0x123...
-        amount:
-          type: string
-          description: Amount of tokens
-          example: '1000000000000000000'
-      required:
-      - token
-      - amount
-    Position:
-      type: object
-      properties:
+          description: Spoke PT
+          example: 0x123...
         balance:
           type: string
           description: Balance of the position
           example: '1000000000000000000'
-        activeBalance:
+      required:
+      - spokePt
+      - balance
+    MerkleUserCampaignResponse:
+      type: object
+      properties:
+        user:
           type: string
-          description: Active balance of the position (for LP only)
-          example: '1000000000000000000'
-        valuation:
+        token:
+          type: string
+        merkleRoot:
+          type: string
+        chainId:
           type: number
-          description: Valuation of the position in USD
-          example: 10
-        claimTokenAmounts:
-          description: Array of claimable rewards
+        assetId:
+          type: string
+        amount:
+          type: string
+        toTimestamp:
+          format: date-time
+          type: string
+        fromTimestamp:
+          format: date-time
+          type: string
+      required:
+      - user
+      - token
+      - merkleRoot
+      - chainId
+      - assetId
+      - amount
+      - toTimestamp
+      - fromTimestamp
+    UserPositionsCrossChainResponse:
+      type: object
+      properties:
+        positions:
+          description: Array of user positions
           type: array
           items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
+            $ref: '#/components/schemas/UserPositionsResponse'
       required:
-      - balance
-      - valuation
+      - positions
     MarketPosition:
       type: object
       properties:
@@ -246,42 +271,17 @@ components:
       - yt
       - lp
       - crossPtPositions
-    MerkleClaimedRewardsResponse:
+    ClaimTokenAmount:
       type: object
       properties:
-        claimedRewards:
-          description: Array of claimed merkle campaigns
-          type: array
-          items:
-            $ref: '#/components/schemas/MerkleUserCampaignResponse'
-      required:
-      - claimedRewards
-    UserPositionsCrossChainResponse:
-      type: object
-      properties:
-        positions:
-          description: Array of user positions
-          type: array
-          items:
-            $ref: '#/components/schemas/UserPositionsResponse'
-      required:
-      - positions
-    SyPosition:
-      type: object
-      properties:
-        syId:
+        token:
           type: string
-          description: Unique identifier of the market
-          example: 1-0xabc
-        balance:
+          description: Token id
+          example: 1-0x123...
+        amount:
           type: string
-          description: Sy token (SY) balance in wei
+          description: Amount of tokens
           example: '1000000000000000000'
-        claimTokenAmounts:
-          description: Array of claimable rewards
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
       required:
-      - syId
-      - balance
+      - token
+      - amount

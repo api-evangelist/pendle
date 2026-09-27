@@ -261,212 +261,6 @@ paths:
       x-retail-api-rank: 3
 components:
   schemas:
-    MarketPointsEntity:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Market id
-        points:
-          description: Points configs
-          type: array
-          items:
-            $ref: '#/components/schemas/PointMetadataEntity'
-      required:
-      - id
-      - points
-    MarketCrossChainData:
-      type: object
-      properties:
-        name:
-          type: string
-          description: market name
-          example: crvUSD
-        address:
-          type: string
-          description: market address
-          example: '0x386f90eb964a477498b528a39d9405e73ed4032b'
-        expiry:
-          type: string
-          description: market expiry date
-          example: '2024-03-28T00:00:00.000Z'
-        pt:
-          type: string
-          description: market pt id
-          example: 1-0xb87511364014c088e30f872efc4a00d7efb843ac
-        yt:
-          type: string
-          description: market yt id
-          example: 1-0xed97f94dd94255637a054098604e0201c442a3fd
-        sy:
-          type: string
-          description: market sy id
-          example: 1-0xe05082b184a34668cd8a904d85fa815802bbb04c
-        underlyingAsset:
-          type: string
-          description: market underlying asset id
-          example: 1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32
-        details:
-          description: Market details including liquidity, APY, fee rate, and yield range
-          allOf:
-          - $ref: '#/components/schemas/MarketDetailsV2Entity'
-        isNew:
-          type: boolean
-          description: Whether the market is new
-        isPrime:
-          type: boolean
-          description: Whether the market is prime
-        timestamp:
-          format: date-time
-          type: string
-          description: Market deployed timestamp
-        lpWrapper:
-          type: string
-          description: LP wrapper address
-        categoryIds:
-          description: Market category IDs
-          example:
-          - btc
-          - stables
-          type: array
-          items:
-            type: string
-        isVolatile:
-          type: boolean
-          description: Whether the market is volatile
-        chainId:
-          type: number
-          description: chain id
-          example: 1
-      required:
-      - name
-      - address
-      - expiry
-      - pt
-      - yt
-      - sy
-      - underlyingAsset
-      - details
-      - isNew
-      - isPrime
-      - timestamp
-      - chainId
-    ValuationResponse:
-      type: object
-      properties:
-        usd:
-          type:
-          - number
-          - 'null'
-          description: Value in USD
-        acc:
-          type:
-          - number
-          - 'null'
-          description: Value in the market's accounting asset (e.g. USDC for a USDC-denominated market)
-    MarketHistoricalDataResponse:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of data points available
-        timestamp_start:
-          format: date-time
-          type: string
-          description: Start timestamp of the data range
-        timestamp_end:
-          format: date-time
-          type: string
-          description: End timestamp of the data range
-        results:
-          description: Array of historical data points
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketHistoricalDataPoint'
-      required:
-      - total
-      - timestamp_start
-      - timestamp_end
-      - results
-    EstimatedDailyPoolRewardResponse:
-      type: object
-      properties:
-        asset:
-          $ref: '#/components/schemas/AssetBasicResponse'
-        amount:
-          type: number
-      required:
-      - asset
-      - amount
-    AssetBasicResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        chainId:
-          type: number
-        address:
-          type: string
-        symbol:
-          type: string
-        decimals:
-          type: number
-        expiry:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        accentColor:
-          type:
-          - string
-          - 'null'
-        price:
-          allOf:
-          - $ref: '#/components/schemas/ValuationResponse'
-        priceUpdatedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-      required:
-      - id
-      - chainId
-      - address
-      - symbol
-      - decimals
-      - name
-    PointMetadataEntity:
-      type: object
-      properties:
-        key:
-          type: string
-        type:
-          type: string
-          description: Either "multiplier" or "points-per-asset"
-          enum:
-          - multiplier
-          - points-per-asset
-        pendleAsset:
-          type: string
-          description: Either "basic" or "lp"
-          enum:
-          - basic
-          - lp
-        externalDashboardURL:
-          type: string
-        value:
-          type: number
-        perDollarLp:
-          type: boolean
-      required:
-      - key
-      - type
-      - pendleAsset
-      - externalDashboardURL
-      - value
-      - perDollarLp
     GetMarketsCrossChainResponse:
       type: object
       properties:
@@ -477,18 +271,6 @@ components:
             $ref: '#/components/schemas/MarketCrossChainData'
       required:
       - markets
-    YieldRangeResponse:
-      type: object
-      properties:
-        min:
-          type: number
-          description: Minimum historical implied APY for this market
-        max:
-          type: number
-          description: Maximum historical implied APY for this market
-      required:
-      - min
-      - max
     MarketDetailsV2Entity:
       type: object
       properties:
@@ -568,6 +350,242 @@ components:
       - totalSy
       - totalSupply
       - totalActiveSupply
+    AssetBasicResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        chainId:
+          type: number
+        address:
+          type: string
+        symbol:
+          type: string
+        decimals:
+          type: number
+        expiry:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        accentColor:
+          type:
+          - string
+          - 'null'
+        price:
+          allOf:
+          - $ref: '#/components/schemas/ValuationResponse'
+        priceUpdatedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+      required:
+      - id
+      - chainId
+      - address
+      - symbol
+      - decimals
+      - name
+    MarketHistoricalDataPoint:
+      type: object
+      properties:
+        timestamp:
+          format: date-time
+          type: string
+          description: Timestamp in ISO format
+        maxApy:
+          type: number
+          description: APY when maximum boost is applied
+        baseApy:
+          type: number
+          description: APY including yield, swap fee and Pendle rewards without boosting
+        underlyingApy:
+          type: number
+          description: APY of the underlying asset
+        impliedApy:
+          type: number
+          description: Implied APY of market
+        tvl:
+          type: number
+          description: Market liquidity (TVL in the pool) in USD
+        totalTvl:
+          type: number
+          description: Market total TVL (including floating PT that are not in the AMM) in USD
+        underlyingInterestApy:
+          type: number
+          description: Annual percentage yield from the underlying asset interest
+        underlyingRewardApy:
+          type: number
+          description: Annual percentage yield from the underlying asset rewards
+        ytFloatingApy:
+          type: number
+          description: Floating APY for YT holders (underlyingApy - impliedApy)
+        swapFeeApy:
+          type: number
+          description: Swap fee APY for LP holders, without boosting
+        voterApr:
+          type: number
+          description: APY for voters (vePENDLE holders) from voting on this pool
+        pendleApy:
+          type: number
+          description: APY from Pendle rewards
+        lpRewardApy:
+          type: number
+          description: APY from LP reward tokens
+        totalPt:
+          type: number
+          description: Total PT in the market
+        totalSy:
+          type: number
+          description: Total SY in the market
+        totalSupply:
+          type: number
+          description: Total supply of the LP token
+        ptPrice:
+          type: number
+          description: PT price in USD
+        ytPrice:
+          type: number
+          description: YT price in USD
+        syPrice:
+          type: number
+          description: SY price in USD
+        lpPrice:
+          type: number
+          description: LP price in USD
+        lastEpochVotes:
+          type: number
+          description: Last epoch votes
+        tradingVolume:
+          type: number
+          description: 24h trading volume in USD
+        explicitSwapFee:
+          type: number
+          description: Explicit swap fee in USD (only available for daily and weekly timeframes)
+        implicitSwapFee:
+          type: number
+          description: Implicit swap fee in USD (only available for daily and weekly timeframes)
+        limitOrderFee:
+          type: number
+          description: Limit order fee in USD (only available for daily and weekly timeframes)
+      required:
+      - timestamp
+    EstimatedDailyPoolRewardResponse:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/AssetBasicResponse'
+        amount:
+          type: number
+      required:
+      - asset
+      - amount
+    MarketPointsEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Market id
+        points:
+          description: Points configs
+          type: array
+          items:
+            $ref: '#/components/schemas/PointMetadataEntity'
+      required:
+      - id
+      - points
+    ValuationResponse:
+      type: object
+      properties:
+        usd:
+          type:
+          - number
+          - 'null'
+          description: Value in USD
+        acc:
+          type:
+          - number
+          - 'null'
+          description: Value in the market's accounting asset (e.g. USDC for a USDC-denominated market)
+    MarketCrossChainData:
+      type: object
+      properties:
+        name:
+          type: string
+          description: market name
+          example: crvUSD
+        address:
+          type: string
+          description: market address
+          example: '0x386f90eb964a477498b528a39d9405e73ed4032b'
+        expiry:
+          type: string
+          description: market expiry date
+          example: '2024-03-28T00:00:00.000Z'
+        pt:
+          type: string
+          description: market pt id
+          example: 1-0xb87511364014c088e30f872efc4a00d7efb843ac
+        yt:
+          type: string
+          description: market yt id
+          example: 1-0xed97f94dd94255637a054098604e0201c442a3fd
+        sy:
+          type: string
+          description: market sy id
+          example: 1-0xe05082b184a34668cd8a904d85fa815802bbb04c
+        underlyingAsset:
+          type: string
+          description: market underlying asset id
+          example: 1-0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32
+        details:
+          description: Market details including liquidity, APY, fee rate, and yield range
+          allOf:
+          - $ref: '#/components/schemas/MarketDetailsV2Entity'
+        isNew:
+          type: boolean
+          description: Whether the market is new
+        isPrime:
+          type: boolean
+          description: Whether the market is prime
+        timestamp:
+          format: date-time
+          type: string
+          description: Market deployed timestamp
+        lpWrapper:
+          type: string
+          description: LP wrapper address
+        categoryIds:
+          description: Market category IDs
+          example:
+          - btc
+          - stables
+          type: array
+          items:
+            type: string
+        isVolatile:
+          type: boolean
+          description: Whether the market is volatile
+        chainId:
+          type: number
+          description: chain id
+          example: 1
+      required:
+      - name
+      - address
+      - expiry
+      - pt
+      - yt
+      - sy
+      - underlyingAsset
+      - details
+      - isNew
+      - isPrime
+      - timestamp
+      - chainId
     MarketDataResponse:
       type: object
       properties:
@@ -668,90 +686,36 @@ components:
       - totalLp
       - totalActiveSupply
       - assetPriceUsd
-    MarketHistoricalDataPoint:
+    PointMetadataEntity:
       type: object
       properties:
-        timestamp:
-          format: date-time
+        key:
           type: string
-          description: Timestamp in ISO format
-        maxApy:
+        type:
+          type: string
+          description: Either "multiplier" or "points-per-asset"
+          enum:
+          - multiplier
+          - points-per-asset
+        pendleAsset:
+          type: string
+          description: Either "basic" or "lp"
+          enum:
+          - basic
+          - lp
+        externalDashboardURL:
+          type: string
+        value:
           type: number
-          description: APY when maximum boost is applied
-        baseApy:
-          type: number
-          description: APY including yield, swap fee and Pendle rewards without boosting
-        underlyingApy:
-          type: number
-          description: APY of the underlying asset
-        impliedApy:
-          type: number
-          description: Implied APY of market
-        tvl:
-          type: number
-          description: Market liquidity (TVL in the pool) in USD
-        totalTvl:
-          type: number
-          description: Market total TVL (including floating PT that are not in the AMM) in USD
-        underlyingInterestApy:
-          type: number
-          description: Annual percentage yield from the underlying asset interest
-        underlyingRewardApy:
-          type: number
-          description: Annual percentage yield from the underlying asset rewards
-        ytFloatingApy:
-          type: number
-          description: Floating APY for YT holders (underlyingApy - impliedApy)
-        swapFeeApy:
-          type: number
-          description: Swap fee APY for LP holders, without boosting
-        voterApr:
-          type: number
-          description: APY for voters (vePENDLE holders) from voting on this pool
-        pendleApy:
-          type: number
-          description: APY from Pendle rewards
-        lpRewardApy:
-          type: number
-          description: APY from LP reward tokens
-        totalPt:
-          type: number
-          description: Total PT in the market
-        totalSy:
-          type: number
-          description: Total SY in the market
-        totalSupply:
-          type: number
-          description: Total supply of the LP token
-        ptPrice:
-          type: number
-          description: PT price in USD
-        ytPrice:
-          type: number
-          description: YT price in USD
-        syPrice:
-          type: number
-          description: SY price in USD
-        lpPrice:
-          type: number
-          description: LP price in USD
-        lastEpochVotes:
-          type: number
-          description: Last epoch votes
-        tradingVolume:
-          type: number
-          description: 24h trading volume in USD
-        explicitSwapFee:
-          type: number
-          description: Explicit swap fee in USD (only available for daily and weekly timeframes)
-        implicitSwapFee:
-          type: number
-          description: Implicit swap fee in USD (only available for daily and weekly timeframes)
-        limitOrderFee:
-          type: number
-          description: Limit order fee in USD (only available for daily and weekly timeframes)
+        perDollarLp:
+          type: boolean
       required:
-      - timestamp
+      - key
+      - type
+      - pendleAsset
+      - externalDashboardURL
+      - value
+      - perDollarLp
     GetPointsMarketsResponse:
       type: object
       properties:
@@ -761,3 +725,39 @@ components:
             $ref: '#/components/schemas/MarketPointsEntity'
       required:
       - markets
+    YieldRangeResponse:
+      type: object
+      properties:
+        min:
+          type: number
+          description: Minimum historical implied APY for this market
+        max:
+          type: number
+          description: Maximum historical implied APY for this market
+      required:
+      - min
+      - max
+    MarketHistoricalDataResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of data points available
+        timestamp_start:
+          format: date-time
+          type: string
+          description: Start timestamp of the data range
+        timestamp_end:
+          format: date-time
+          type: string
+          description: End timestamp of the data range
+        results:
+          description: Array of historical data points
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketHistoricalDataPoint'
+      required:
+      - total
+      - timestamp_start
+      - timestamp_end
+      - results
