@@ -83,58 +83,60 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    SyPosition:
+    ClaimTokenAmount:
       type: object
       properties:
-        syId:
+        token:
           type: string
-          description: Unique identifier of the market
-          example: 1-0xabc
-        balance:
+          description: Token id
+          example: 1-0x123...
+        amount:
           type: string
-          description: Sy token (SY) balance in wei
+          description: Amount of tokens
           example: '1000000000000000000'
-        claimTokenAmounts:
-          description: Array of claimable rewards
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
       required:
-      - syId
-      - balance
-    Position:
+      - token
+      - amount
+    MerkleUserCampaignResponse:
       type: object
       properties:
-        balance:
+        user:
           type: string
-          description: Balance of the position
-          example: '1000000000000000000'
-        activeBalance:
+        token:
           type: string
-          description: Active balance of the position (for LP only)
-          example: '1000000000000000000'
-        valuation:
+        merkleRoot:
+          type: string
+        chainId:
           type: number
-          description: Valuation of the position in USD
-          example: 10
-        claimTokenAmounts:
-          description: Array of claimable rewards
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
+        assetId:
+          type: string
+        amount:
+          type: string
+        toTimestamp:
+          format: date-time
+          type: string
+        fromTimestamp:
+          format: date-time
+          type: string
       required:
-      - balance
-      - valuation
-    MerkleClaimedRewardsResponse:
+      - user
+      - token
+      - merkleRoot
+      - chainId
+      - assetId
+      - amount
+      - toTimestamp
+      - fromTimestamp
+    UserPositionsCrossChainResponse:
       type: object
       properties:
-        claimedRewards:
-          description: Array of claimed merkle campaigns
+        positions:
+          description: Array of user positions
           type: array
           items:
-            $ref: '#/components/schemas/MerkleUserCampaignResponse'
+            $ref: '#/components/schemas/UserPositionsResponse'
       required:
-      - claimedRewards
+      - positions
     UserPositionsResponse:
       type: object
       properties:
@@ -187,60 +189,6 @@ components:
       - closedPositions
       - syPositions
       - updatedAt
-    CrossPtPosition:
-      type: object
-      properties:
-        spokePt:
-          type: string
-          description: Spoke PT
-          example: 0x123...
-        balance:
-          type: string
-          description: Balance of the position
-          example: '1000000000000000000'
-      required:
-      - spokePt
-      - balance
-    MerkleUserCampaignResponse:
-      type: object
-      properties:
-        user:
-          type: string
-        token:
-          type: string
-        merkleRoot:
-          type: string
-        chainId:
-          type: number
-        assetId:
-          type: string
-        amount:
-          type: string
-        toTimestamp:
-          format: date-time
-          type: string
-        fromTimestamp:
-          format: date-time
-          type: string
-      required:
-      - user
-      - token
-      - merkleRoot
-      - chainId
-      - assetId
-      - amount
-      - toTimestamp
-      - fromTimestamp
-    UserPositionsCrossChainResponse:
-      type: object
-      properties:
-        positions:
-          description: Array of user positions
-          type: array
-          items:
-            $ref: '#/components/schemas/UserPositionsResponse'
-      required:
-      - positions
     MarketPosition:
       type: object
       properties:
@@ -271,17 +219,69 @@ components:
       - yt
       - lp
       - crossPtPositions
-    ClaimTokenAmount:
+    SyPosition:
       type: object
       properties:
-        token:
+        syId:
           type: string
-          description: Token id
-          example: 1-0x123...
-        amount:
+          description: Unique identifier of the market
+          example: 1-0xabc
+        balance:
           type: string
-          description: Amount of tokens
+          description: Sy token (SY) balance in wei
+          example: '1000000000000000000'
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
+      required:
+      - syId
+      - balance
+    Position:
+      type: object
+      properties:
+        balance:
+          type: string
+          description: Balance of the position
+          example: '1000000000000000000'
+        activeBalance:
+          type: string
+          description: Active balance of the position (for LP only)
+          example: '1000000000000000000'
+        valuation:
+          type: number
+          description: Valuation of the position in USD
+          example: 10
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
+      required:
+      - balance
+      - valuation
+    MerkleClaimedRewardsResponse:
+      type: object
+      properties:
+        claimedRewards:
+          description: Array of claimed merkle campaigns
+          type: array
+          items:
+            $ref: '#/components/schemas/MerkleUserCampaignResponse'
+      required:
+      - claimedRewards
+    CrossPtPosition:
+      type: object
+      properties:
+        spokePt:
+          type: string
+          description: Spoke PT
+          example: 0x123...
+        balance:
+          type: string
+          description: Balance of the position
           example: '1000000000000000000'
       required:
-      - token
-      - amount
+      - spokePt
+      - balance

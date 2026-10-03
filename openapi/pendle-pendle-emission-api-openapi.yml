@@ -36,16 +36,6 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    GetPendleEmissionResponse:
-      type: object
-      properties:
-        markets:
-          description: List of markets with their emission breakdown
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketEmission'
-      required:
-      - markets
     MarketEmission:
       type: object
       properties:
@@ -78,3 +68,13 @@ components:
       - feeIncentive
       - discretionaryIncentive
       - cobribingIncentive
+    GetPendleEmissionResponse:
+      type: object
+      properties:
+        markets:
+          description: List of markets with their emission breakdown
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketEmission'
+      required:
+      - markets

@@ -147,19 +147,108 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    ValuationEntity:
+    PriceAssetData:
       type: object
       properties:
-        usd:
+        pt:
           type: number
-        asset:
+          description: PT price in the market's accounting asset at the time of the transaction
+        yt:
           type: number
-        eth:
+          description: YT price in the market's accounting asset at the time of the transaction
+        lp:
           type: number
+          description: LP price in the market's accounting asset at the time of the transaction
       required:
-      - usd
-      - asset
-      - eth
+      - pt
+      - yt
+      - lp
+    SpendUnitData:
+      type: object
+      properties:
+        unit:
+          type: number
+          description: Balance of user in wei
+        spent_v2:
+          description: Total spent to purchase this asset
+          allOf:
+          - $ref: '#/components/schemas/ValuationEntity'
+      required:
+      - unit
+      - spent_v2
+    TransactionsV5Response:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of transactions available
+        resumeToken:
+          type: string
+          description: Resume token for pagination. Use this to continue a previous query. Use this token in the next request. Can be undefined if the query is at the end of the results.
+        limit:
+          type: number
+          description: Maximum number of results returned
+        skip:
+          type: number
+          description: Number of results skipped for pagination
+        results:
+          description: List of transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV5Response'
+      required:
+      - total
+      - limit
+      - skip
+      - results
+    TransactionV5Response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the transaction
+        market:
+          type: string
+          description: Market address where the transaction occurred
+        timestamp:
+          format: date-time
+          type: string
+          description: Timestamp when the transaction occurred
+        chainId:
+          type: number
+          description: Chain ID where the transaction occurred
+        txHash:
+          type: string
+          description: Transaction hash on the blockchain
+        value:
+          type: number
+          description: Transaction value in USD
+        type:
+          type: string
+          description: Transaction type (e.g., TRADES, ADD_LIQUIDITY, REMOVE_LIQUIDITY)
+        action:
+          type: string
+          description: Transaction action (e.g., BUY_PT, SELL_PT, ADD_LIQUIDITY_DUAL)
+        txOrigin:
+          type: string
+          description: Original transaction sender address
+        impliedApy:
+          type: number
+          description: Weighted average implied APY for this transaction
+        notional:
+          description: Notional amounts traded (only for TRADES type)
+          allOf:
+          - $ref: '#/components/schemas/NotionalV5'
+      required:
+      - id
+      - market
+      - timestamp
+      - chainId
+      - txHash
+      - value
+      - type
+      - action
+      - impliedApy
     TransactionsResponseEntity:
       type: object
       properties:
@@ -181,22 +270,24 @@ components:
       - SHORT_YIELD
       - ADD_LIQUIDITY
       - REMOVE_LIQUIDITY
-    PriceAssetData:
+    ValuationEntity:
       type: object
       properties:
-        pt:
+        usd:
           type: number
-          description: PT price in the market's accounting asset at the time of the transaction
-        yt:
+        asset:
           type: number
-          description: YT price in the market's accounting asset at the time of the transaction
-        lp:
+        eth:
           type: number
-          description: LP price in the market's accounting asset at the time of the transaction
       required:
-      - pt
-      - yt
-      - lp
+      - usd
+      - asset
+      - eth
+    TransactionType:
+      type: string
+      enum:
+      - TRADES
+      - LIQUIDITY
     PnLTransactionEntity:
       type: object
       properties:
@@ -301,92 +392,6 @@ components:
       - assetUsd
       - assetEth
       - ptExchangeRate
-    TransactionV5Response:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the transaction
-        market:
-          type: string
-          description: Market address where the transaction occurred
-        timestamp:
-          format: date-time
-          type: string
-          description: Timestamp when the transaction occurred
-        chainId:
-          type: number
-          description: Chain ID where the transaction occurred
-        txHash:
-          type: string
-          description: Transaction hash on the blockchain
-        value:
-          type: number
-          description: Transaction value in USD
-        type:
-          type: string
-          description: Transaction type (e.g., TRADES, ADD_LIQUIDITY, REMOVE_LIQUIDITY)
-        action:
-          type: string
-          description: Transaction action (e.g., BUY_PT, SELL_PT, ADD_LIQUIDITY_DUAL)
-        txOrigin:
-          type: string
-          description: Original transaction sender address
-        impliedApy:
-          type: number
-          description: Weighted average implied APY for this transaction
-        notional:
-          description: Notional amounts traded (only for TRADES type)
-          allOf:
-          - $ref: '#/components/schemas/NotionalV5'
-      required:
-      - id
-      - market
-      - timestamp
-      - chainId
-      - txHash
-      - value
-      - type
-      - action
-      - impliedApy
-    TransactionsV5Response:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of transactions available
-        resumeToken:
-          type: string
-          description: Resume token for pagination. Use this to continue a previous query. Use this token in the next request. Can be undefined if the query is at the end of the results.
-        limit:
-          type: number
-          description: Maximum number of results returned
-        skip:
-          type: number
-          description: Number of results skipped for pagination
-        results:
-          description: List of transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionV5Response'
-      required:
-      - total
-      - limit
-      - skip
-      - results
-    SpendUnitData:
-      type: object
-      properties:
-        unit:
-          type: number
-          description: Balance of user in wei
-        spent_v2:
-          description: Total spent to purchase this asset
-          allOf:
-          - $ref: '#/components/schemas/ValuationEntity'
-      required:
-      - unit
-      - spent_v2
     NotionalV5:
       type: object
       properties:
@@ -395,8 +400,3 @@ components:
           description: Notional amount of PT traded
       required:
       - pt
-    TransactionType:
-      type: string
-      enum:
-      - TRADES
-      - LIQUIDITY
