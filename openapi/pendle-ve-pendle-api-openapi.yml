@@ -95,95 +95,34 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    VePendleExtendedDataResponse:
+    MarketTotalFeesData:
       type: object
       properties:
-        avgLockDuration:
-          type: number
-          description: Average lock duration in days
-        totalPendleLocked:
-          type: number
-          description: Total amount of PENDLE tokens locked in vePENDLE
-        vePendleSupply:
-          type: number
-          description: Total supply of vePENDLE tokens
-        totalProjectedVotes:
-          type: number
-          description: Total projected votes for next epoch
-        totalCurrentVotes:
-          type: number
-          description: Total votes in current epoch
-        pools:
-          description: List of voting pools with their APY, fees, and voting data
+        market:
+          description: market metadata
+          allOf:
+          - $ref: '#/components/schemas/MarketMetaData'
+        values:
+          description: total fee at each timestamp
           type: array
           items:
-            $ref: '#/components/schemas/PoolV2Response'
-        tokenSupply:
-          description: Current circulating and total supply of PENDLE tokens
-          allOf:
-          - $ref: '#/components/schemas/PendleTokenSupplyResponse'
-        monthlyRevenue:
-          description: Monthly protocol revenue breakdown and trends
-          allOf:
-          - $ref: '#/components/schemas/GetMonthlyRevenueResponse'
+            $ref: '#/components/schemas/TotalFeesWithTimestamp'
       required:
-      - avgLockDuration
-      - totalPendleLocked
-      - vePendleSupply
-      - totalProjectedVotes
-      - totalCurrentVotes
-      - pools
-    PendleTokenSupplyResponse:
+      - market
+      - values
+    TotalFeesWithTimestamp:
       type: object
       properties:
-        timestamp:
+        time:
           format: date-time
           type: string
-          description: Timestamp of the token supply data
-        totalPendleCirculating:
+          description: timestamp where total fee is being calculated
+        totalFees:
           type: number
-          description: Total circulating supply of PENDLE tokens (not locked)
-        totalPendleLocked:
-          type: number
-          description: Total amount of PENDLE tokens locked in vePENDLE
-        totalPendleSupply:
-          type: number
-          description: Total supply of PENDLE tokens
+          description: total fees at given timestamp
       required:
-      - timestamp
-      - totalPendleCirculating
-      - totalPendleLocked
-      - totalPendleSupply
-    VoteV2Response:
-      type: object
-      properties:
-        votes:
-          type: number
-          description: Absolute number of votes
-        percentage:
-          type: number
-          description: Percentage of total votes
-      required:
-      - votes
-      - percentage
-    MarketMetaData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: market id
-      required:
-      - id
-    AllMarketTotalFeesResponse:
-      type: object
-      properties:
-        results:
-          description: all market total fees response
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketTotalFeesData'
-      required:
-      - results
+      - time
+      - totalFees
     PoolV2Response:
       type: object
       properties:
@@ -229,34 +168,57 @@ components:
       - id
       - symbol
       - expiry
-    MarketTotalFeesData:
+    PendleTokenSupplyResponse:
       type: object
       properties:
-        market:
-          description: market metadata
-          allOf:
-          - $ref: '#/components/schemas/MarketMetaData'
-        values:
-          description: total fee at each timestamp
-          type: array
-          items:
-            $ref: '#/components/schemas/TotalFeesWithTimestamp'
-      required:
-      - market
-      - values
-    TotalFeesWithTimestamp:
-      type: object
-      properties:
-        time:
+        timestamp:
           format: date-time
           type: string
-          description: timestamp where total fee is being calculated
-        totalFees:
+          description: Timestamp of the token supply data
+        totalPendleCirculating:
           type: number
-          description: total fees at given timestamp
+          description: Total circulating supply of PENDLE tokens (not locked)
+        totalPendleLocked:
+          type: number
+          description: Total amount of PENDLE tokens locked in vePENDLE
+        totalPendleSupply:
+          type: number
+          description: Total supply of PENDLE tokens
       required:
-      - time
-      - totalFees
+      - timestamp
+      - totalPendleCirculating
+      - totalPendleLocked
+      - totalPendleSupply
+    MarketMetaData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: market id
+      required:
+      - id
+    VoteV2Response:
+      type: object
+      properties:
+        votes:
+          type: number
+          description: Absolute number of votes
+        percentage:
+          type: number
+          description: Percentage of total votes
+      required:
+      - votes
+      - percentage
+    AllMarketTotalFeesResponse:
+      type: object
+      properties:
+        results:
+          description: all market total fees response
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketTotalFeesData'
+      required:
+      - results
     GetMonthlyRevenueResponse:
       type: object
       properties:
@@ -277,3 +239,41 @@ components:
       - revenues
       - epochStartDates
       - accumulatedRevenue
+    VePendleExtendedDataResponse:
+      type: object
+      properties:
+        avgLockDuration:
+          type: number
+          description: Average lock duration in days
+        totalPendleLocked:
+          type: number
+          description: Total amount of PENDLE tokens locked in vePENDLE
+        vePendleSupply:
+          type: number
+          description: Total supply of vePENDLE tokens
+        totalProjectedVotes:
+          type: number
+          description: Total projected votes for next epoch
+        totalCurrentVotes:
+          type: number
+          description: Total votes in current epoch
+        pools:
+          description: List of voting pools with their APY, fees, and voting data
+          type: array
+          items:
+            $ref: '#/components/schemas/PoolV2Response'
+        tokenSupply:
+          description: Current circulating and total supply of PENDLE tokens
+          allOf:
+          - $ref: '#/components/schemas/PendleTokenSupplyResponse'
+        monthlyRevenue:
+          description: Monthly protocol revenue breakdown and trends
+          allOf:
+          - $ref: '#/components/schemas/GetMonthlyRevenueResponse'
+      required:
+      - avgLockDuration
+      - totalPendleLocked
+      - vePendleSupply
+      - totalProjectedVotes
+      - totalCurrentVotes
+      - pools

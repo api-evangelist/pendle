@@ -609,49 +609,109 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    MultiRouteConvertResponse:
+    PriceImpactBreakDownData:
       type: object
       properties:
-        action:
+        internalPriceImpact:
+          type: number
+        externalPriceImpact:
+          type: number
+      required:
+      - internalPriceImpact
+      - externalPriceImpact
+    SupportedAggregator:
+      type: object
+      properties:
+        name:
           type: string
-          enum:
-          - swap
-          - add-liquidity
-          - remove-liquidity
-          - exit-market
-          - transfer-liquidity
-          - roll-over-pt
-          - add-liquidity-dual
-          - remove-liquidity-dual
-          - mint-py
-          - redeem-py
-          - mint-sy
-          - redeem-sy
-          - pendle-swap
-          - convert-lp-to-pt
-          description: The action that was performed
-        inputs:
-          description: Input token amounts for the action
+          description: Name of the aggregator, e.g., kyberswap, okx, odos, paraswap
+          example: kyberswap
+        computingUnit:
+          type: number
+          description: Computing unit required for the aggregator
+          example: 5
+      required:
+      - name
+      - computingUnit
+    SupportedAggregatorsResponse:
+      type: object
+      properties:
+        aggregators:
+          description: List of supported aggregators with their computing units
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedAggregator'
+      required:
+      - aggregators
+    SwapWithFixedPricePtAmmData:
+      type: object
+      properties:
+        netTokenOut:
+          type: string
+          description: Net token output amount
+      required:
+      - netTokenOut
+    SwapWithFixedPricePtAmmResponse:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        tokenApprovals:
           type: array
           items:
             $ref: '#/components/schemas/TokenAmountResponse'
-        requiredApprovals:
+        data:
+          $ref: '#/components/schemas/SwapWithFixedPricePtAmmData'
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
+      - tx
+      - data
+    RedeemInterestsAndRewardsResponse:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
           type: array
           items:
-            $ref: '#/components/schemas/TokenAmountResponse'
-        routes:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
           type: array
           items:
-            $ref: '#/components/schemas/ConvertResponse'
-        rewards:
-          description: Reward token amounts from redeem action
+            type: array
+        tx:
+          description: Transaction data
+          allOf:
+          - $ref: '#/components/schemas/TransactionDto'
+        tokenApprovals:
           type: array
           items:
             $ref: '#/components/schemas/TokenAmountResponse'
       required:
-      - action
-      - inputs
-      - routes
+      - method
+      - contractCallParamsName
+      - contractCallParams
+      - tx
     ConvertV3Dto:
       type: object
       properties:
@@ -701,46 +761,7 @@ components:
       - slippage
       - inputs
       - outputs
-    SupportedAggregator:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the aggregator, e.g., kyberswap, okx, odos, paraswap
-          example: kyberswap
-        computingUnit:
-          type: number
-          description: Computing unit required for the aggregator
-          example: 5
-      required:
-      - name
-      - computingUnit
-    ConvertData:
-      type: object
-      properties:
-        aggregatorType:
-          type: string
-        priceImpact:
-          type: number
-        impliedApy:
-          $ref: '#/components/schemas/ImpliedApy'
-        priceImpactBreakDown:
-          $ref: '#/components/schemas/PriceImpactBreakDownData'
-        effectiveApy:
-          type: number
-        paramsBreakdown:
-          description: Parameter breakdown for transfer liquidity
-          allOf:
-          - $ref: '#/components/schemas/ParamsBreakdown'
-        fee:
-          description: Fee in USD
-          allOf:
-          - $ref: '#/components/schemas/FeeUsd'
-      required:
-      - aggregatorType
-      - priceImpact
-      - priceImpactBreakDown
-    RedeemInterestsAndRewardsResponse:
+    SdkResponse:
       type: object
       properties:
         method:
@@ -769,16 +790,69 @@ components:
       - contractCallParamsName
       - contractCallParams
       - tx
-    TokenAmountResponse:
+    TransactionDto:
       type: object
       properties:
-        token:
+        data:
           type: string
-        amount:
+          description: Transaction data
+        to:
           type: string
+          description: Transaction receiver
+        from:
+          type: string
+          description: Transaction sender
+        value:
+          type: string
+          description: Transaction value
       required:
-      - token
-      - amount
+      - data
+      - to
+      - from
+      - value
+    MultiRouteConvertResponse:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - swap
+          - add-liquidity
+          - remove-liquidity
+          - exit-market
+          - transfer-liquidity
+          - roll-over-pt
+          - add-liquidity-dual
+          - remove-liquidity-dual
+          - mint-py
+          - redeem-py
+          - mint-sy
+          - redeem-sy
+          - pendle-swap
+          - convert-lp-to-pt
+          description: The action that was performed
+        inputs:
+          description: Input token amounts for the action
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        requiredApprovals:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConvertResponse'
+        rewards:
+          description: Reward token amounts from redeem action
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmountResponse'
+      required:
+      - action
+      - inputs
+      - routes
     ConvertResponse:
       type: object
       properties:
@@ -802,6 +876,19 @@ components:
       - tx
       - outputs
       - data
+    PtCrossChainMetadataResponse:
+      type: object
+      properties:
+        pairedTokensOut:
+          description: Array of token addresses that the PT can be swapped to
+          type: array
+          items:
+            type: string
+        ammAddress:
+          type: string
+          description: The address of the AMM
+      required:
+      - pairedTokensOut
     FeeUsd:
       type: object
       properties:
@@ -809,6 +896,26 @@ components:
           type: number
       required:
       - usd
+    ContractParamInfo:
+      type: object
+      properties:
+        method:
+          type: string
+          description: Method name
+        contractCallParamsName:
+          description: Contract call parameters name
+          type: array
+          items:
+            type: string
+        contractCallParams:
+          description: Contract call parameters
+          type: array
+          items:
+            type: array
+      required:
+      - method
+      - contractCallParamsName
+      - contractCallParams
     MarketTokensResponse:
       type: object
       properties:
@@ -847,97 +954,18 @@ components:
       required:
       - before
       - after
-    TransactionDto:
+    ParamsBreakdown:
       type: object
       properties:
-        data:
-          type: string
-          description: Transaction data
-        to:
-          type: string
-          description: Transaction receiver
-        from:
-          type: string
-          description: Transaction sender
-        value:
-          type: string
-          description: Transaction value
+        selfCall1:
+          $ref: '#/components/schemas/ContractParamInfo'
+        selfCall2:
+          $ref: '#/components/schemas/ContractParamInfo'
+        reflectCall:
+          $ref: '#/components/schemas/ContractParamInfo'
       required:
-      - data
-      - to
-      - from
-      - value
-    TokenAmountDto:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token address
-        amount:
-          type: string
-          description: Token amount in wei
-      required:
-      - token
-      - amount
-    ContractParamInfo:
-      type: object
-      properties:
-        method:
-          type: string
-          description: Method name
-        contractCallParamsName:
-          description: Contract call parameters name
-          type: array
-          items:
-            type: string
-        contractCallParams:
-          description: Contract call parameters
-          type: array
-          items:
-            type: array
-      required:
-      - method
-      - contractCallParamsName
-      - contractCallParams
-    PriceImpactBreakDownData:
-      type: object
-      properties:
-        internalPriceImpact:
-          type: number
-        externalPriceImpact:
-          type: number
-      required:
-      - internalPriceImpact
-      - externalPriceImpact
-    SdkResponse:
-      type: object
-      properties:
-        method:
-          type: string
-          description: Method name
-        contractCallParamsName:
-          description: Contract call parameters name
-          type: array
-          items:
-            type: string
-        contractCallParams:
-          description: Contract call parameters
-          type: array
-          items:
-            type: array
-        tx:
-          description: Transaction data
-          allOf:
-          - $ref: '#/components/schemas/TransactionDto'
-        tokenApprovals:
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenAmountResponse'
-      required:
-      - method
-      - contractCallParamsName
-      - contractCallParams
-      - tx
+      - selfCall1
+      - reflectCall
     OKXCustomParamsDto:
       type: object
       properties:
@@ -949,6 +977,41 @@ components:
           type: number
         positiveSlippagePercent:
           type: number
+    TokenAmountResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        amount:
+          type: string
+      required:
+      - token
+      - amount
+    ConvertData:
+      type: object
+      properties:
+        aggregatorType:
+          type: string
+        priceImpact:
+          type: number
+        impliedApy:
+          $ref: '#/components/schemas/ImpliedApy'
+        priceImpactBreakDown:
+          $ref: '#/components/schemas/PriceImpactBreakDownData'
+        effectiveApy:
+          type: number
+        paramsBreakdown:
+          description: Parameter breakdown for transfer liquidity
+          allOf:
+          - $ref: '#/components/schemas/ParamsBreakdown'
+        fee:
+          description: Fee in USD
+          allOf:
+          - $ref: '#/components/schemas/FeeUsd'
+      required:
+      - aggregatorType
+      - priceImpact
+      - priceImpactBreakDown
     GetSpotSwappingPriceResponse:
       type: object
       properties:
@@ -985,78 +1048,15 @@ components:
       - underlyingTokenToYtRate
       - ytToUnderlyingTokenRate
       - impliedApy
-    SwapWithFixedPricePtAmmResponse:
+    TokenAmountDto:
       type: object
       properties:
-        method:
+        token:
           type: string
-          description: Method name
-        contractCallParamsName:
-          description: Contract call parameters name
-          type: array
-          items:
-            type: string
-        contractCallParams:
-          description: Contract call parameters
-          type: array
-          items:
-            type: array
-        tx:
-          description: Transaction data
-          allOf:
-          - $ref: '#/components/schemas/TransactionDto'
-        tokenApprovals:
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenAmountResponse'
-        data:
-          $ref: '#/components/schemas/SwapWithFixedPricePtAmmData'
-      required:
-      - method
-      - contractCallParamsName
-      - contractCallParams
-      - tx
-      - data
-    SwapWithFixedPricePtAmmData:
-      type: object
-      properties:
-        netTokenOut:
+          description: Token address
+        amount:
           type: string
-          description: Net token output amount
+          description: Token amount in wei
       required:
-      - netTokenOut
-    ParamsBreakdown:
-      type: object
-      properties:
-        selfCall1:
-          $ref: '#/components/schemas/ContractParamInfo'
-        selfCall2:
-          $ref: '#/components/schemas/ContractParamInfo'
-        reflectCall:
-          $ref: '#/components/schemas/ContractParamInfo'
-      required:
-      - selfCall1
-      - reflectCall
-    SupportedAggregatorsResponse:
-      type: object
-      properties:
-        aggregators:
-          description: List of supported aggregators with their computing units
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedAggregator'
-      required:
-      - aggregators
-    PtCrossChainMetadataResponse:
-      type: object
-      properties:
-        pairedTokensOut:
-          description: Array of token addresses that the PT can be swapped to
-          type: array
-          items:
-            type: string
-        ammAddress:
-          type: string
-          description: The address of the AMM
-      required:
-      - pairedTokensOut
+      - token
+      - amount

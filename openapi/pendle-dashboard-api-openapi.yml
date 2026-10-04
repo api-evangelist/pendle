@@ -83,6 +83,16 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
+    MerkleClaimedRewardsResponse:
+      type: object
+      properties:
+        claimedRewards:
+          description: Array of claimed merkle campaigns
+          type: array
+          items:
+            $ref: '#/components/schemas/MerkleUserCampaignResponse'
+      required:
+      - claimedRewards
     ClaimTokenAmount:
       type: object
       properties:
@@ -97,6 +107,62 @@ components:
       required:
       - token
       - amount
+    CrossPtPosition:
+      type: object
+      properties:
+        spokePt:
+          type: string
+          description: Spoke PT
+          example: 0x123...
+        balance:
+          type: string
+          description: Balance of the position
+          example: '1000000000000000000'
+      required:
+      - spokePt
+      - balance
+    Position:
+      type: object
+      properties:
+        balance:
+          type: string
+          description: Balance of the position
+          example: '1000000000000000000'
+        activeBalance:
+          type: string
+          description: Active balance of the position (for LP only)
+          example: '1000000000000000000'
+        valuation:
+          type: number
+          description: Valuation of the position in USD
+          example: 10
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
+      required:
+      - balance
+      - valuation
+    SyPosition:
+      type: object
+      properties:
+        syId:
+          type: string
+          description: Unique identifier of the market
+          example: 1-0xabc
+        balance:
+          type: string
+          description: Sy token (SY) balance in wei
+          example: '1000000000000000000'
+        claimTokenAmounts:
+          description: Array of claimable rewards
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimTokenAmount'
+      required:
+      - syId
+      - balance
     MerkleUserCampaignResponse:
       type: object
       properties:
@@ -219,69 +285,3 @@ components:
       - yt
       - lp
       - crossPtPositions
-    SyPosition:
-      type: object
-      properties:
-        syId:
-          type: string
-          description: Unique identifier of the market
-          example: 1-0xabc
-        balance:
-          type: string
-          description: Sy token (SY) balance in wei
-          example: '1000000000000000000'
-        claimTokenAmounts:
-          description: Array of claimable rewards
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
-      required:
-      - syId
-      - balance
-    Position:
-      type: object
-      properties:
-        balance:
-          type: string
-          description: Balance of the position
-          example: '1000000000000000000'
-        activeBalance:
-          type: string
-          description: Active balance of the position (for LP only)
-          example: '1000000000000000000'
-        valuation:
-          type: number
-          description: Valuation of the position in USD
-          example: 10
-        claimTokenAmounts:
-          description: Array of claimable rewards
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaimTokenAmount'
-      required:
-      - balance
-      - valuation
-    MerkleClaimedRewardsResponse:
-      type: object
-      properties:
-        claimedRewards:
-          description: Array of claimed merkle campaigns
-          type: array
-          items:
-            $ref: '#/components/schemas/MerkleUserCampaignResponse'
-      required:
-      - claimedRewards
-    CrossPtPosition:
-      type: object
-      properties:
-        spokePt:
-          type: string
-          description: Spoke PT
-          example: 0x123...
-        balance:
-          type: string
-          description: Balance of the position
-          example: '1000000000000000000'
-      required:
-      - spokePt
-      - balance

@@ -147,60 +147,6 @@ paths:
       x-retail-api-rank: 6969
 components:
   schemas:
-    PriceAssetData:
-      type: object
-      properties:
-        pt:
-          type: number
-          description: PT price in the market's accounting asset at the time of the transaction
-        yt:
-          type: number
-          description: YT price in the market's accounting asset at the time of the transaction
-        lp:
-          type: number
-          description: LP price in the market's accounting asset at the time of the transaction
-      required:
-      - pt
-      - yt
-      - lp
-    SpendUnitData:
-      type: object
-      properties:
-        unit:
-          type: number
-          description: Balance of user in wei
-        spent_v2:
-          description: Total spent to purchase this asset
-          allOf:
-          - $ref: '#/components/schemas/ValuationEntity'
-      required:
-      - unit
-      - spent_v2
-    TransactionsV5Response:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of transactions available
-        resumeToken:
-          type: string
-          description: Resume token for pagination. Use this to continue a previous query. Use this token in the next request. Can be undefined if the query is at the end of the results.
-        limit:
-          type: number
-          description: Maximum number of results returned
-        skip:
-          type: number
-          description: Number of results skipped for pagination
-        results:
-          description: List of transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionV5Response'
-      required:
-      - total
-      - limit
-      - skip
-      - results
     TransactionV5Response:
       type: object
       properties:
@@ -249,20 +195,6 @@ components:
       - type
       - action
       - impliedApy
-    TransactionsResponseEntity:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of matching transactions
-        results:
-          description: Paginated list of transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/PnLTransactionEntity'
-      required:
-      - total
-      - results
     TransactionAction:
       type: string
       enum:
@@ -270,6 +202,35 @@ components:
       - SHORT_YIELD
       - ADD_LIQUIDITY
       - REMOVE_LIQUIDITY
+    TransactionType:
+      type: string
+      enum:
+      - TRADES
+      - LIQUIDITY
+    NotionalV5:
+      type: object
+      properties:
+        pt:
+          type: number
+          description: Notional amount of PT traded
+      required:
+      - pt
+    PriceAssetData:
+      type: object
+      properties:
+        pt:
+          type: number
+          description: PT price in the market's accounting asset at the time of the transaction
+        yt:
+          type: number
+          description: YT price in the market's accounting asset at the time of the transaction
+        lp:
+          type: number
+          description: LP price in the market's accounting asset at the time of the transaction
+      required:
+      - pt
+      - yt
+      - lp
     ValuationEntity:
       type: object
       properties:
@@ -283,11 +244,6 @@ components:
       - usd
       - asset
       - eth
-    TransactionType:
-      type: string
-      enum:
-      - TRADES
-      - LIQUIDITY
     PnLTransactionEntity:
       type: object
       properties:
@@ -392,11 +348,55 @@ components:
       - assetUsd
       - assetEth
       - ptExchangeRate
-    NotionalV5:
+    TransactionsV5Response:
       type: object
       properties:
-        pt:
+        total:
           type: number
-          description: Notional amount of PT traded
+          description: Total number of transactions available
+        resumeToken:
+          type: string
+          description: Resume token for pagination. Use this to continue a previous query. Use this token in the next request. Can be undefined if the query is at the end of the results.
+        limit:
+          type: number
+          description: Maximum number of results returned
+        skip:
+          type: number
+          description: Number of results skipped for pagination
+        results:
+          description: List of transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV5Response'
       required:
-      - pt
+      - total
+      - limit
+      - skip
+      - results
+    SpendUnitData:
+      type: object
+      properties:
+        unit:
+          type: number
+          description: Balance of user in wei
+        spent_v2:
+          description: Total spent to purchase this asset
+          allOf:
+          - $ref: '#/components/schemas/ValuationEntity'
+      required:
+      - unit
+      - spent_v2
+    TransactionsResponseEntity:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of matching transactions
+        results:
+          description: Paginated list of transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/PnLTransactionEntity'
+      required:
+      - total
+      - results
