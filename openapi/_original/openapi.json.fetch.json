@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json",
+ "requested_url": "https://raw.githubusercontent.com/pendle-finance/documentation/master/static/pendle-dev-docs/openapi/open-api.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 335159,
+ "sha256": "7fb8ced3c5aa439a1b86eddf1c577234c50d352796827c85a82aa989b495a110",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
